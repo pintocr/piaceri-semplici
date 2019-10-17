@@ -1,24 +1,24 @@
 import React from 'react';
-import './App.css';
+import { Input } from "antd";
+import "antd/dist/antd.css";
+const { Search } = Input;
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface IProps { }
+
+interface IState {}
+
+export default class App extends React.PureComponent<IProps, IState> {
+
+  render() {
+    return (
+      <div>
+         <div className="App">
+          <div className = "Searchbox">
+            <p>Artikelsuche</p>
+            <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton /></div>
+          </div>
+      </div>
+     
+    );
+  }
 }
-
-export default App;
