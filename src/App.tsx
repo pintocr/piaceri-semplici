@@ -14,6 +14,7 @@ export default class App extends React.PureComponent<IProps, IState> {
       <div>
          <div className="App">
           <div className = "Searchbox">
+            <p>Artikelsuche</p>
             <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton /></div>
           </div>
       </div>
