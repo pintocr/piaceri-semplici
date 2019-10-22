@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import "antd/dist/antd.css";
 import SignUpModal from './component/Signup';
+import shoppingCart from '../src/component/shoppingCart'
 
 import { CS } from './framework/CS';
 import { IWindow } from './framework/IWindow'
@@ -24,6 +25,7 @@ const routing = (
       </div>
       <br />
       <Route exact path="/" component={App} />
+      <Route exact path="/cart" component={shoppingCart} />
     </Router>
   )
   ReactDOM.render(routing, document.getElementById('root'));
@@ -33,5 +35,13 @@ const routing = (
     ReactDOM.render(routing, document.getElementById('root'));
   });
 
+
+
+
+
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
 
 serviceWorker.unregister();
