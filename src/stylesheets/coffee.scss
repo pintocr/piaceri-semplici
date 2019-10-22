@@ -64,3 +64,15 @@
   .image4 {
     animation: picture4 30s infinite ease-in-out;
   }
+
+  .description {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 1vw;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0.1em 0.1em #333;
+    z-index: 5;
+  }
