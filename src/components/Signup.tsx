@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Input, message }from 'antd'
+import { Modal, Button, Input, message, Icon }from 'antd'
 import axios from 'axios';
 
 //redux
@@ -66,7 +66,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
         type: ActionType.closeSignupModal
       }
       const input = this.state.inputData
-      axios.post('http://localhost:8080/user/signup', input)
+      axios.post(`${process.env.REACT_APP_BACKEND}/user/signup`, input)
       .then(res => {
         window.CS.clientAction(action);
       })
@@ -84,9 +84,8 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
                 default:
                 console.log("unbekannter Datenbankfehler");
                 break;
-            }
-           
-        });
+            }   
+      });
      
       this.setState({ signupVisible: window.CS.getUIState().signupVisible });
       }, 500);
@@ -114,8 +113,8 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
     const visible = this.state.signupVisible;
     return (
       <div>
-        <Button style={{ "backgroundColor": "rgb(156, 113, 47)" }} type="primary" onClick={this.showModal}>
-            Registrieren
+        <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>
+        <Icon type="user" style={{ fontSize: '24px' }} theme="outlined" />
         </Button>
         <Modal
           visible={visible}
@@ -126,7 +125,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
             <Button key="back" onClick={this.handleCancel}>
               Abbrechen
             </Button>,
-            <Button  style={{ "backgroundColor": "rgb(156, 113, 47)" }} form = "signupForm" key="submit" type="primary" loading={signupLoading} onClick={this.handleOk}>
+            <Button  style={{ "backgroundColor": "rgb(71, 38, 21)" }} form = "signupForm" key="submit" type="primary" loading={signupLoading} onClick={this.handleOk}>
               Registrieren
             </Button>,
           ]}

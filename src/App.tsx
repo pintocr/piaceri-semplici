@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css';
 import { Input } from 'antd';
 import "antd/dist/antd.css";
 import StartPageArticles from './components/startPageArticles';
@@ -44,6 +45,7 @@ componentDidMount() {
   render() {
     return (
       <div>
+<<<<<<< HEAD
         <div className="App">
           <div className="Searchbox">
             <p>Artikelsuche</p>
@@ -51,6 +53,14 @@ componentDidMount() {
           <div>
             <p>Exclusive Selection</p>
             {window.CS.getBMState().products.forEach(product => <StartPageArticles key={product._id} product={product} />)}
+=======
+         <div className="App">
+          <div className = "Searchcontainer">
+            <div className = "Searchbox">
+            <h2>Artikelsuche </h2>
+            <Search placeholder="Artikelname hier eingeben" onSearch={value => console.log(value)} enterButton /></div>
+            </div>
+>>>>>>> master
           </div>
         </div>
       </div>
