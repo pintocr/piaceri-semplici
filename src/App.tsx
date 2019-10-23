@@ -9,7 +9,7 @@ declare let window: IWindow;
 const { Search } = Input;
 
 interface IProps {
-  stateCounter: number
+
 }
 
 interface IState {
@@ -36,6 +36,7 @@ export interface IProductAction extends IAction {
 
 export default class App extends React.PureComponent<IProps, IState> {
 
+
 componentDidMount() {
     window.CS.clientAction(productsReadActionCreator())
   }
@@ -49,7 +50,7 @@ componentDidMount() {
             <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton /></div>
           <div>
             <p>Exclusive Selection</p>
-            {window.CS.getBMState().products.map(product => <StartPageArticles key={product._id} product={product} />)}
+            {window.CS.getBMState().products.forEach(product => <StartPageArticles key={product._id} product={product} />)}
           </div>
         </div>
       </div>
@@ -78,6 +79,7 @@ export function productsReadActionCreator() {
         products: response.data as IProductData[]
       }
       dispatch(responseAction);
+      
     }).catch(function (error) { console.log(error); })
   }
 }

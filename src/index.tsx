@@ -7,7 +7,6 @@ import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import "antd/dist/antd.css";
 import SignUpModal from './components/Signup';
 import shoppingCart from './components/shoppingCart'
-
 import { CS } from './framework/CS';
 import { IWindow } from './framework/IWindow'
 declare let window: IWindow;
@@ -28,7 +27,8 @@ const routing = (
       <Route exact path="/cart" component={shoppingCart} />
     </Router>
   )
-  ReactDOM.render(routing, document.getElementById('root'));
+
+  ReactDOM.render(<App />, document.getElementById('root'));
 
 
   window.CS.getStore().subscribe(() => {
