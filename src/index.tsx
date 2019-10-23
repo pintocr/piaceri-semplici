@@ -6,14 +6,10 @@ import Coffee from '../src/components/coffee';
 import * as serviceWorker from './serviceWorker';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import "antd/dist/antd.css";
-<<<<<<< HEAD
-import SignUpModal from './components/Signup';
 import shoppingCart from './components/shoppingCart'
-=======
 import { Icon } from 'antd';
 import SignUpModal from './components/Signup';
 
->>>>>>> master
 import { CS } from './framework/CS';
 import { IWindow } from './framework/IWindow'
 declare let window: IWindow;
@@ -32,11 +28,8 @@ const routing = (
       </div>
       <br />
       <Route exact path="/" component={App} />
-<<<<<<< HEAD
       <Route exact path="/cart" component={shoppingCart} />
-=======
       <Route path="/coffee" component={Coffee} />
->>>>>>> master
     </Router>
   )
 
