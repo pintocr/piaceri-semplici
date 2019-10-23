@@ -8,9 +8,16 @@ export const reducer = (state = initial, action: IAction) => {
     window.CS.log("2. ACTION:" + action.type);
     let newState: IState = state;
     newState = JSON.parse(JSON.stringify(state)) as IState;
-    newState.UI.counter = state.UI.counter + 1;
     switch (action.type) {
         case ActionType.INIT:
+            return newState;
+
+        case ActionType.openSignupModal: 
+            newState.UI.signupVisible = true;
+            return newState;
+
+        case ActionType.closeSignupModal: 
+            newState.UI.signupVisible = false;
             return newState;
 
         default:
