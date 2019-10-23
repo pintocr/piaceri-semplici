@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Input, message }from 'antd'
+import { Modal, Button, Input, message, Icon }from 'antd'
 import axios from 'axios';
 
 //redux
@@ -114,7 +114,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
     return (
       <div>
         <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>
-            Registrieren
+        <Icon type="user" style={{ fontSize: '24px' }} theme="outlined" />
         </Button>
         <Modal
           visible={visible}
