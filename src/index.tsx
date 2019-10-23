@@ -6,7 +6,8 @@ import Coffee from '../src/components/coffee';
 import * as serviceWorker from './serviceWorker';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import "antd/dist/antd.css";
-import SignUpModal from './component/Signup';
+import { Icon } from 'antd';
+import SignUpModal from './components/Signup';
 
 import { CS } from './framework/CS';
 import { IWindow } from './framework/IWindow'
@@ -21,7 +22,8 @@ const routing = (
         <Link className ="navigationEntry" to="/">Home</Link>&nbsp;
         <Link className ="navigationEntry" to="/coffee">Coffee</Link>&nbsp;
         <Link className ="navigationEntry" to="/">Home</Link>&nbsp;
-        <SignUpModal/>
+        <SignUpModal/>&nbsp;
+        <Link className ="navigationEntry" to="/"><Icon type="shopping-cart" style={{ fontSize: '24px' }}/></Link>&nbsp;
       </div>
       <br />
       <Route exact path="/" component={App} />

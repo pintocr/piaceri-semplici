@@ -17,16 +17,23 @@ code {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  background-color: rgb(156, 113, 47);
+  background-color: rgb(71, 38, 21);
   padding: 1rem;
 }
 
 .navigationEntry {
-  padding: 0.5rem;
-  padding-left: 1.5rem;
-  font-size: 1.6rem;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+  height: 32px;
+  padding: 0 15px;
+  font-size: 1.0rem;
   text-decoration: none;
-  background-color: rgb(156, 113, 47);
-  border: none;
+  background-color: rgb(71, 38, 21);
+  border: 1px solid transparent;;
+  border-color: white;
   color: white;
 }
