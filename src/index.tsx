@@ -5,8 +5,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
 import "antd/dist/antd.css";
-import SignUpModal from './component/Signup';
-import shoppingCart from '../src/component/shoppingCart'
+import SignUpModal from './components/Signup';
+import shoppingCart from './components/shoppingCart'
 
 import { CS } from './framework/CS';
 import { IWindow } from './framework/IWindow'
@@ -34,7 +34,6 @@ const routing = (
   window.CS.getStore().subscribe(() => {
     ReactDOM.render(routing, document.getElementById('root'));
   });
-
 
 
 

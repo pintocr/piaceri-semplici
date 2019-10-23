@@ -1,17 +1,26 @@
 export interface IUI{
+    counter: number;
     loggedIn: boolean;
     waitingForResponse:boolean;
     signupVisible : boolean;
 }
 
-interface IAssetData {
+interface IProductData {
     _id: string;
-    asset_name: string;
-    asset_value: number;
+    product_id: String;
+    title: string;
+    description: string;
+    price: number;
+    amount: number;
+    unit: string;
+    manufacturer: string;
+    ref_category: string;
+    rating: number;
+    pic_list: string;
   }
 
 export interface IBM{
-    assets:IAssetData[];
+    products:IProductData[];
     shoppingCart?:IShoppingCart;
 }
 
@@ -44,11 +53,12 @@ export interface IState{
 // initial state 
 export const initial:IState = {
 	UI: {
+        counter: 0,
 		loggedIn: false,
         waitingForResponse: false,
         signupVisible: false,       
 	},
 	BM: {
-        assets:[]
+        products:[]
 	}
 };
