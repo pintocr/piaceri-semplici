@@ -1,7 +1,7 @@
 export interface IUI{
-    counter: number;
     loggedIn: boolean;
     waitingForResponse:boolean;
+    signupVisible : boolean;
 }
 
 interface IAssetData {
@@ -23,9 +23,9 @@ export interface IState{
 // initial state 
 export const initial:IState = {
 	UI: {
-		counter: 0,
 		loggedIn: false,
-		waitingForResponse: false,
+        waitingForResponse: false,
+        signupVisible: false,       
 	},
 	BM: {
         assets:[]

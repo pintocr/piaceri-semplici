@@ -1,6 +1,5 @@
 import React from 'react';
-import { Input } from "antd";
-import "antd/dist/antd.css";
+import { Input } from 'antd';
 const { Search } = Input;
 
 interface IProps { }
