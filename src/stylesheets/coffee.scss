@@ -1,0 +1,78 @@
+
+  .image-wrapper {
+    position: relative;
+    height: 45vh;
+    background-color: #D2B48C;
+  }
+  .image-wrapper img {
+    width: 100vw;
+    height: 45vh;
+    object-fit: cover;
+  }
+
+@keyframes picture1 {
+  0% {opacity: 1;}
+  20% {opacity: 1;}
+  25% {opacity: 0;}
+  95% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+@keyframes picture2 {
+  0% {opacity: 0;}
+  20% {opacity: 0;}
+  25% {opacity: 1;}
+  45% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 0;}
+}
+ @keyframes picture3 {
+  0% {opacity: 0;}
+  45% {opacity: 0;}
+  50% {opacity: 1;}
+  70% {opacity: 1;} 
+  75% {opacity: 0;} 
+  100% {opacity: 0;}
+ }
+ @keyframes picture4 {
+  0% {opacity: 0;}
+  70% {opacity: 0;}
+  75% {opacity: 1;} 
+  95% {opacity: 1;} 
+  100% {opacity: 0;} 
+ }
+
+.images {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+}
+
+  .image1 {
+    animation: picture1 30s infinite ease-in-out;
+  }
+
+  .image2 {
+    animation: picture2 30s infinite ease-in-out;
+  }
+
+  .image3 {
+    animation: picture3 30s infinite ease-in-out;
+  }
+
+  .image4 {
+    animation: picture4 30s infinite ease-in-out;
+  }
+
+  .description {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 1vw;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0.1em 0.1em #333;
+    z-index: 5;
+  }
