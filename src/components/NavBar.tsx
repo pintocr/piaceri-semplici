@@ -4,7 +4,7 @@ import "antd/dist/antd.css";
 import { Icon } from 'antd';
 import LoginContainerModal from './LoginContainer'
 import '../index.css';
-import Coffee from './coffee';
+import Coffee from './categoryPage';
 //redux
 import { IWindow } from '../framework/IWindow'
 declare let window: IWindow;
@@ -25,17 +25,19 @@ export default class NavBar extends React.PureComponent<IProps, IState> {
     render () {
         return (
             <Router>
-                <div className="navBar">
-                <Link className ="navigationEntry" to="/">Home</Link>&nbsp;
-                <Link className ="navigationEntry" to="/coffee">Coffee</Link>&nbsp;
-                <Link className ="navigationEntry" to="/">Home</Link>&nbsp;
-                <Link className ="navigationEntry" to="/">Home</Link>&nbsp;
-                <LoginContainerModal/>&nbsp;
-                <Link className ="navigationEntry" to="/"><Icon type="shopping-cart" style={{ fontSize: '24px' }}/></Link>&nbsp;
-                </div>
-                <br />
-                <Route path="/coffee" component={Coffee} />
-            </Router>
+            <div className="navBar">
+            <Link className ="navigationEntry" to="/">Home</Link>&nbsp;
+            <Link className ="navigationEntry" to="/coffee">Coffee</Link>&nbsp;
+            <Link className ="navigationEntry" to="/whiskey">Whiskey</Link>&nbsp;
+            <Link className ="navigationEntry" to="/chocolate">Chocolate</Link>&nbsp;
+            <LoginContainerModal/>&nbsp;
+            <Link className ="navigationEntry" to="/"><Icon type="shopping-cart" style={{ fontSize: '24px' }}/></Link>&nbsp;
+            </div>
+            <br />
+            <Route path="/coffee"><Coffee category="Coffee"/></Route>
+            <Route path="/whiskey"><Coffee category="Whiskey" /></Route>
+            <Route path="/chocolate"><Coffee category="Chocolate" /></Route>
+        </Router>
         ) 
     }
 
