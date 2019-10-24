@@ -20,6 +20,23 @@ export const reducer = (state = initial, action: IAction) => {
             newState.UI.signupVisible = false;
             return newState;
 
+        case ActionType.openLoginModal: 
+            newState.UI.loginVisible = true;
+            return newState;
+
+        case ActionType.closeLoginModal: 
+            newState.UI.loginVisible = false;
+            return newState;
+
+        case ActionType.login: 
+            newState.UI.loginVisible = false;
+            newState.UI.loggedIn = true;
+            return newState;
+
+        case ActionType.logout: 
+            newState.UI.loggedIn = false;
+            return newState;
+
         default:
             window.CS.log("1. Error!!!!! no reducer defined");
             return newState;
