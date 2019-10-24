@@ -9,7 +9,7 @@ export const reducer = (state = initial, action: IAction) => {
     window.CS.log("2. ACTION:" + action.type);
     let newState: IState = state;
     newState = JSON.parse(JSON.stringify(state)) as IState;
-    newState.UI.counter = state.UI.counter + 1;
+    //newState.UI.counter = state.UI.counter + 1;
     switch (action.type) {
         case ActionType.INIT:
             return newState;
@@ -29,7 +29,24 @@ export const reducer = (state = initial, action: IAction) => {
         case ActionType.add_products_from_server:
             const productsLoaded = action as IProductsLoadedAction;
             newState.UI.waitingForResponse = false;
-            newState.BM.products = productsLoaded.products
+            newState.BM.products = productsLoaded.products;
+            return newState;
+
+        case ActionType.openLoginModal: 
+            newState.UI.loginVisible = true;
+            return newState;
+
+        case ActionType.closeLoginModal: 
+            newState.UI.loginVisible = false;
+            return newState;
+
+        case ActionType.login: 
+            newState.UI.loginVisible = false;
+            newState.UI.loggedIn = true;
+            return newState;
+
+        case ActionType.logout: 
+            newState.UI.loggedIn = false;
             return newState;
 
         default:
