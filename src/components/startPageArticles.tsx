@@ -23,7 +23,7 @@ export default class StartPageArticles extends React.PureComponent<IProps, IStat
                     hoverable
                     style={{ width: 240 }}
                     cover={<img alt={this.props.product.title} src={path} id={this.props.product._id} />}>
-                    <Meta title={this.props.product.title} description={this.props.product.price}/>$
+                    <Meta title={this.props.product.title} description={this.props.product.price}/>
                 </Card>
 
 

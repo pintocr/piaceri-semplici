@@ -29,7 +29,7 @@ export const reducer = (state = initial, action: IAction) => {
         case ActionType.add_products_from_server:
             const productsLoaded = action as IProductsLoadedAction;
             newState.UI.waitingForResponse = false;
-            newState.BM.products = productsLoaded.products;
+            newState.BM.products = productsLoaded.products
             return newState;
 
         default:

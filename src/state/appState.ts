@@ -1,3 +1,5 @@
+import mongoose, { Document } from 'mongoose';
+
 export interface IUI{
     counter: number;
     loggedIn: boolean;
@@ -5,9 +7,9 @@ export interface IUI{
     signupVisible : boolean;
 }
 
-interface IProductData {
+interface IProductData extends Document {
     _id: string;
-    product_id: String;
+    product_id: string;
     title: string;
     description: string;
     price: number;

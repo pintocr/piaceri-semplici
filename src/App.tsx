@@ -6,6 +6,8 @@ import StartPageArticles from './components/startPageArticles';
 import { IAction, ActionType } from './framework/IAction';
 import { IWindow } from './framework/IWindow'
 import axios from 'axios';
+import responsiveObserve from 'antd/lib/_util/responsiveObserve';
+import mongoose, { Document } from 'mongoose';
 declare let window: IWindow;
 const { Search } = Input;
 
@@ -17,9 +19,9 @@ interface IState {
   products: IProductData[]
 }
 
-export interface IProductData {
+export interface IProductData extends Document {
   _id: string;
-  product_id: String;
+  product_id: string;
   title: string;
   description: string;
   price: number;
@@ -38,11 +40,14 @@ export interface IProductAction extends IAction {
 export default class App extends React.PureComponent<IProps, IState> {
 
 
-componentDidMount() {
+  componentDidMount() {
     window.CS.clientAction(productsReadActionCreator())
   }
 
   render() {
+    const productArr: IProductData[] = JSON.parse(JSON.stringify(window.CS.getBMState().products));
+   
+    console.log(productArr.slice(9))
     return (
       <div>
         <div className="App">
@@ -51,15 +56,15 @@ componentDidMount() {
             <Search placeholder="input search text" onSearch={value => console.log(value)} enterButton /></div>
           <div>
             <p>Exclusive Selection</p>
-            {window.CS.getBMState().products.forEach(product => <StartPageArticles key={product._id} product={product} />)}
+            {window.CS.getBMState().products.slice(9).map(product => <StartPageArticles key={product._id} product={product} />)}
           </div>
         </div>
       </div>
 
     );
-    //
   }
 }
+// {window.CS.getBMState().products.map(product => <StartPageArticles key={product._id} product={product} />)}
 
 export interface IProductsLoadedAction extends IAction {
   products: IProductData[]
@@ -75,12 +80,19 @@ export function productsReadActionCreator() {
     axios.get(`${process.env.REACT_APP_BACKEND}/product/`).then(response => {
       console.log("this data was loaded as a result of componentDidMount:");
       console.log(response.data);
+      console.log(typeof response.data)
+      const objectArr :IProductData[] = JSON.parse(JSON.stringify(response.data))
+        /*for(let i=0;i<objectArr.length;i++){
+          const obj = objectArr[i].toObject;
+          console.log(obj)
+        }*/
+      
       const responseAction: IProductsLoadedAction = {
         type: ActionType.add_products_from_server,
-        products: response.data as IProductData[]
+        products: objectArr as IProductData[]
       }
       dispatch(responseAction);
-      
+
     }).catch(function (error) { console.log(error); })
   }
 }
