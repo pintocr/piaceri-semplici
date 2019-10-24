@@ -37,3 +37,8 @@ code {
   border-color: white;
   color: white;
 }
+
+.logincontainer {
+  display: flex;
+  flex-direction: row;
+}

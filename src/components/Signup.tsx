@@ -69,6 +69,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
       axios.post(`${process.env.REACT_APP_BACKEND}/user/signup`, input)
       .then(res => {
         window.CS.clientAction(action);
+        this.setState({ signupVisible: window.CS.getUIState().signupVisible });
       })
       .catch(error => {
             switch(error.response.data.error){
@@ -88,7 +89,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
       });
      
       this.setState({ signupVisible: window.CS.getUIState().signupVisible });
-      }, 500);
+      }, 300);
   };
 
   handleCancel = () => {
