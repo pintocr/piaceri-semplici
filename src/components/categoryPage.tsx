@@ -47,7 +47,9 @@ interface IState {
     pictureList: string[];
     products: [];
 }
-interface IProps { }
+interface IProps {
+    category: String;
+ }
 
 export default class Coffee extends React.PureComponent<IProps, IState> {
 
@@ -66,7 +68,7 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
 
         Axios.get(`${process.env.REACT_APP_BACKEND}/category`)
             .then(res => {
-                let categoryInfo = res.data.filter((cat: ICategory) => cat.name === 'Coffee')[0];
+                let categoryInfo = res.data.filter((cat: ICategory) => cat.name === this.props.category)[0];
                 this.setState({
                     categoryId: categoryInfo._id,
                     categoryDescription: categoryInfo.description,
