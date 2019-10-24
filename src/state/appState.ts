@@ -8,7 +8,7 @@ export interface IUI{
     loginVisible: boolean;
 }
 
-interface IProductData extends Document {
+interface IProductData {
     _id: string;
     product_id: string;
     title: string;
@@ -22,7 +22,7 @@ interface IProductData extends Document {
     pic_list: string;
   }
 
-export interface IBM{
+export interface IBM {
     products:IProductData[];
     shoppingCart?:IShoppingCart;
 }
