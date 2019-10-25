@@ -104,6 +104,14 @@ export default class LoginModal extends React.PureComponent<IProps, IState> {
           }
       });
     }
+
+    handleLink = () => {
+      const action: IAction = {
+        type: ActionType.changeToSignupModal
+      }
+    window.CS.clientAction(action);
+    this.setState({ loginVisible: window.CS.getUIState().loginVisible });
+    }
     
       render() {
         const { loginLoading } = this.state;
@@ -134,7 +142,7 @@ export default class LoginModal extends React.PureComponent<IProps, IState> {
               <Input.Password placeholder= "password" name = "password" value = {this.state.inputData.password} onChange={this.handleChange}/>&nbsp;
             </form>
               <p>Sie haben noch keinen Account bei uns?</p>
-              <a href="/">Hier geht es zur Registrierung</a>
+              <a onClick={this.handleLink}>Hier geht es zur Registrierung</a>
             </Modal>
           </div>
         );

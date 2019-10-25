@@ -6,6 +6,8 @@ export enum ActionType {
     closeLoginModal = "closeLoginModal",
     login = "login",
     logout = "logout",
+    changeToLoginModal = "changeToLoginModal",
+    changeToSignupModal = "changeToSignupModal",
 }
 export interface IAction {
     type: ActionType;

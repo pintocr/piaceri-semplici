@@ -34,6 +34,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
         this.handleOk = this.handleOk.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleLink = this.handleLink.bind(this);
 
         this.state = {
             signupLoading: false,
@@ -109,6 +110,14 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
     });
   }
 
+  handleLink = () => {
+    const action: IAction = {
+      type: ActionType.changeToLoginModal
+    }
+  window.CS.clientAction(action);
+  this.setState({ signupVisible: window.CS.getUIState().signupVisible });
+  }
+
   render() {
     const { signupLoading } = this.state;
     const visible = this.state.signupVisible;
@@ -146,7 +155,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
           <Input placeholder= "telefon" name= "user_phone" value = {this.state.inputData.user_phone} onChange={this.handleChange}/>&nbsp;
         </form>
           <p>Sie haben bereits einen Account bei uns?</p>
-          <a href="/">Hier geht es zur Anmeldung</a>
+          <a onClick={this.handleLink}>Hier geht es zur Anmeldung</a>
         </Modal>
       </div>
     );

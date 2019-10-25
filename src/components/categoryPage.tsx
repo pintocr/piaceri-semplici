@@ -2,6 +2,7 @@ import React from 'react';
 import Axios from 'axios';
 import '../stylesheets/coffee.scss';
 import { Card, Col, Row } from 'antd';
+import {Link} from 'react-router-dom';
 import { Mongoose } from 'mongoose';
 
 const cardStyle = {
@@ -107,24 +108,24 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
                 <div className="product-container">
 
                     <Row type="flex" justify="center">
-
                         {this.state.products.map((product: IProduct) => {
                             return (
                                 <div>
-                                    <Card hoverable size="default" style={cardStyle} bodyStyle={bodyStyle}>
-                                        <div className="pics">
-                                            <img src={process.env.REACT_APP_BACKEND + '/images/' + product.pic_list[0]} alt={product.title} />
-                                        </div>
-                                        <br />
-                                        <div className="title">{product.title}<br />
-                                            {product.price}<br />
-                                            {product.manufacturer}
-                                        </div>
-                                    </Card>
+                                     <Link to={'/detailpage/' + product._id}>
+                                        <Card hoverable size="default" style={cardStyle} bodyStyle={bodyStyle}>
+                                            <div className="pics">
+                                                <img src={process.env.REACT_APP_BACKEND + '/images/' + product.pic_list[0]} alt={product.title} />
+                                            </div>
+                                            <br />
+                                            <div className="title">{product.title}<br />
+                                                {product.price}<br />
+                                                {product.manufacturer}
+                                            </div>
+                                        </Card>                                          
+                                    </Link>
                                 </div>)
                         })
                         }
-
                     </Row>
                 </div>
 

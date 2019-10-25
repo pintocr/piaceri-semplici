@@ -5,9 +5,10 @@ import { Icon } from 'antd';
 import LoginContainerModal from './LoginContainer'
 import '../index.css';
 import Coffee from './categoryPage';
-//redux
-import { IWindow } from '../framework/IWindow'
-declare let window: IWindow;
+import DetailPage from './DetailPage';
+import { Input } from 'antd';
+
+const { Search } = Input;
 
 
 interface IProps {
@@ -33,11 +34,18 @@ export default class NavBar extends React.PureComponent<IProps, IState> {
             <LoginContainerModal/>&nbsp;
             <Link className ="navigationEntry" to="/"><Icon type="shopping-cart" style={{ fontSize: '24px' }}/></Link>&nbsp;
             </div>
+            <div className = "Searchcontainer">
+            <div className = "Searchbox">
+            <h2>Artikelsuche </h2>
+            <Search placeholder="Artikelname hier eingeben" onSearch={value => console.log(value)} enterButton />
+            </div>
+          </div>
             <br />
             <Route path="/coffee"><Coffee category="Coffee"/></Route>
             <Route path="/whiskey"><Coffee category="Whiskey" /></Route>
             <Route path="/chocolate"><Coffee category="Chocolate" /></Route>
-        </Router>
+            <Route path="/detailpage/:id" render={(props) => <DetailPage {...props} />}/>    
+            </Router>
         ) 
     }
 
