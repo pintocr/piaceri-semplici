@@ -2,10 +2,11 @@
   .image-wrapper {
     position: relative;
     height: 45vh;
+    width: 96vw;
     background-color: #D2B48C;
   }
   .image-wrapper img {
-    width: 100vw;
+    width: 96vw;
     height: 45vh;
     object-fit: cover;
   }
@@ -69,10 +70,37 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    margin: 1vw;
+    padding: 1vw;
     color: white;
-    font-size: 2rem;
+    font-size: 20px;
     font-weight: bold;
     text-shadow: 0.1em 0.1em #333;
     z-index: 5;
   }
+
+  .product-container {
+   background-color: #c4d7db;
+   margin: 20px 0 10px 0;
+   width: 96vw;
+  }
+
+  .product-container img {
+    height: 300px;
+    overflow: hidden;
+    text-align: center;
+   }
+
+   .title {
+    background-color:#472615;
+    color: white;
+    display: block;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 20px;
+    text-transform: uppercase;
+    text-align: center;
+   }
+
+   .pics {
+    text-align: center;
+   }

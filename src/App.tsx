@@ -10,7 +10,7 @@ import responsiveObserve from 'antd/lib/_util/responsiveObserve';
 import mongoose, { Document } from 'mongoose';
 import { IWindow } from './framework/IWindow';
 import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
-import Coffee from './components/coffee'
+import Coffee from './components/categoryPage'
 import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
 declare let window: IWindow;
@@ -52,7 +52,8 @@ export default class App extends React.PureComponent<IProps, IState> {
 
   render() {
     //const productArr: IProductData[] = JSON.parse(JSON.stringify(window.CS.getBMState().products));
-
+    //            <Route path="/coffee" component={Coffee} />
+    //            <Route path="/" component={OnloadProducts} />
     console.log("App rendered()");
 
     return (
@@ -64,8 +65,10 @@ export default class App extends React.PureComponent<IProps, IState> {
           <Search placeholder="Artikelname hier eingeben" onSearch={value => console.log(value)} enterButton /></div>
         <div>
           <Switch>
-            <Route path="/coffee" component={Coffee} />
             <Route path="/" component={OnloadProducts} />
+            <Route path="/whiskey"><Coffee category="Whiskey" /></Route>
+            <Route path="/chocolate"><Coffee category="Chocolate" /></Route>
+            <Route path="/coffee"><Coffee category="Coffee"/></Route>
           </Switch>
         </div>
       </div>
