@@ -19,7 +19,7 @@ interface IProductData {
     manufacturer: string;
     ref_category: string;
     rating: number;
-    pic_list: string;
+    pic_list: string[];
   }
 
 export interface IBM {

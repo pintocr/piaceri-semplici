@@ -82,25 +82,22 @@
    background-color: #c4d7db;
    margin: 20px 0 10px 0;
    width: 96vw;
+   text-align: center;
   }
 
   .product-container img {
     height: 300px;
+    width: auto;
     overflow: hidden;
-    text-align: center;
-   }
-
-   .title {
-    background-color:#472615;
-    color: white;
-    display: block;
-    font-weight: bold;
-    font-size: 1.2rem;
-    padding: 20px;
-    text-transform: uppercase;
     text-align: center;
    }
 
    .pics {
     text-align: center;
+    background-color:white;
+   }
+
+   .metaStyle {
+    background-color: #472615;
+     color: white;
    }

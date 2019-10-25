@@ -1,24 +1,10 @@
 import React from 'react';
 import Axios from 'axios';
-import '../stylesheets/coffee.scss';
+import "antd/dist/antd.css";
+import '../stylesheets/pages.scss';
 import { Card, Col, Row } from 'antd';
-import { Mongoose } from 'mongoose';
+import PagedArticles from './pagedArticles';
 
-const cardStyle = {
-    width: 300,
-    overflow: 'hidden',
-    display: 'flex',
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 12,
-    flexGrow: 1,
-};
-
-const bodyStyle = {
-    width: 300,
-    justifyContent: "center",
-    alignItems: "center",
-}
 
 interface ICategory {
     _id: String;
@@ -38,7 +24,7 @@ interface IProduct {
     unit: string;
     ref_category: string;
     pic_list: string[];
-    rating: [];
+    rating: number;
 }
 
 interface IState {
@@ -50,9 +36,9 @@ interface IState {
 interface IProps {
     category: String;
     stateCounter: number
- }
+}
 
-export default class Coffee extends React.PureComponent<IProps, IState> {
+export default class CategoryPage extends React.PureComponent<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
@@ -76,7 +62,6 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
                     pictureList: categoryInfo.pic_list.map((pic: String) =>
                         process.env.REACT_APP_BACKEND + '/images/' + pic)
                 });
-                //console.log(this.state)
 
                 Axios.get(`${process.env.REACT_APP_BACKEND}/product`)
                     .then(res => {
@@ -85,10 +70,7 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
                         this.setState({ products: productList })
 
                     })
-
             })
-
-
     }
 
 
@@ -104,27 +86,12 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
                     <div className="images image3"><img src={this.state.pictureList[2]} alt="pic" /></div>
                     <div className="images image4"><img src={this.state.pictureList[3]} alt="pic" /></div>
                 </div>
-
+              
                 <div className="product-container">
-
+             
                     <Row type="flex" justify="center">
 
-                        {this.state.products.map((product: IProduct) => {
-                            return (
-                                <div>
-                                    <Card hoverable size="default" style={cardStyle} bodyStyle={bodyStyle}>
-                                        <div className="pics">
-                                            <img src={process.env.REACT_APP_BACKEND + '/images/' + product.pic_list[0]} alt={product.title} />
-                                        </div>
-                                        <br />
-                                        <div className="title">{product.title}<br />
-                                            {product.price}<br />
-                                            {product.manufacturer}
-                                        </div>
-                                    </Card>
-                                </div>)
-                        })
-                        }
+                        {this.state.products.map((product: IProduct) =>  <PagedArticles key={product._id} product={product} />)}
 
                     </Row>
                 </div>
