@@ -9,10 +9,11 @@ import axios from 'axios';
 import responsiveObserve from 'antd/lib/_util/responsiveObserve';
 import mongoose, { Document } from 'mongoose';
 import { IWindow } from './framework/IWindow';
-import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { Route, Link, BrowserRouter as Router} from 'react-router-dom';
 import Coffee from './components/categoryPage'
 import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
+import AccountSettings from './components/AccountSettings'
 declare let window: IWindow;
 const { Search } = Input;
 
@@ -55,8 +56,7 @@ export default class App extends React.PureComponent<IProps, IState> {
     //            <Route path="/coffee" component={Coffee} />
     //            <Route path="/" component={OnloadProducts} />
     console.log("App rendered()");
-//  <Switch>
-// </Switch>
+
     return (
 
       <div>
@@ -69,7 +69,8 @@ export default class App extends React.PureComponent<IProps, IState> {
             <Route path="/whiskey"><Coffee stateCounter={window.CS.getUIState().counter} category="Whiskey" /></Route>
             <Route path="/chocolate"><Coffee stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
             <Route path="/coffee"><Coffee stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
-            <Route path="/" component={OnloadProducts} />
+            <Route path="/account"><AccountSettings stateCounter={window.CS.getUIState().counter} /></Route>
+            <Route exact path="/" component={OnloadProducts} />
        
         </div>
       </div>

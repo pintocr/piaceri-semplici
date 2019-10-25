@@ -115,7 +115,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
     return (
       <div>
         <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>
-        <Icon type="user" style={{ fontSize: '24px' }} theme="outlined" />
+        <Icon type="user-add" style={{ fontSize: '24px' }} theme="outlined" />
         </Button>
         <Modal
           visible={visible}
