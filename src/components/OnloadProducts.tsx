@@ -37,23 +37,19 @@ export interface IProductAction extends IAction {
 }
 
 export default class OnloadProducts extends React.PureComponent<IProps, IState> {
-
-
- 
-
     render() {
         //const productArr: IProductData[] = JSON.parse(JSON.stringify(window.CS.getBMState().products));
 
-   return (
-       <div>
-    <div className="App">
-    <div className="Searchcontainer">
-        <p>Exclusive Selection</p>
-        {window.CS.getBMState().products.map(product => <StartPageArticles key={product._id} product={product} />)}
-      </div>
-    </div>
-  </div>
- );
+        return (
+            <div>
+                <div className="App">
+                    <div className="Searchcontainer">
+                        <p>Exclusive Selection</p>
+                        {window.CS.getBMState().products.map(product => <StartPageArticles key={product._id} product={product} />)}
+                    </div>
+                </div>
+            </div>
+        );
     }
 }
 // {window.CS.getBMState().products.map(product => <StartPageArticles key={product._id} product={product} />)}

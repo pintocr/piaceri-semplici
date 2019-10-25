@@ -56,9 +56,9 @@ export default class App extends React.PureComponent<IProps, IState> {
     console.log("App rendered()");
 
     return (
-     
+
       <div>
-        <NavBar stateCounter={window.CS.getUIState().counter}/>
+        <NavBar stateCounter={window.CS.getUIState().counter} />
         <div className="Searchbox">
           <h2>Artikelsuche </h2>
           <Search placeholder="Artikelname hier eingeben" onSearch={value => console.log(value)} enterButton /></div>
