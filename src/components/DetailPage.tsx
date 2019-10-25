@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Card, InputNumber, Button, Icon } from 'antd';
+import { Card, InputNumber, Button, Icon, message } from 'antd';
 import {IProduct} from './categoryPage'
 import Axios from 'axios';
 
@@ -73,6 +73,11 @@ export default class DetailPage extends React.PureComponent<IProps & RouteCompon
         this.setState({ amount: this.state.amount-1 });
       }
 
+
+      onChangeBasket = () => {
+        message.success("Der Artikel wurde erfolgreich in den Warenkorb gelegt");
+      }
+
     render(){
         return(
             <div style={{  display: "flex", flexDirection: "row", justifyContent: "center"}}>
@@ -101,7 +106,7 @@ export default class DetailPage extends React.PureComponent<IProps & RouteCompon
                 <Button onClick={this.onChangePlus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
                     +
                 </Button>&nbsp;
-                <Button type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
+                <Button onClick={this.onChangeBasket} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
                     <Icon type="shopping-cart" style={{ fontSize: '20px' }}/>
                     In den Warenkorb
                 </Button>
