@@ -45,7 +45,7 @@ export default class OnloadProducts extends React.PureComponent<IProps, IState> 
                 <div className="App">
                     <div className="Searchcontainer">
                         <p>Exclusive Selection</p>
-                        {window.CS.getBMState().products.map(product => <StartPageArticles key={product._id} product={product} />)}
+                        {window.CS.getBMState().products.slice(9).map(product => <StartPageArticles key={product._id} product={product} />)}
                     </div>
                 </div>
             </div>

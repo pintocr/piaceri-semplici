@@ -49,6 +49,7 @@ interface IState {
 }
 interface IProps {
     category: String;
+    stateCounter: number
  }
 
 export default class Coffee extends React.PureComponent<IProps, IState> {
@@ -92,7 +93,7 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
 
 
     render() {
-
+        console.log("Category rendered()");
         return (
             <div>
 

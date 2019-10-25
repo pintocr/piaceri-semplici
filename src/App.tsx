@@ -55,7 +55,8 @@ export default class App extends React.PureComponent<IProps, IState> {
     //            <Route path="/coffee" component={Coffee} />
     //            <Route path="/" component={OnloadProducts} />
     console.log("App rendered()");
-
+//  <Switch>
+// </Switch>
     return (
 
       <div>
@@ -64,12 +65,12 @@ export default class App extends React.PureComponent<IProps, IState> {
           <h2>Artikelsuche </h2>
           <Search placeholder="Artikelname hier eingeben" onSearch={value => console.log(value)} enterButton /></div>
         <div>
-          <Switch>
+        
+            <Route path="/whiskey"><Coffee stateCounter={window.CS.getUIState().counter} category="Whiskey" /></Route>
+            <Route path="/chocolate"><Coffee stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
+            <Route path="/coffee"><Coffee stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
             <Route path="/" component={OnloadProducts} />
-            <Route path="/whiskey"><Coffee category="Whiskey" /></Route>
-            <Route path="/chocolate"><Coffee category="Chocolate" /></Route>
-            <Route path="/coffee"><Coffee category="Coffee"/></Route>
-          </Switch>
+       
         </div>
       </div>
 
