@@ -1,9 +1,8 @@
 import React from 'react';
 import Axios from 'axios';
 import '../stylesheets/coffee.scss';
-import { Card, Col, Row } from 'antd';
+import { Card, Row } from 'antd';
 import {Link} from 'react-router-dom';
-import { Mongoose } from 'mongoose';
 
 const cardStyle = {
     width: 300,
@@ -28,7 +27,7 @@ interface ICategory {
     pic_list: String[];
 }
 
-interface IProduct {
+export interface IProduct {
     _id: string;
     title: string;
     product_id: string;
@@ -50,6 +49,7 @@ interface IState {
 }
 interface IProps {
     category: String;
+    stateCounter: number
  }
 
 export default class Coffee extends React.PureComponent<IProps, IState> {
@@ -93,7 +93,7 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
 
 
     render() {
-
+        console.log("Category rendered()");
         return (
             <div>
 

@@ -17,6 +17,7 @@ interface INewCustomer {
 }
 
 interface IProps {
+  stateCounter: number
 }
 
 interface IState {
@@ -120,7 +121,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
 
   render() {
     const { signupLoading } = this.state;
-    const visible = this.state.signupVisible;
+    const visible =  window.CS.getUIState().signupVisible;
     return (
       <div>
         <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>

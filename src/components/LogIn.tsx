@@ -9,6 +9,7 @@ declare let window: IWindow;
 
 
 interface IProps {
+  stateCounter: number
 }
 
 interface ICustomer {
@@ -115,7 +116,7 @@ export default class LoginModal extends React.PureComponent<IProps, IState> {
     
       render() {
         const { loginLoading } = this.state;
-        const visible = this.state.loginVisible;
+        const visible =  window.CS.getUIState().loginVisible;
         return (
           <div>
             <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>

@@ -12,7 +12,8 @@ declare let window: IWindow;
 
 
 interface IProps {
-}
+    stateCounter: number
+  }
 
 
 interface IState {
@@ -34,7 +35,8 @@ export default class LoginContainerModal extends React.PureComponent<IProps, ISt
 
     
 render(){
-    if(this.state.isLoggedIn){
+    console.log("LoginContainer rendered()");
+    if(window.CS.getUIState().loggedIn){
         return ( 
             <span>
                 <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white"}} type="primary" onClick={this.logout}>
@@ -46,8 +48,8 @@ render(){
     } else {
         return (
             <span className="logincontainer">
-            <SignUpModal/>&nbsp;
-            <LoginModal/>
+            <SignUpModal stateCounter={window.CS.getUIState().counter}/>&nbsp;
+            <LoginModal stateCounter={window.CS.getUIState().counter}/>
             </span>
         );
     }
@@ -60,8 +62,10 @@ logout() {
         type: ActionType.logout
       }
     window.CS.clientAction(action);
+    
     this.setState({
         isLoggedIn : window.CS.getUIState().loggedIn
     })
+    
   };
 }
