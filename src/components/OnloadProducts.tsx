@@ -1,11 +1,10 @@
 import React from 'react';
 import '../App.css';
-import { Input } from 'antd';
+import { Input, Row } from 'antd';
 import "antd/dist/antd.css";
-import StartPageArticles from './startPageArticles';
+import PagedArticles from './pagedArticles';
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow';
-import axios from 'axios';
 
 declare let window: IWindow;
 
@@ -38,19 +37,22 @@ export interface IProductAction extends IAction {
 
 export default class OnloadProducts extends React.PureComponent<IProps, IState> {
     render() {
-        //const productArr: IProductData[] = JSON.parse(JSON.stringify(window.CS.getBMState().products));
 
         return (
             <div>
                 <div className="App">
-                    <div className="Searchcontainer">
-                        <p>Exclusive Selection</p>
-                        {window.CS.getBMState().products.slice(9).map(product => <StartPageArticles key={product._id} product={product} />)}
+                    <div className="Searchcontainer"></div>
+
+                    <div className="product-container">
+                        <p>Unsere erlesene Auswahl</p>
+                        
+                        <Row type="flex" justify="center">
+                            {window.CS.getBMState().products.slice(9).map(product => <PagedArticles key={product._id} product={product} />)}
+                        </Row>
                     </div>
                 </div>
             </div>
         );
     }
 }
-// {window.CS.getBMState().products.map(product => <StartPageArticles key={product._id} product={product} />)}
 

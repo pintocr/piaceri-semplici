@@ -5,7 +5,7 @@ import "antd/dist/antd.css";
 import { Icon } from 'antd';
 import LoginContainerModal from './LoginContainer'
 import '../index.css';
-import Coffee from './categoryPage';
+import CategoryPage from './categoryPage';
 //redux
 import { IWindow } from '../framework/IWindow'
 declare let window: IWindow;
@@ -28,9 +28,9 @@ export default class NavBar extends React.PureComponent<IProps, IState> {
             <div>
                 <div className="navBar">
                 <Link className="navigationEntry" to="/">Home</Link>&nbsp;
-                <Link className ="navigationEntry" to="/coffee">Coffee</Link>&nbsp;
+                <Link className ="navigationEntry" to="/coffee">Kaffee</Link>&nbsp;
                 <Link className ="navigationEntry" to="/whiskey">Whiskey</Link>&nbsp;
-                <Link className ="navigationEntry" to="/chocolate">Chocolate</Link>&nbsp;
+                <Link className ="navigationEntry" to="/chocolate">Schokolade</Link>&nbsp;
                 <LoginContainerModal stateCounter={window.CS.getUIState().counter} />&nbsp;
                 <Link className="navigationEntry" to="/"><Icon type="shopping-cart" style={{ fontSize: '24px' }} /></Link>&nbsp;
                 </div>
