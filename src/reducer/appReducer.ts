@@ -41,10 +41,10 @@ export const reducer = (state = initial, action: IAction) => {
             return newState;
 
         case ActionType.login: 
-            const newUser = action as IUserAction;
+            const loggedInUser = action as IUserAction;
             newState.UI.loginVisible = false;
             newState.UI.loggedIn = true;
-            newState.UI.user = newUser.user;
+            newState.UI.user = loggedInUser.user;
             return newState;
 
         case ActionType.logout: 
