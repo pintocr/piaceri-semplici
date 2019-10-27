@@ -1,7 +1,8 @@
-import { initial, IState } from '../state/appState'
+import { initial, IState, IUserData } from '../state/appState'
 import { IWindow } from '../framework/IWindow'
 import { IAction, ActionType } from '../framework/IAction'
 import { IProductsLoadedAction } from '../App'
+import { IUserAction } from '../components/LogIn'
 
 declare let window: IWindow;
 
@@ -40,8 +41,10 @@ export const reducer = (state = initial, action: IAction) => {
             return newState;
 
         case ActionType.login: 
+            const newUser = action as IUserAction;
             newState.UI.loginVisible = false;
             newState.UI.loggedIn = true;
+            newState.UI.user = newUser.user;
             return newState;
 
         case ActionType.logout: 

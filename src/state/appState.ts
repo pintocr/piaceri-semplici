@@ -6,6 +6,7 @@ export interface IUI{
     waitingForResponse:boolean;
     signupVisible : boolean;
     loginVisible: boolean;
+    user?: IUserData;
 }
 
 interface IProductData {
@@ -60,7 +61,7 @@ export const initial:IState = {
 		loggedIn: false,
         waitingForResponse: false,
         signupVisible: false,    
-        loginVisible: false ,   
+        loginVisible: false , 
 	},
 	BM: {
         products:[]
