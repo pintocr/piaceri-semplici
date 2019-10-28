@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input, message, Icon } from 'antd'
+import { Button, Input, message, Icon, Collapse } from 'antd'
 import axios from 'axios';
 import { IUserData } from '../state/appState'
 import 'antd/dist/antd.css';
@@ -64,7 +64,9 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                         
                     </table>
                     </div>
+                    <Collapse >
                     <Address stateCounter={window.CS.getUIState().counter} />
+                    </Collapse>
                 </form>
 
             </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Input, message, Icon }from 'antd'
+import { Modal, Button, Input, message, Icon, Collapse }from 'antd'
 import axios from 'axios';
 import {IAddressData} from '../state/appState'
 //redux
@@ -8,153 +8,155 @@ import { IWindow } from '../framework/IWindow'
 import { format } from 'url';
 declare let window: IWindow;
 
-interface INewAddress {
-    _id: string;
-    type: string;
-    street: string;
-    zip_code: string;
-    city: string;
-    iso_country_code: string;
-    pickup_station_id: string;
-    pickup_ident_no: string;
-}
+// const {Panel} = Collapse;
 
-interface IProps {
-}
+// interface INewAddress {
+//     _id: string;
+//     type: string;
+//     street: string;
+//     zip_code: string;
+//     city: string;
+//     iso_country_code: string;
+//     pickup_station_id: string;
+//     pickup_ident_no: string;
+// }
 
-interface IState {
-    signupLoading : boolean;
-    signupVisible : boolean;
-    inputData : INewAddress;
-}
+// interface IProps {
+// }
 
-export default class CreateAddress extends React.PureComponent<IProps, IState> {
+// interface IState {
+//     signupLoading : boolean;
+//     signupVisible : boolean;
+//     inputData : INewAddress;
+// }
 
-    constructor(props: IProps) {
-        super(props);
+// export default class CreateAddress extends React.PureComponent<IProps, IState> {
+
+//     constructor(props: IProps) {
+//         super(props);
         
-        this.showModal = this.showModal.bind(this);
-        this.handleOk = this.handleOk.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+//         this.showModal = this.showModal.bind(this);
+//         this.handleOk = this.handleOk.bind(this);
+//         this.handleCancel = this.handleCancel.bind(this);
+//         this.handleChange = this.handleChange.bind(this);
 
-        this.state = {
-            signupLoading: false,
-            signupVisible : window.CS.getUIState().signupVisible,
-            inputData : {
-                _id: "",
-                type: "",
-                street: "",
-                zip_code: "",
-                city: "",
-                iso_country_code: "",
-                pickup_station_id: "",
-                pickup_ident_no: ""
+//         this.state = {
+//             signupLoading: false,
+//             signupVisible : window.CS.getUIState().signupVisible,
+//             inputData : {
+//                 _id: "",
+//                 type: "",
+//                 street: "",
+//                 zip_code: "",
+//                 city: "",
+//                 iso_country_code: "",
+//                 pickup_station_id: "",
+//                 pickup_ident_no: ""
 
-            }
-    };
-}
+//             }
+//     };
+// }
 
-  showModal = () => {
-    const action: IAction = {
-        type: ActionType.openSignupModal
-      }
-    window.CS.clientAction(action);
-    this.setState({ signupVisible: window.CS.getUIState().signupVisible });
-  };
+//   showModal = () => {
+//     const action: IAction = {
+//         type: ActionType.openSignupModal
+//       }
+//     window.CS.clientAction(action);
+//     this.setState({ signupVisible: window.CS.getUIState().signupVisible });
+//   };
 
-  handleOk = (event : any) => {
-    event.preventDefault();
-    this.setState({ signupLoading: true });
-    setTimeout(() => {
-      this.setState({ signupLoading: false });
-      const action: IAction = {
-        type: ActionType.closeSignupModal
-      }
-      const input = this.state.inputData
-      axios.post(`${process.env.REACT_APP_BACKEND}/address/createAdress`, window.CS.getUIState().user._id)
-      .then(res => {
-        window.CS.clientAction(action);
-        this.setState({ signupVisible: window.CS.getUIState().signupVisible });
-      })
-      .catch(error => {
-            switch(error.response.data.error){
-                case "all fields must be filled":
-                        message.error("Bitte füllen Sie alle Felder aus");
-                        break;
-                case "user already exists":
-                        message.error("Dieser Username ist bereits vergeben");
-                        break;
-                case "not a real email":
-                        message.error("Bitte geben Sie ihre richtige Email Adresse an");
-                        break;
-                default:
-                console.log("unbekannter Datenbankfehler");
-                break;
-            }   
-      });
+//   handleOk = (event : any) => {
+//     event.preventDefault();
+//     this.setState({ signupLoading: true });
+//     setTimeout(() => {
+//       this.setState({ signupLoading: false });
+//       const action: IAction = {
+//         type: ActionType.closeSignupModal
+//       }
+//       const input = this.state.inputData
+//       axios.post(`${process.env.REACT_APP_BACKEND}/address/createAdress`, window.CS.getUIState().user._id)
+//       .then(res => {
+//         window.CS.clientAction(action);
+//         this.setState({ signupVisible: window.CS.getUIState().signupVisible });
+//       })
+//       .catch(error => {
+//             switch(error.response.data.error){
+//                 case "all fields must be filled":
+//                         message.error("Bitte füllen Sie alle Felder aus");
+//                         break;
+//                 case "user already exists":
+//                         message.error("Dieser Username ist bereits vergeben");
+//                         break;
+//                 case "not a real email":
+//                         message.error("Bitte geben Sie ihre richtige Email Adresse an");
+//                         break;
+//                 default:
+//                 console.log("unbekannter Datenbankfehler");
+//                 break;
+//             }   
+//       });
      
-      this.setState({ signupVisible: window.CS.getUIState().signupVisible });
-      }, 300);
-  };
+//       this.setState({ signupVisible: window.CS.getUIState().signupVisible });
+//       }, 300);
+//   };
 
-  handleCancel = () => {
-    const action: IAction = {
-        type: ActionType.closeSignupModal
-      }
-    window.CS.clientAction(action);
-    this.setState({ signupVisible: window.CS.getUIState().signupVisible });
-  };
+//   handleCancel = () => {
+//     const action: IAction = {
+//         type: ActionType.closeSignupModal
+//       }
+//     window.CS.clientAction(action);
+//     this.setState({ signupVisible: window.CS.getUIState().signupVisible });
+//   };
 
-  handleChange(event : any) {
-      let { name, value } = event.target;
-    this.setState({inputData : {
-        ...this.state.inputData,
-        [name]: value
-        }
-    });
-  }
+//   handleChange(event : any) {
+//       let { name, value } = event.target;
+//     this.setState({inputData : {
+//         ...this.state.inputData,
+//         [name]: value
+//         }
+//     });
+//   }
 
-  render() {
-    const { signupLoading } = this.state;
-    const visible = this.state.signupVisible;
-    return (
-      <div>
-        <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>
-        <Icon type="user-add" style={{ fontSize: '24px' }} theme="outlined" />
-        </Button>
-        <Modal
-          visible={visible}
-          title="Neuer Kunde?"
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-          footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              Abbrechen
-            </Button>,
-            <Button  style={{ "backgroundColor": "rgb(71, 38, 21)" }} form = "signupForm" key="submit" type="primary" loading={signupLoading} onClick={this.handleOk}>
-              Registrieren
-            </Button>,
-          ]}
-        >  
-        <form id="signupForm">
-          <p>Nutzername: </p>
-          <Input placeholder= "nutzername" name= "user_name" value = {this.state.inputData.user_name} onChange={this.handleChange} />&nbsp;
-          <p>Passwort: </p>
-          <Input.Password placeholder= "password" name = "user_password" value = {this.state.inputData.user_password} onChange={this.handleChange}/>&nbsp;
-          <p>Vorname: </p>
-          <Input placeholder= "vorname" name = "user_first_name" value = {this.state.inputData.user_first_name} onChange={this.handleChange}/>&nbsp;
-          <p>Nachname: </p>
-          <Input placeholder= "nachname" name ="user_last_name" value = {this.state.inputData.user_last_name} onChange={this.handleChange}/>&nbsp;
-          <p>E-Mail Adresse: </p>
-          <Input placeholder= "e-mail" name ="user_email" value = {this.state.inputData.user_email} onChange={this.handleChange}/>&nbsp;
-          <p>Telefonnummer: </p>
-          <Input placeholder= "telefon" name= "user_phone" value = {this.state.inputData.user_phone} onChange={this.handleChange}/>&nbsp;
-        </form>
-          <p>Sie haben bereits einen Account bei uns?</p>
-          <a href="/">Hier geht es zur Anmeldung</a>
-        </Modal>
-      </div>
-    );
-  }
-}
+//   render() {
+//     const { signupLoading } = this.state;
+//     const visible = this.state.signupVisible;
+//     return (
+//       <div>
+//         <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>
+//         <Icon type="user-add" style={{ fontSize: '24px' }} theme="outlined" />
+//         </Button>
+//         <Modal
+//           visible={visible}
+//           title="Neuer Kunde?"
+//           onOk={this.handleOk}
+//           onCancel={this.handleCancel}
+//           footer={[
+//             <Button key="back" onClick={this.handleCancel}>
+//               Abbrechen
+//             </Button>,
+//             <Button  style={{ "backgroundColor": "rgb(71, 38, 21)" }} form = "signupForm" key="submit" type="primary" loading={signupLoading} onClick={this.handleOk}>
+//               Registrieren
+//             </Button>,
+//           ]}
+//         >  
+//         <form id="signupForm">
+//           <p>Nutzername: </p>
+//           <Input placeholder= "nutzername" name= "user_name" value = {this.state.inputData.user_name} onChange={this.handleChange} />&nbsp;
+//           <p>Passwort: </p>
+//           <Input.Password placeholder= "password" name = "user_password" value = {this.state.inputData.user_password} onChange={this.handleChange}/>&nbsp;
+//           <p>Vorname: </p>
+//           <Input placeholder= "vorname" name = "user_first_name" value = {this.state.inputData.user_first_name} onChange={this.handleChange}/>&nbsp;
+//           <p>Nachname: </p>
+//           <Input placeholder= "nachname" name ="user_last_name" value = {this.state.inputData.user_last_name} onChange={this.handleChange}/>&nbsp;
+//           <p>E-Mail Adresse: </p>
+//           <Input placeholder= "e-mail" name ="user_email" value = {this.state.inputData.user_email} onChange={this.handleChange}/>&nbsp;
+//           <p>Telefonnummer: </p>
+//           <Input placeholder= "telefon" name= "user_phone" value = {this.state.inputData.user_phone} onChange={this.handleChange}/>&nbsp;
+//         </form>
+//           <p>Sie haben bereits einen Account bei uns?</p>
+//           <a href="/">Hier geht es zur Anmeldung</a>
+//         </Modal>
+//       </div>
+//     );
+//   }
+// }

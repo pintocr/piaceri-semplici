@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Input, message, Icon, Select, Descriptions } from 'antd'
+import { Modal, Button, Input, message, Icon, Select, Descriptions, Collapse } from 'antd'
 import axios from 'axios';
 import { IUserData } from '../state/appState'
 import 'antd/dist/antd.css';
@@ -8,7 +8,7 @@ import 'antd/dist/antd.css';
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
 const { Option } = Select;
-
+const { Panel } = Collapse;
 declare let window: IWindow;
 
 interface IProps {
@@ -39,6 +39,8 @@ export default class Address extends React.PureComponent<IProps, IState> {
       return (
         <div>
           <div className="DeliveryAddress">
+          
+          <Panel header={window.CS.getUIState().address.type} key={window.CS.getUIState().address._id}>
             <Descriptions title="Adresse">
               <Descriptions.Item label="Stadt">{window.CS.getUIState().address.city}</Descriptions.Item>
               </Descriptions>
@@ -54,13 +56,10 @@ export default class Address extends React.PureComponent<IProps, IState> {
               <Descriptions >
               <Descriptions.Item label="Art der Adresse">{window.CS.getUIState().address.type}</Descriptions.Item>
             </Descriptions>
+            </Panel>
+            
           </div>
-          <div className="BillingAddress">
 
-          </div>
-          <div className="PickUpStation">
-
-          </div>
         </div>
       )
 
