@@ -2,12 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import NavBar from './components/NavBar'
 import * as serviceWorker from './serviceWorker';
 import "antd/dist/antd.css";
-import shoppingCart from './components/shoppingCart';
-import { Icon } from 'antd';
-import SignUpModal from './components/Signup';
 import { CS } from './framework/CS';
 import { IWindow } from './framework/IWindow';
 import history from './framework/history';
