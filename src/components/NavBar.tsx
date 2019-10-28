@@ -1,11 +1,10 @@
 import React from 'react';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import "antd/dist/antd.css";
 import { Icon } from 'antd';
 import LoginContainerModal from './LoginContainer'
 import '../index.css';
-import CategoryPage from './categoryPage';
 //redux
 import { IWindow } from '../framework/IWindow'
 declare let window: IWindow;

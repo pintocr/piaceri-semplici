@@ -1,4 +1,3 @@
-import mongoose, { Document } from 'mongoose';
 
 export interface IUI{
     counter: number;
@@ -22,8 +21,17 @@ interface IProductData {
     pic_list: string[];
   }
 
+interface ICategoryData {
+    _id: string;
+    name: string;
+    description: string;
+    pic_list: string[];
+}
+
 export interface IBM {
+    categories: ICategoryData[];
     products:IProductData[];
+    productsLimited: IProductData[];
     shoppingCart?:IShoppingCart;
 }
 
@@ -63,6 +71,8 @@ export const initial:IState = {
         loginVisible: false ,   
 	},
 	BM: {
-        products:[]
+        categories: [],
+        products:[],
+        productsLimited: []
 	}
 };

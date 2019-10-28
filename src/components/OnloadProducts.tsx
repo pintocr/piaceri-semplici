@@ -1,34 +1,22 @@
 import React from 'react';
 import '../App.css';
-import { Input, Row } from 'antd';
+import { Row, Select } from 'antd';
 import "antd/dist/antd.css";
 import PagedArticles from './pagedArticles';
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow';
+import { IProductData, IProductsLimitedAction } from '../App';
 
 declare let window: IWindow;
+const { Option } = Select;
 
 
 interface IProps {
-
+    limitedList: IProductData[];
 }
 
 interface IState {
-
-}
-
-export interface IProductData {
-    _id: string;
-    product_id: string;
-    title: string;
-    description: string;
-    price: number;
-    amount: number;
-    unit: string;
-    manufacturer: string;
-    ref_category: string;
-    rating: number;
-    pic_list: string;
+    products: IProductData[]
 }
 
 export interface IProductAction extends IAction {
@@ -36,6 +24,14 @@ export interface IProductAction extends IAction {
 }
 
 export default class OnloadProducts extends React.PureComponent<IProps, IState> {
+
+    constructor(props: IProps) {
+        super(props);
+
+        this.handleSort = this.handleSort.bind(this);
+
+    }
+
     render() {
 
         return (
@@ -45,14 +41,62 @@ export default class OnloadProducts extends React.PureComponent<IProps, IState> 
 
                     <div className="product-container">
                         <p>Unsere erlesene Auswahl</p>
-                        
                         <Row type="flex" justify="center">
-                            {window.CS.getBMState().products.slice(9).map(product => <PagedArticles key={product._id} product={product} />)}
+                            <Select defaultValue="title" size="small" style={{ width: 180, margin: 2 }} onChange={this.handleSort}>
+                                <Option value="title">Sortiere nach Titel</Option>
+                                <Option value="up">Sortiere nach Preis (auf)</Option>
+                                <Option value="down">Sortiere nach Preis (ab)</Option>
+                            </Select>
+                        </Row>
+
+
+                        <Row type="flex" justify="center">
+                            {window.CS.getBMState().productsLimited.map(product => <PagedArticles key={product._id} product={product} />)}
                         </Row>
                     </div>
                 </div>
             </div>
         );
     }
+
+    handleSort(event: any) {
+        switch (event) {
+            case 'title': {
+
+                let productList = Array.from(window.CS.getBMState().productsLimited).sort((a: IProductData, b: IProductData) => a.title.localeCompare(b.title));
+
+                const action: IProductsLimitedAction = {
+                    type: ActionType.update_limited_list,
+                    products: productList
+                }
+                window.CS.clientAction(action);
+                break;
+            }
+            case 'up': {
+                let productList = Array.from(window.CS.getBMState().productsLimited).sort((a: IProductData, b: IProductData) => a.price - b.price);
+                const action: IProductsLimitedAction = {
+                    type: ActionType.update_limited_list,
+                    products: productList
+                }
+                window.CS.clientAction(action);
+                break;
+            }
+            case 'down': {
+                let productList = Array.from(window.CS.getBMState().productsLimited).sort((a: IProductData, b: IProductData) => b.price - a.price);
+                const action: IProductsLimitedAction = {
+                    type: ActionType.update_limited_list,
+                    products: productList
+                }
+                window.CS.clientAction(action);
+                break;
+            }
+        }
+
+
+
+
+    }
+
+
 }
 
