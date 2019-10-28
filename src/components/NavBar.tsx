@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import "antd/dist/antd.css";
-import { Icon } from 'antd';
-import LoginContainerModal from './LoginContainer'
+import LoginContainerModal from './LoginContainer';
+import ShoppingCartModal from './shoppingCart';
 import '../index.css';
 //redux
 import { IWindow } from '../framework/IWindow'
@@ -34,7 +34,7 @@ export default class NavBar extends React.PureComponent<IProps, IState> {
                 <Link className ="navigationEntry" to="/whiskey">Whiskey</Link>&nbsp;
                 <Link className ="navigationEntry" to="/chocolate">Schokolade</Link>&nbsp;
                 <LoginContainerModal stateCounter={window.CS.getUIState().counter} />&nbsp;
-                <Link className="navigationEntry" to="/"><Icon type="shopping-cart" style={{ fontSize: '24px' }} /></Link>&nbsp;
+                <ShoppingCartModal stateCounter={window.CS.getUIState().counter}/>&nbsp;
                 </div>
                 <br />
             </div>

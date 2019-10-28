@@ -5,6 +5,7 @@ export interface IUI{
     waitingForResponse:boolean;
     signupVisible : boolean;
     loginVisible: boolean;
+    shoppingVisible: boolean;
 }
 
 interface IProductData {
@@ -32,12 +33,14 @@ export interface IBM {
     categories: ICategoryData[];
     products:IProductData[];
     productsLimited: IProductData[];
-    shoppingCart?:IShoppingCart;
+    shoppingCart:IShoppingCart;
 }
 
 export interface IScItemData {
     product_id: string;
     count: number;
+    title: string;
+    price: number;
 }
 
 export interface IUserData {
@@ -51,7 +54,6 @@ export interface IUserData {
 }
 
 export interface IShoppingCart {
-    _id: string;
     items: IScItemData[];
     user?: IUserData;
 }
@@ -69,10 +71,14 @@ export const initial:IState = {
         waitingForResponse: false,
         signupVisible: false,    
         loginVisible: false ,   
+        shoppingVisible: false,
 	},
 	BM: {
         categories: [],
         products:[],
-        productsLimited: []
+        productsLimited: [],
+        shoppingCart: {
+            items: []
+        }
 	}
 };
