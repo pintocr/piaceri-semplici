@@ -4,6 +4,8 @@ export enum ActionType {
     closeSignupModal = "closeSignupModal",
     server_called = "server_called",
     add_products_from_server = "add_products_from_server",
+    add_categories_from_server = "add_categories_from_server",
+    update_limited_list = "update_limited_list",
     openLoginModal = "openLoginModal",
     closeLoginModal = "closeLoginModal",
     login = "login",

@@ -36,7 +36,7 @@ export default class DetailPage extends React.PureComponent<IProps & RouteCompon
                 unit: "",
                 ref_category: "",
                 pic_list: [],
-                rating: [],
+                rating: 4,
             },
         }
     };

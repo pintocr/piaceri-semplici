@@ -18,11 +18,20 @@ interface IProductData {
     manufacturer: string;
     ref_category: string;
     rating: number;
-    pic_list: string;
+    pic_list: string[];
   }
 
+interface ICategoryData {
+    _id: string;
+    name: string;
+    description: string;
+    pic_list: string[];
+}
+
 export interface IBM {
+    categories: ICategoryData[];
     products:IProductData[];
+    productsLimited: IProductData[];
     shoppingCart?:IShoppingCart;
 }
 
@@ -62,6 +71,8 @@ export const initial:IState = {
         loginVisible: false ,   
 	},
 	BM: {
-        products:[]
+        categories: [],
+        products:[],
+        productsLimited: []
 	}
 };

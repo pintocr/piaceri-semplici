@@ -1,30 +1,18 @@
 import React from 'react';
 import Axios from 'axios';
-import '../stylesheets/coffee.scss';
-import { Card, Row } from 'antd';
-import {Link} from 'react-router-dom';
-
-const cardStyle = {
-    width: 300,
-    overflow: 'hidden',
-    display: 'flex',
-    justifyContent: "center",
-    alignItems: "center",
-    margin: 12,
-    flexGrow: 1,
-};
-
-const bodyStyle = {
-    width: 300,
-    justifyContent: "center",
-    alignItems: "center",
-}
+import "antd/dist/antd.css";
+import '../stylesheets/pages.scss';
+import { Row, Select } from 'antd';
+import PagedArticles from './pagedArticles';
+import { IWindow } from '../framework/IWindow';
+declare let window: IWindow;
+const { Option } = Select;
 
 interface ICategory {
-    _id: String;
-    name: String;
-    description: String;
-    pic_list: String[];
+    _id: string;
+    name: string;
+    description: string;
+    pic_list: string[];
 }
 
 export interface IProduct {
@@ -38,24 +26,26 @@ export interface IProduct {
     unit: string;
     ref_category: string;
     pic_list: string[];
-    rating: [];
+    rating: number;
 }
 
 interface IState {
-    categoryId: String;
-    categoryDescription: String;
+    categoryId: string;
+    categoryDescription: string;
     pictureList: string[];
-    products: [];
+    products: IProduct[];
 }
 interface IProps {
-    category: String;
+    category: string;
     stateCounter: number
- }
+}
 
-export default class Coffee extends React.PureComponent<IProps, IState> {
+export default class CategoryPage extends React.PureComponent<IProps, IState> {
 
     constructor(props: IProps) {
         super(props);
+
+        this.handleSort = this.handleSort.bind(this);
 
         this.state = {
             categoryId: '',
@@ -67,16 +57,16 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
 
     componentDidMount() {
 
+        // window.CS.getBMState().categories.
         Axios.get(`${process.env.REACT_APP_BACKEND}/category`)
             .then(res => {
-                let categoryInfo = res.data.filter((cat: ICategory) => cat.name === this.props.category)[0];
+                let categoryInfo = window.CS.getBMState().categories.filter((cat: ICategory) => cat.name === this.props.category)[0];
                 this.setState({
                     categoryId: categoryInfo._id,
                     categoryDescription: categoryInfo.description,
-                    pictureList: categoryInfo.pic_list.map((pic: String) =>
+                    pictureList: categoryInfo.pic_list.map((pic: string) =>
                         process.env.REACT_APP_BACKEND + '/images/' + pic)
                 });
-                //console.log(this.state)
 
                 Axios.get(`${process.env.REACT_APP_BACKEND}/product`)
                     .then(res => {
@@ -85,10 +75,7 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
                         this.setState({ products: productList })
 
                     })
-
             })
-
-
     }
 
 
@@ -108,24 +95,17 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
                 <div className="product-container">
 
                     <Row type="flex" justify="center">
-                        {this.state.products.map((product: IProduct) => {
-                            return (
-                                <div>
-                                     <Link to={'/detailpage/' + product._id}>
-                                        <Card hoverable size="default" style={cardStyle} bodyStyle={bodyStyle}>
-                                            <div className="pics">
-                                                <img src={process.env.REACT_APP_BACKEND + '/images/' + product.pic_list[0]} alt={product.title} />
-                                            </div>
-                                            <br />
-                                            <div className="title">{product.title}<br />
-                                                {product.price}<br />
-                                                {product.manufacturer}
-                                            </div>
-                                        </Card>                                          
-                                    </Link>
-                                </div>)
-                        })
-                        }
+                        <Select defaultValue="title" size="small" style={{ width: 180, margin: 2 }} onChange={this.handleSort}>
+                            <Option value="title">Sortiere nach Titel</Option>
+                            <Option value="up">Sortiere nach Preis (auf)</Option>
+                            <Option value="down">Sortiere nach Preis (ab)</Option>
+                        </Select>
+                    </Row>
+
+                    <Row type="flex" justify="center">
+
+                        {this.state.products.map((product: IProduct) => <PagedArticles key={product._id} product={product} />)}
+
                     </Row>
                 </div>
 
@@ -133,4 +113,24 @@ export default class Coffee extends React.PureComponent<IProps, IState> {
         )
     }
 
+    handleSort(event: any) {
+
+        switch (event) {
+            case 'title': {
+                    let productList = Array.from(this.state.products).sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title));
+                    this.setState({ products: productList })
+                    break;
+                }
+            case 'up': {
+                let productList = Array.from(this.state.products).sort((a: IProduct, b: IProduct) => a.price - b.price);
+                this.setState({ products: productList })
+                break;
+            }
+            case 'down': {
+                let productList = Array.from(this.state.products).sort((a: IProduct, b: IProduct) => b.price - a.price);
+                this.setState({ products: productList })
+                break;
+            }
+        }
+    }
 }
