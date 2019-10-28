@@ -48,8 +48,8 @@ render(){
     } else {
         return (
             <span className="logincontainer">
-            <SignUpModal/>&nbsp;
-            <LoginModal/>
+            <SignUpModal stateCounter={window.CS.getUIState().counter}/>&nbsp;
+            <LoginModal stateCounter={window.CS.getUIState().counter}/>
             </span>
         );
     }

@@ -6,8 +6,9 @@ import "antd/dist/antd.css";
 import { IAction, ActionType } from './framework/IAction';
 import axios from 'axios';
 import { IWindow } from './framework/IWindow';
-import { Route } from 'react-router-dom';
-import CategoryPage from './components/categoryPage';
+import { Route} from 'react-router-dom';
+import DetailPage from './components/DetailPage'
+import Coffee from './components/categoryPage'
 import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
 declare let window: IWindow;
@@ -53,27 +54,23 @@ export default class App extends React.PureComponent<IProps, IState> {
   }
 
   render() {
-    //const productArr: IProductData[] = JSON.parse(JSON.stringify(window.CS.getBMState().products));
-    //            <Route path="/coffee" component={Coffee} />
-    //            <Route path="/" component={OnloadProducts} />
     console.log("App rendered()");
-//  <Switch>
-// </Switch>
+
     return (
 
       <div>
         <NavBar stateCounter={window.CS.getUIState().counter} />
-        <div className="Searchbox">
-          <h2>Artikelsuche </h2>
-          <Search placeholder="Artikelname hier eingeben" onSearch={value => console.log(value)} enterButton /></div>
-        <div>
-        
-            <Route path="/whiskey"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Whiskey" /></Route>
-            <Route path="/chocolate"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
-            <Route path="/coffee"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
-            <Route exact path="/"><OnloadProducts limitedList={window.CS.getBMState().productsLimited} /></Route>
-       
-        </div>
+
+            <div className = "Searchbox">
+            <h2>Artikelsuche </h2>
+            <Search placeholder="Artikelname hier eingeben" onSearch={value => console.log(value)} enterButton />
+            </div>
+
+            <Route path="/whiskey"><Coffee stateCounter={window.CS.getUIState().counter} category="Whiskey" /></Route>
+            <Route path="/chocolate"><Coffee stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
+            <Route path="/coffee"><Coffee stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
+            <Route path="/detailpage/:id" render={(props) => <DetailPage {...props} />}/>  
+            <Route exact path="/" component={OnloadProducts} />
       </div>
 
     );

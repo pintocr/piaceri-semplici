@@ -15,7 +15,7 @@ interface ICategory {
     pic_list: string[];
 }
 
-interface IProduct {
+export interface IProduct {
     _id: string;
     title: string;
     product_id: string;

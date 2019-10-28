@@ -10,6 +10,9 @@ import { IWindow } from '../framework/IWindow'
 declare let window: IWindow;
 
 
+
+
+
 interface IProps {
     stateCounter: number
 }
@@ -35,9 +38,7 @@ export default class NavBar extends React.PureComponent<IProps, IState> {
                 </div>
                 <br />
             </div>
-
-        )
-
+        ) 
     }
 
 }

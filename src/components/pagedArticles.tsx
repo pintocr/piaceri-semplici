@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import "../stylesheets/pages.scss";
 import { Card, Icon, Rate } from 'antd';
 import { IProductData } from '../App';
+import {Link} from 'react-router-dom';
 
 
 const cardStyle = {width: 240, height: 500, margin: 12, border: 'none', overflow: 'hidden', backgroundColor: '#472615'}
@@ -22,6 +23,7 @@ export default class PagedArticles extends React.PureComponent<IProps, IState> {
         const price: string = Number(this.props.product.price).toLocaleString('de', {style: 'currency', currency: 'EUR'})
         return (
             <div>
+                <Link to={'/detailpage/' + this.props.product._id}>
                 <Card
                     hoverable
                     style={cardStyle}
@@ -35,7 +37,7 @@ export default class PagedArticles extends React.PureComponent<IProps, IState> {
                         </div>
                         <Rate allowHalf defaultValue={4.5}/>
                 </Card>
-
+                </Link>
 
             </div>
 
