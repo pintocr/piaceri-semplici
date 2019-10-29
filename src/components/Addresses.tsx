@@ -43,38 +43,35 @@ export default class Address extends React.PureComponent<IProps, IState> {
     console.log("AccountSettings rendered()")
 
     const size = 'small'
-
     if (!window.CS.getUIState().edit_Address) {
-      return (
-        <div>
-          <Button type="primary" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
-            <Icon type="minus-square" />delete
-        </Button>
-          <Button type="primary" size={size} onClick={this.editAddress} name={this.props.address._id}>
-            <Icon type="edit" />edit
-        </Button>
-          <div className="DeliveryAddress">
-            <Collapse defaultActiveKey={['1']} onChange={this.handleChange}>
-              <Panel header={this.props.address.type} key={this.props.address._id}>
-                <Descriptions title="Adresse">
-                  <Descriptions.Item label="Stadt">{this.props.address.city}</Descriptions.Item>
-                </Descriptions>
-                <Descriptions >
-                  <Descriptions.Item label="Land">{this.props.address.iso_country_code}</Descriptions.Item>
-                </Descriptions>
-                <Descriptions >
-                  <Descriptions.Item label="Straße">{this.props.address.street}</Descriptions.Item>
-                </Descriptions>
-                <Descriptions >
-                  <Descriptions.Item label="Postleitzahl">{this.props.address.zip_code}</Descriptions.Item>
-                </Descriptions>
-                <Descriptions >
-                  <Descriptions.Item label="Art der Adresse">{this.props.address.type}</Descriptions.Item>
-                </Descriptions>
-              </Panel>
-            </Collapse>
-          </div>
+    return (
+      
 
+        <div className="DeliveryAddress">
+          <Collapse defaultActiveKey={['1']} onChange={this.handleChange}>
+            <Panel header={this.props.address.type} key={this.props.address._id}>
+              <Descriptions title="Adresse">
+                <Descriptions.Item label="Stadt">{this.props.address.city}</Descriptions.Item>
+              </Descriptions>
+              <Descriptions >
+                <Descriptions.Item label="Land">{this.props.address.iso_country_code}</Descriptions.Item>
+              </Descriptions>
+              <Descriptions >
+                <Descriptions.Item label="Straße">{this.props.address.street}</Descriptions.Item>
+              </Descriptions>
+              <Descriptions >
+                <Descriptions.Item label="Postleitzahl">{this.props.address.zip_code}</Descriptions.Item>
+              </Descriptions>
+              <Descriptions >
+                <Descriptions.Item label="Art der Adresse">{this.props.address.type}</Descriptions.Item>
+              </Descriptions>
+              <br/>
+              <Button type="primary" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
+          <Icon type="minus-square" />Adresse entfernen
+        </Button>
+            </Panel>
+
+          </Collapse>
         </div>
       )
     }else if(window.CS.getUIState().edit_Address){

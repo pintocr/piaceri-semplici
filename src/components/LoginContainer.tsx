@@ -3,12 +3,10 @@ import "antd/dist/antd.css";
 import { Icon } from 'antd';
 import SignUpModal from '../components/Signup';
 import LoginModal from '../components/LogIn';
-import { IUserAction } from '../components/LogIn';
 import '../index.css';
-import { Redirect, Route, Link, BrowserRouter as Router } from 'react-router-dom';
-import history from '../framework/history'
+import { Link, BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
-import { IUserData, IAddressData } from '../state/appState'
+import {IAddressData } from '../state/appState'
 //redux
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
@@ -50,7 +48,7 @@ export default class LoginContainerModal extends React.PureComponent<IProps, ISt
                 <span>
                     <span>
                         <Link style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} className="navigationEntry" to="/account" onClick={this.getAddress}>
-                            <Icon type="setting" style={{ fontSize: '24px' }} theme="outlined" />
+                            <Icon type="setting" style={iconStyle} theme="outlined" />
                         </Link>&nbsp;
             </span>
                     <span>

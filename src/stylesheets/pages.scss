@@ -1,47 +1,90 @@
-
-  .image-wrapper {
-    position: relative;
-    height: 45vh;
-    width: 96vw;
-    background-color: #D2B48C;
-  }
-  .image-wrapper img {
-    width: 96vw;
-    height: 45vh;
-    object-fit: cover;
-  }
+.image-wrapper {
+  position: relative;
+  height: 45vh;
+  width: 96vw;
+  background-color: #d2b48c;
+}
+.image-wrapper img {
+  width: 96vw;
+  height: 45vh;
+  object-fit: cover;
+}
 
 @keyframes picture1 {
-  0% {opacity: 1;}
-  20% {opacity: 1;}
-  25% {opacity: 0;}
-  95% {opacity: 0;}
-  100% {opacity: 1;}
+  0% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes picture2 {
-  0% {opacity: 0;}
-  20% {opacity: 0;}
-  25% {opacity: 1;}
-  45% {opacity: 1;}
-  50% {opacity: 0;}
-  100% {opacity: 0;}
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  45% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
 }
- @keyframes picture3 {
-  0% {opacity: 0;}
-  45% {opacity: 0;}
-  50% {opacity: 1;}
-  70% {opacity: 1;} 
-  75% {opacity: 0;} 
-  100% {opacity: 0;}
- }
- @keyframes picture4 {
-  0% {opacity: 0;}
-  70% {opacity: 0;}
-  75% {opacity: 1;} 
-  95% {opacity: 1;} 
-  100% {opacity: 0;} 
- }
+@keyframes picture3 {
+  0% {
+    opacity: 0;
+  }
+  45% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes picture4 {
+  0% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 
 .images {
   position: absolute;
@@ -50,65 +93,80 @@
   opacity: 0;
 }
 
-  .image1 {
-    animation: picture1 30s infinite ease-in-out;
-  }
+.image1 {
+  animation: picture1 30s infinite ease-in-out;
+}
 
-  .image2 {
-    animation: picture2 30s infinite ease-in-out;
-  }
+.image2 {
+  animation: picture2 30s infinite ease-in-out;
+}
 
-  .image3 {
-    animation: picture3 30s infinite ease-in-out;
-  }
+.image3 {
+  animation: picture3 30s infinite ease-in-out;
+}
 
-  .image4 {
-    animation: picture4 30s infinite ease-in-out;
-  }
+.image4 {
+  animation: picture4 30s infinite ease-in-out;
+}
 
-  .description {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    padding: 1vw;
-    color: white;
-    font-size: 20px;
-    font-weight: bold;
-    text-shadow: 0.1em 0.1em #333;
-    z-index: 5;
-  }
+.description {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 1vw;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 0.1em 0.1em #333;
+  z-index: 5;
+}
 
-  .product-container {
-   background-color: #c4d7db;
-   margin: 20px 0 10px 0;
-   width: 96vw;
-   text-align: center;
-  }
+.product-container {
+  background-color: #c4d7db;
+  margin: 20px 0 10px 0;
+  width: 96vw;
+  text-align: center;
+}
 
-  .product-container img {
-    height: 300px;
-    width: auto;
-    overflow: hidden;
-    text-align: center;
-   }
+.product-container img {
+  height: 300px;
+  width: auto;
+  overflow: hidden;
+  text-align: center;
+}
 
-   .pics {
-    text-align: center;
-    background-color:white;
-   }
+.pics {
+  text-align: center;
+  background-color: white;
+}
 
-   .metaStyle {
-    background-color: #472615; 
-     color: white;
-     display: flex;
-     flex-direction: column;
-     height: 100%;
-    //  align-items: space-between;
-     flex-grow: 1;
-   }
+.metaStyle {
+  background-color: #472615;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  //  align-items: space-between;
+  flex-grow: 1;
+}
 
+.searchCriteria {
+  flex-wrap: wrap;
+  vertical-align: middle;
+}
 
-   .searchCriteria {
-     flex-wrap: wrap;
-     vertical-align: middle;
-   }
+.account-table {
+  margin: 0 20px 20px 20px;
+  background-color:#FFEFD5;
+}
+
+.account-table tr {
+  vertical-align: text-bottom;
+}
+.account-table th {
+  padding: 5px;
+}
+
+.account-table td {
+  padding: 0 20px 0 20px;
+}
