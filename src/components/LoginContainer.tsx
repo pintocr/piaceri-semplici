@@ -1,6 +1,6 @@
 import React from 'react';
 import "antd/dist/antd.css";
-import { Icon, Button } from 'antd';
+import { Icon } from 'antd';
 import SignUpModal from '../components/Signup';
 import LoginModal from '../components/LogIn';
 import '../index.css';
@@ -10,6 +10,9 @@ import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
 declare let window: IWindow;
 
+const iconStyle = {
+    fontSize: '24px', color: 'white', justifySelf: 'center', padding: '2px 15px'
+  }
 
 interface IProps {
     stateCounter: number
@@ -39,9 +42,7 @@ render(){
     if(window.CS.getUIState().loggedIn){
         return ( 
             <span>
-                <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white"}} type="primary" onClick={this.logout}>
-                <Icon type="logout" style={{ fontSize: '24px' }} theme="outlined" />
-                </Button>&nbsp;
+                <Icon type="logout" style={iconStyle} className="navigationEntry" theme="outlined" onClick={this.logout}/>
             </span>
             );
         

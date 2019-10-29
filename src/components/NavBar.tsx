@@ -29,7 +29,7 @@ export default class NavBar extends React.PureComponent<IProps, IState> {
         return (
             <div>
                 <div className="navBar">
-                <Link className="navigationEntry" to="/">Home</Link>&nbsp;
+                <div><Link className="navigationEntry" to="/">piaceri semplici.</Link>&nbsp;</div>
                 <Link className ="navigationEntry" to="/coffee">Kaffee</Link>&nbsp;
                 <Link className ="navigationEntry" to="/whiskey">Whiskey</Link>&nbsp;
                 <Link className ="navigationEntry" to="/chocolate">Schokolade</Link>&nbsp;
