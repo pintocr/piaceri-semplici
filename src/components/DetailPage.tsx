@@ -1,6 +1,7 @@
 import React from 'react';
+import '../stylesheets/details.scss';
 import { RouteComponentProps } from 'react-router';
-import { Card, InputNumber, Button, Icon, message } from 'antd';
+import { Card, InputNumber, Button, Icon, message, Rate } from 'antd';
 import {IProduct} from './categoryPage'
 import Axios from 'axios';
 
@@ -79,22 +80,26 @@ export default class DetailPage extends React.PureComponent<IProps & RouteCompon
       }
 
     render(){
+
+        const price: string = Number(this.state.product.price).toLocaleString('de', {style: 'currency', currency: 'EUR'})
+
         return(
-            <div style={{  display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                <Card hoverable style={{ width: 600 }}>
-                    <div className="title">{this.state.product.title}<br />
+            <div className="detail-wrapper">
+                <Card style={{ width: 350, flexGrow: 1 }}>
+                    <div className="title" style={{fontWeight: 'bold', textTransform: 'uppercase'}}>{this.state.product.title}<br /><br />
                     </div>
                     <div className="pics">
-                        <img src={process.env.REACT_APP_BACKEND + '/images/' + this.state.product.pic_list[0]} alt={this.state.product.title} style={{ width: 600 }} />
+                        <img src={process.env.REACT_APP_BACKEND + '/images/' + this.state.product.pic_list[0]} alt={this.state.product.title} style={{ height: 400 }} />
                     </div>
-                    Hersteller: {this.state.product.manufacturer}&nbsp;
+                    <br/>Hersteller: <b>{this.state.product.manufacturer}</b>&nbsp;<br/><br/>
                     <div>{this.state.product.description}&nbsp;</div>
                     <br />
                 </Card>   
 
-                 <Card title="Kaufen" style={{ width: 400 }}>
-                <p>Verfügbarkeit: </p><p><Icon type="check" /> Im Lager</p>&nbsp;
-                <p>Preis: {this.state.product.price} €</p>
+            <div style={{width: 350,flexGrow: 1}}>
+                 <Card title="Kaufen">
+                <p>Verfügbarkeit: </p><p><Icon type="check" style={{color: 'green'}} /> Im Lager</p>&nbsp;
+                <p>Preis: {price} </p>
                 <p>(inkl. Mwst, zzgl. Versandkosten)</p>
                
                 <Button onClick={this.onChangeMinus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
@@ -112,6 +117,13 @@ export default class DetailPage extends React.PureComponent<IProps & RouteCompon
                 </Button>
 
                  </Card>
+
+
+                 <Card title="Bewerten">
+                Möchten Sie das Produkt bewerten? Vergeben Sie Ihre Sterne hier:<br/><br/>
+                 <Rate allowHalf style={{color: 'gold'}} defaultValue={4.5}/>
+                </Card>
+                </div>
             </div>
         ) 
     }

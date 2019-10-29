@@ -1,7 +1,6 @@
 
 import React from 'react';
 import './App.css';
-import { Input } from 'antd';
 import "antd/dist/antd.css";
 import { IAction, ActionType } from './framework/IAction';
 import axios from 'axios';
@@ -12,7 +11,6 @@ import Coffee from './components/categoryPage'
 import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
 declare let window: IWindow;
-const { Search } = Input;
 
 interface IProps {
   stateCounter: number
@@ -60,12 +58,6 @@ export default class App extends React.PureComponent<IProps, IState> {
 
       <div>
         <NavBar stateCounter={window.CS.getUIState().counter} />
-
-            <div className = "Searchbox">
-            <h2>Artikelsuche </h2>
-            <Search placeholder="Artikelname hier eingeben" onSearch={value => console.log(value)} enterButton />
-            </div>
-
             <Route path="/whiskey"><Coffee stateCounter={window.CS.getUIState().counter} category="Whiskey" /></Route>
             <Route path="/chocolate"><Coffee stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
             <Route path="/coffee"><Coffee stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>

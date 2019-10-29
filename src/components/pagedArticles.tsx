@@ -35,7 +35,7 @@ export default class PagedArticles extends React.PureComponent<IProps, IState> {
                         {this.props.product.manufacturer}<br/><br/>
                         <Icon type="shopping" theme="twoTone" twoToneColor="orange" style={iconStyle}/>
                         </div>
-                        <Rate allowHalf defaultValue={4.5}/>
+                        <Rate disabled allowHalf style={{color: '#D4AF37'}} defaultValue={4.5}/>
                 </Card>
                 </Link>
 

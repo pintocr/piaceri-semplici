@@ -7,6 +7,10 @@ import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
 declare let window: IWindow;
 
+const iconStyle = {
+  fontSize: '24px', color: 'white', justifySelf: 'center', padding: '2px 15px'
+}
+
 interface INewCustomer {
     user_name: string;
     user_password: string;
@@ -124,9 +128,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
     const visible =  window.CS.getUIState().signupVisible;
     return (
       <div>
-        <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>
-        <Icon type="user" style={{ fontSize: '24px' }} theme="outlined" />
-        </Button>
+        <Icon type="user" style={iconStyle} className="navigationEntry" theme="outlined" onClick={this.showModal}/>
         <Modal
           visible={visible}
           title="Neuer Kunde?"
