@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import "antd/dist/antd.css";
 import LoginContainerModal from './LoginContainer';
 import ShoppingCartModal from './shoppingCart';

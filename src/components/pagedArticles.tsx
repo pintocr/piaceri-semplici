@@ -6,9 +6,8 @@ import { IProductData } from '../App';
 import { Link } from 'react-router-dom';
 
 
-const cardStyle = { width: 240, height: 500, margin: 12, border: 'none', overflow: 'hidden', backgroundColor: '#472615' }
-const bodyStyle = { backgroundColor: '#472615' }
-const iconStyle = { fontSize: 25, color: 'white' }
+const cardStyle = { width: 240, height: 500, margin: 12, border: 'none', overflow: 'hidden', backgroundColor: '#472615', cursor: 'default' }
+const bodyStyle = { backgroundColor: '#472615', height: '100' }
 
 interface IProps {
     product: IProductData
@@ -34,20 +33,22 @@ export default class PagedArticles extends React.PureComponent<IProps, IState> {
                         </Link>}>
 
                     <div className="metaStyle">
-                        <Link to={'/detailpage/' + this.props.product._id}>
-                            <b>{this.props.product.title}</b><br />
-                            {price}<br />
-                            {this.props.product.manufacturer}<br /><br />
+                        <Link to={'/detailpage/' + this.props.product._id} style={{color: 'orange'}}  >
+                            <div>{this.props.product.title}</div>
+                            <div>{price}</div>
+                            <div>{this.props.product.manufacturer}</div>
                         </Link>
-                        <Button onClick={this.onChangeBasket} type="primary" style={{ backgroundColor: "#472615", borderColor: "#472615" }}>
-                            <Icon type="shopping-cart" style={{ fontSize: '20px' }} />
-                            In den Warenkorb
+                        <div>
+                            <Button onClick={this.onChangeBasket} type="primary" style={{ backgroundColor: "#472615", borderColor: "#472615" }}>
+                                <Icon type="shopping-cart" style={{ fontSize: '20px' }} />
+                                In den Warenkorb
                             </Button>
+                        </div>
+                        <div><Rate disabled allowHalf style={{ color: '#D4AF37' }} defaultValue={4.5} /></div>
                     </div>
-
-                    <Rate disabled allowHalf style={{ color: '#D4AF37' }} defaultValue={4.5} />
+ 
                 </Card>
-                {/* </Link> */}
+              
 
             </div>
 
@@ -56,5 +57,15 @@ export default class PagedArticles extends React.PureComponent<IProps, IState> {
 
     onChangeBasket = () => {
         message.success("Der Artikel wurde erfolgreich in den Warenkorb gelegt");
+
+        // const action: IShoppingCartAction = {
+        //     type: ActionType.addToShoppingCart,
+        //     productId : this.state.product._id,
+        //     amount: this.state.amount,
+        //     title: this.state.product.title,
+        //     price: this.state.product.price,
+        //   }
+
+        // window.CS.clientAction(action);
     }
 }
