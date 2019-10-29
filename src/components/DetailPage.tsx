@@ -4,6 +4,11 @@ import { Card, InputNumber, Button, Icon, message } from 'antd';
 import {IProduct} from './categoryPage'
 import Axios from 'axios';
 
+//redux
+import { IAction, ActionType } from '../framework/IAction';
+import { IWindow } from '../framework/IWindow'
+declare let window: IWindow;
+
 interface IProps {
 }
 
@@ -15,6 +20,15 @@ interface IState {
 interface IParams {
     id : string;
 }
+
+
+export interface IShoppingCartAction extends IAction {
+    productId: string;
+    amount : number;
+    title: string;
+    price: number;
+  }
+
 
 export default class DetailPage extends React.PureComponent<IProps & RouteComponentProps, IState> {
 
@@ -65,7 +79,6 @@ export default class DetailPage extends React.PureComponent<IProps & RouteCompon
      }
 
      onChangePlus = () => {
-         console.log("mehr: ", this.state.amount);
         this.setState({ amount: this.state.amount+1 });
       }
 
@@ -76,6 +89,16 @@ export default class DetailPage extends React.PureComponent<IProps & RouteCompon
 
       onChangeBasket = () => {
         message.success("Der Artikel wurde erfolgreich in den Warenkorb gelegt");
+
+        const action: IShoppingCartAction = {
+            type: ActionType.addToShoppingCart,
+            productId : this.state.product._id,
+            amount: this.state.amount,
+            title: this.state.product.title,
+            price: this.state.product.price,
+          }
+
+        window.CS.clientAction(action);
       }
 
     render(){

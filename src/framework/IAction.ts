@@ -12,6 +12,11 @@ export enum ActionType {
     logout = "logout",
     changeToLoginModal = "changeToLoginModal",
     changeToSignupModal = "changeToSignupModal",
+    addToShoppingCart = "addToShoppingCart",
+    openShoppingcart = "openShoppingcart",
+    closeShoppingcart = "closeShoppingcart",
+    changeSpecificAmount = "changeSpecificAmount",
+    deleteLine = "deleteLine"
 }
 export interface IAction {
     type: ActionType;
