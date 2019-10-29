@@ -5,6 +5,7 @@ import axios from 'axios';
 //redux
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
+import { IUserData } from '../state/appState';
 declare let window: IWindow;
 
 const iconStyle = {
@@ -18,6 +19,10 @@ interface IProps {
 interface ICustomer {
   username: string;
   password: string;
+}
+
+export interface IUserAction extends IAction {
+  user: IUserData;
 }
 
 interface IState {
@@ -62,12 +67,15 @@ export default class LoginModal extends React.PureComponent<IProps, IState> {
     this.setState({ loginLoading: true });
     setTimeout(() => {
       this.setState({ loginLoading: false });
-      const action: IAction = {
-        type: ActionType.login
-      }
       const input = this.state.inputData
       axios.post(`${process.env.REACT_APP_BACKEND}/user/login`, input)
         .then(res => {
+          console.log("response after login", res);
+          const loggedInUser: IUserData = res.data.user;
+          const action: IUserAction = {
+            type: ActionType.login,
+            user: loggedInUser
+          }
           window.CS.clientAction(action);
           this.setState({ loginVisible: window.CS.getUIState().loginVisible });
         })
@@ -123,7 +131,7 @@ export default class LoginModal extends React.PureComponent<IProps, IState> {
     const visible = window.CS.getUIState().loginVisible;
     return (
       <div>
-        <Icon type="profile" style={iconStyle} theme="outlined" className="navigationEntry" onClick={this.showModal} />
+        <Icon type="login" style={iconStyle} theme="outlined" className="navigationEntry" onClick={this.showModal} />
         <Modal
           visible={visible}
           title="Anmelden"

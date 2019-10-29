@@ -128,7 +128,8 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
     const visible =  window.CS.getUIState().signupVisible;
     return (
       <div>
-        <Icon type="user" style={iconStyle} className="navigationEntry" theme="outlined" onClick={this.showModal}/>
+
+        <Icon type="user-add" style={iconStyle} className="navigationEntry" theme="outlined" onClick={this.showModal}/>
         <Modal
           visible={visible}
           title="Neuer Kunde?"

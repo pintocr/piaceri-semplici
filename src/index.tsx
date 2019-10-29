@@ -19,7 +19,6 @@ ReactDOM.render(<Router history={history}><App stateCounter={window.CS.getUIStat
 
 window.CS.getStore().subscribe(() => {
   console.log("rerender");
-  //ReactDOM.render(<App stateCounter={window.CS.getUIState().counter} />, document.getElementById('root'));
   ReactDOM.render(<Router history={history}><App stateCounter={window.CS.getUIState().counter} /></Router>, document.getElementById('root'));
 });
 

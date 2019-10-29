@@ -7,9 +7,10 @@ import axios from 'axios';
 import { IWindow } from './framework/IWindow';
 import { Route} from 'react-router-dom';
 import DetailPage from './components/DetailPage'
-import Coffee from './components/categoryPage'
+import CategoryPage from './components/categoryPage'
 import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
+import AccountSettings from './components/AccountSettings'
 declare let window: IWindow;
 
 interface IProps {
@@ -58,11 +59,13 @@ export default class App extends React.PureComponent<IProps, IState> {
 
       <div>
         <NavBar stateCounter={window.CS.getUIState().counter} />
-            <Route path="/whiskey"><Coffee stateCounter={window.CS.getUIState().counter} category="Whiskey" /></Route>
-            <Route path="/chocolate"><Coffee stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
-            <Route path="/coffee"><Coffee stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
+        <Route path="/whiskey"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Whiskey" /></Route>
+            <Route path="/chocolate"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
+            <Route path="/coffee"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
+            <Route path="/account"><AccountSettings stateCounter={window.CS.getUIState().counter} /></Route>
             <Route path="/detailpage/:id" render={(props) => <DetailPage {...props} />}/>  
-            <Route exact path="/" component={OnloadProducts} />
+            <Route exact path="/"><OnloadProducts limitedList={window.CS.getBMState().productsLimited} /></Route>
+           
       </div>
 
     );

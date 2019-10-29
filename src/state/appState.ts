@@ -1,14 +1,21 @@
+import mongoose, { Document } from 'mongoose';
+import { string } from 'prop-types';
 
-export interface IUI{
+export interface IUI {
     counter: number;
     loggedIn: boolean;
-    waitingForResponse:boolean;
-    signupVisible : boolean;
+    waitingForResponse: boolean;
+    signupVisible: boolean;
     loginVisible: boolean;
+    user: IUserData;
+    addresses: IAddressData[];
+    showCreateAddressForm: boolean;
     shoppingVisible: boolean;
 }
 
-interface IProductData {
+
+
+export interface IProductData {
     _id: string;
     product_id: string;
     title: string;
@@ -20,8 +27,20 @@ interface IProductData {
     ref_category: string;
     rating: number;
     pic_list: string[];
-  }
+}
 
+export interface IAddressData {
+    _id: string;
+    type: string;
+    street: string;
+    zip_code: string;
+    city: string;
+    iso_country_code: string;
+    ref_user: string;
+    pickup_station_id: string;
+    pickup_ident_no: string;
+    
+}
 interface ICategoryData {
     _id: string;
     name: string;
@@ -31,7 +50,7 @@ interface ICategoryData {
 
 export interface IBM {
     categories: ICategoryData[];
-    products:IProductData[];
+    products: IProductData[];
     productsLimited: IProductData[];
     shoppingCart:IShoppingCart;
 }
@@ -44,13 +63,13 @@ export interface IScItemData {
 }
 
 export interface IUserData {
-    _id: String;
-    user_name: String;
-    user_first_name: String;
-    user_last_name: String;
-    user_password: String;
-    user_email: String;
-    user_phone: String;
+    _id: string;
+    user_name: string;
+    user_first_name: string;
+    user_last_name: string;
+    user_password: string;
+    user_email: string;
+    user_phone: string;
 }
 
 export interface IShoppingCart {
@@ -58,22 +77,33 @@ export interface IShoppingCart {
     user?: IUserData;
 }
 
-export interface IState{
-    UI:IUI;
-    BM:IBM;
+export interface IState {
+    UI: IUI;
+    BM: IBM;
 }
 
 // initial state 
-export const initial:IState = {
-	UI: {
+export const initial: IState = {
+    UI: {
         counter: 0,
-		loggedIn: false,
+        loggedIn: false,
         waitingForResponse: false,
-        signupVisible: false,    
-        loginVisible: false ,   
+        signupVisible: false,
+        loginVisible: false,
         shoppingVisible: false,
-	},
-	BM: {
+        user: {
+            _id: "",
+            user_name: "",
+            user_first_name: "",
+            user_last_name: "",
+            user_password: "",
+            user_email: "",
+            user_phone: ""
+        },
+        addresses: [],
+        showCreateAddressForm: false,
+    },
+    BM: {
         categories: [],
         products:[],
         productsLimited: [],
