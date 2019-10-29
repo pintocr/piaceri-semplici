@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button, Icon, Badge, Row, Col, InputNumber } from 'antd';
 import '../index.css';
+import { Link } from 'react-router-dom';
 
 //redux
 import { IAction, ActionType } from '../framework/IAction';
