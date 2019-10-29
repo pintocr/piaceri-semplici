@@ -111,7 +111,7 @@ export default class DetailPage extends React.PureComponent<IProps & RouteCompon
                 <Button onClick={this.onChangePlus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
                     +
                 </Button>&nbsp;
-                <Button onClick={this.onChangeBasket} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
+                <Button onClick={this.onChangeBasket} type="primary" style={{backgroundColor: "#472615"}}>
                     <Icon type="shopping-cart" style={{ fontSize: '20px' }}/>
                     In den Warenkorb
                 </Button>
