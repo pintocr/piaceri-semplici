@@ -1,13 +1,13 @@
 import React from 'react';
-import { Button, Input, message, Icon, Collapse } from 'antd'
-import axios from 'axios';
-import { IUserData } from '../state/appState'
+import { Button, Input, message, Icon, Collapse } from 'antd';
+import { IUserData } from '../state/appState';
 import 'antd/dist/antd.css';
+import '../stylesheets/pages.scss';
 import Address from './Addresses'
 import CreateAddress from './CreateAddress';
 //redux
 import { IAction, ActionType } from '../framework/IAction';
-import { IWindow } from '../framework/IWindow'
+import { IWindow } from '../framework/IWindow';
 declare let window: IWindow;
 const { Panel } = Collapse;
 interface IProps {
@@ -36,10 +36,12 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
             const size = 'large'
             return (
                 <div>
-                    <p>Account Settings</p>&nbsp;
-                <form id="AccountSettings" >
+                    <form id="AccountSettings" >
                         <div>
-                            <table>
+                            <table className="account-table">
+                                <tr>
+                                    <th colSpan={2}>Mein Account<br /><br /></th>
+                                </tr>
                                 <tr>
                                     <td><p>Nutzername:</p>&nbsp;</td>
                                     <td><Input placeholder="Nutzername" name="user_name" disabled value={window.CS.getUIState().user.user_name} />&nbsp;&nbsp;</td>
@@ -66,10 +68,27 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                                 </tr>
                             </table>
                         </div>
-                        <Button type="primary" size={size} onClick={this.createAddress}>
-                            <Icon type="plus-square" />
-                        </Button>
-                        {window.CS.getUIState().addresses.map(address => <Address key={address._id} address={address} stateCounter={window.CS.getUIState().counter} />)}
+
+                        <div>
+                            <table className="account-table">
+                                <tr>
+                                    <th>Meine Adressen<br /><br /></th>
+                                </tr>
+
+                                {window.CS.getUIState().addresses.map(address =>
+                                    <tr><td><Address key={address._id} address={address} stateCounter={window.CS.getUIState().counter} /></td></tr>)}
+
+                                <tr>
+                                    <td>
+                                        <Button type="primary" size={size} onClick={this.createAddress}>
+                                            <Icon type="plus-square" />Addresse hinzufügen
+                                    </Button>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+
                     </form>
                 </div>
             )
@@ -78,10 +97,13 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
             const size = 'large'
             return (
                 <div>
-                    <p>Account Settings</p>&nbsp;
-            <form id="AccountSettings" >
+                    <form id="AccountSettings" >
                         <div>
-                            <table>
+                            <table className="account-table">
+                                <tr>
+                                    <th colSpan={2}>Mein Account<br /><br />
+                                    </th>
+                                </tr>
                                 <tr>
                                     <td><p>Nutzername:</p>&nbsp;</td>
                                     <td><Input placeholder="Nutzername" name="user_name" disabled value={window.CS.getUIState().user.user_name} />&nbsp;&nbsp;</td>
@@ -106,11 +128,27 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                                     <td><p>Telefon:</p>&nbsp;</td>
                                     <td><Input placeholder="phone" name="user_phone" disabled value={window.CS.getUIState().user.user_phone} />&nbsp;&nbsp;</td>
                                 </tr>
+
                             </table>
-                            <p>Noch keine Anschrift hinterlegt? Um eine Bestellung erfolgreich abschließen zu können benötigen sie eine Anschrift. </p>
-                            <Button type="primary" size={size} onClick={this.createAddress}>
-                                <Icon type="plus-square" />addresse hinzufügen
-                            </Button>
+
+                            <table className="account-table">
+                                <tr>
+                                    <th>Meine Adressen<br /><br /></th>
+                                </tr>
+                                <tr>
+                                    <td>Noch keine Anschrift hinterlegt? Um eine Bestellung erfolgreich abschließen zu können benötigen sie eine Anschrift.
+                                        <br/><br/></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <Button type="primary" size={size} onClick={this.createAddress}>
+                                            <Icon type="plus-square" />Addresse hinzufügen
+                                    </Button>
+                                    </td>
+                                </tr>                   
+
+                            </table>
+
                         </div>
                     </form>
                 </div>
@@ -134,5 +172,5 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
         }
         window.CS.clientAction(action)
     }
-    
+
 }

@@ -43,9 +43,7 @@ export default class Address extends React.PureComponent<IProps, IState> {
     const size = 'small'
     return (
       <div>
-        <Button type="primary" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
-          <Icon type="minus-square" />delete
-        </Button>
+
         <div className="DeliveryAddress">
           <Collapse defaultActiveKey={['1']} onChange={this.handleChange}>
             <Panel header={this.props.address.type} key={this.props.address._id}>
@@ -64,7 +62,12 @@ export default class Address extends React.PureComponent<IProps, IState> {
               <Descriptions >
                 <Descriptions.Item label="Art der Adresse">{this.props.address.type}</Descriptions.Item>
               </Descriptions>
+              <br/>
+              <Button type="primary" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
+          <Icon type="minus-square" />Adresse entfernen
+        </Button>
             </Panel>
+
           </Collapse>
         </div>
 
