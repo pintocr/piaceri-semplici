@@ -1,7 +1,10 @@
-import { initial, IState } from '../state/appState'
+import { initial, IState, IScItemData } from '../state/appState'
 import { IWindow } from '../framework/IWindow'
 import { IAction, ActionType } from '../framework/IAction'
 import { IProductsLoadedAction, IProductsLimitedAction, ICategoriesLoadedAction } from '../App'
+import {IShoppingCartAction} from '../components/DetailPage'
+import {ICountAction, IDeleteOneLine} from '../components/shoppingCart'
+
 
 declare let window: IWindow;
 
@@ -57,6 +60,55 @@ export const reducer = (state = initial, action: IAction) => {
 
         case ActionType.logout:
             newState.UI.loggedIn = false;
+            return newState;
+
+        case ActionType.changeToLoginModal: 
+            newState.UI.signupVisible = false;
+            newState.UI.loginVisible = true;
+            return newState;
+
+        case ActionType.changeToSignupModal: 
+            newState.UI.signupVisible = true;
+            newState.UI.loginVisible = false;
+            return newState;
+
+        case ActionType.addToShoppingCart: 
+            const productData = action as IShoppingCartAction
+            let alreadyInBasket = false;
+
+            newState.BM.shoppingCart.items.forEach(element => {
+              if (element.product_id === productData.productId) {
+                  element.count = element.count + productData.amount
+                  alreadyInBasket = true;
+              }
+            })
+
+            if (!alreadyInBasket) {
+                newState.BM.shoppingCart.items.push({
+                    product_id: productData.productId,
+                    count : productData.amount,
+                    title: productData.title,
+                    price: productData.price
+                } as IScItemData);
+            }
+            return newState;
+
+        case ActionType.openShoppingcart:
+            newState.UI.shoppingVisible = true;
+            return newState;
+
+        case ActionType.closeShoppingcart:
+            newState.UI.shoppingVisible = false;
+            return newState;
+
+        case ActionType.changeSpecificAmount: 
+            const amountChangeData = action as ICountAction
+            newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count = newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count + amountChangeData.delta
+            return newState;
+
+        case ActionType.deleteLine:
+            const lineToDelete = action as IDeleteOneLine;
+            newState.BM.shoppingCart.items.splice(lineToDelete.indexOfLine, 1);
             return newState;
 
         default:
