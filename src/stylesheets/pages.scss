@@ -98,9 +98,15 @@
    }
 
    .metaStyle {
-    background-color: #472615;
+    background-color: #472615; 
      color: white;
+     display: flex;
+     flex-direction: column;
+     height: 100%;
+    //  align-items: space-between;
+     flex-grow: 1;
    }
+
 
    .searchCriteria {
      flex-wrap: wrap;
