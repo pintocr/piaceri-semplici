@@ -5,6 +5,7 @@ import { IUserData } from '../state/appState'
 import 'antd/dist/antd.css';
 import Address from './Addresses'
 import CreateAddress from './CreateAddress';
+import App from '../App'
 //redux
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
@@ -32,7 +33,8 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
 
     render() {
         console.log("AccountSettings rendered()")
-        if (window.CS.getUIState().addresses.length !== 0 && window.CS.getUIState().showCreateAddressForm === false) {
+       
+        if(window.CS.getUIState().addresses.length !== 0 && window.CS.getUIState().showCreateAddressForm === false) {
             const size = 'large'
             return (
                 <div>
@@ -122,8 +124,8 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                 </div>
             )
         }
-    }
-
+    
+}
     handleChange(key: any) {
         console.log(key);
     }

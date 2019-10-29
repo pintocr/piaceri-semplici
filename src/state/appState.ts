@@ -11,6 +11,7 @@ export interface IUI {
     addresses: IAddressData[];
     showCreateAddressForm: boolean;
     shoppingVisible: boolean;
+    edit_Address : boolean;
 }
 
 
@@ -91,6 +92,7 @@ export const initial: IState = {
         signupVisible: false,
         loginVisible: false,
         shoppingVisible: false,
+        edit_Address: false,
         user: {
             _id: "",
             user_name: "",

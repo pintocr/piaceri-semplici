@@ -20,7 +20,9 @@ export enum ActionType {
     openShoppingcart = "openShoppingcart",
     closeShoppingcart = "closeShoppingcart",
     changeSpecificAmount = "changeSpecificAmount",
-    deleteLine = "deleteLine"
+    deleteLine = "deleteLine",
+    show_edit_Address = "show_edit_Address",
+    close_edit_Address = "close_edit_Address"
 }
 export interface IAction {
     type: ActionType;

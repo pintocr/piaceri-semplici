@@ -3,7 +3,7 @@ import { Modal, Button, Input, message, Icon, Select, Descriptions, Collapse } f
 import axios from 'axios';
 import { IUserData, IAddressData } from '../state/appState'
 import 'antd/dist/antd.css';
-import {getAddressActionCreator} from '../components/LoginContainer'
+import { getAddressActionCreator } from '../components/LoginContainer'
 
 //redux
 import { IAction, ActionType } from '../framework/IAction';
@@ -32,6 +32,8 @@ export default class Address extends React.PureComponent<IProps, IState> {
     this.handleChange = this.handleChange.bind(this);
     this.createAddress = this.createAddress.bind(this);
     this.deleteAddress = this.deleteAddress.bind(this);
+    this.editAddress = this.editAddress.bind(this);
+    this.saveAddress = this.saveAddress.bind(this);
 
 
   };
@@ -41,39 +43,90 @@ export default class Address extends React.PureComponent<IProps, IState> {
     console.log("AccountSettings rendered()")
 
     const size = 'small'
-    return (
-      <div>
-        <Button type="primary" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
-          <Icon type="minus-square" />delete
-        </Button>
-        <div className="DeliveryAddress">
-          <Collapse defaultActiveKey={['1']} onChange={this.handleChange}>
-            <Panel header={this.props.address.type} key={this.props.address._id}>
-              <Descriptions title="Adresse">
-                <Descriptions.Item label="Stadt">{this.props.address.city}</Descriptions.Item>
-              </Descriptions>
-              <Descriptions >
-                <Descriptions.Item label="Land">{this.props.address.iso_country_code}</Descriptions.Item>
-              </Descriptions>
-              <Descriptions >
-                <Descriptions.Item label="Straße">{this.props.address.street}</Descriptions.Item>
-              </Descriptions>
-              <Descriptions >
-                <Descriptions.Item label="Postleitzahl">{this.props.address.zip_code}</Descriptions.Item>
-              </Descriptions>
-              <Descriptions >
-                <Descriptions.Item label="Art der Adresse">{this.props.address.type}</Descriptions.Item>
-              </Descriptions>
-            </Panel>
-          </Collapse>
-        </div>
 
-      </div>
-    )
+    if (!window.CS.getUIState().edit_Address) {
+      return (
+        <div>
+          <Button type="primary" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
+            <Icon type="minus-square" />delete
+        </Button>
+          <Button type="primary" size={size} onClick={this.editAddress} name={this.props.address._id}>
+            <Icon type="edit" />edit
+        </Button>
+          <div className="DeliveryAddress">
+            <Collapse defaultActiveKey={['1']} onChange={this.handleChange}>
+              <Panel header={this.props.address.type} key={this.props.address._id}>
+                <Descriptions title="Adresse">
+                  <Descriptions.Item label="Stadt">{this.props.address.city}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions >
+                  <Descriptions.Item label="Land">{this.props.address.iso_country_code}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions >
+                  <Descriptions.Item label="Straße">{this.props.address.street}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions >
+                  <Descriptions.Item label="Postleitzahl">{this.props.address.zip_code}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions >
+                  <Descriptions.Item label="Art der Adresse">{this.props.address.type}</Descriptions.Item>
+                </Descriptions>
+              </Panel>
+            </Collapse>
+          </div>
+
+        </div>
+      )
+    }else if(window.CS.getUIState().edit_Address){
+      return (
+        <div>
+
+          <Button type="primary" size={size} onClick={this.saveAddress} name={this.props.address._id}>
+            <Icon type="save" />save
+        </Button>
+          <div className="DeliveryAddress">
+            <Collapse defaultActiveKey={['1']} onChange={this.handleChange}>
+              <Panel header={this.props.address.type} key={this.props.address._id}>
+                <Descriptions title="Adresse">
+                  <Descriptions.Item label="Stadt">{this.props.address.city}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions >
+                  <Descriptions.Item label="Land">{this.props.address.iso_country_code}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions >
+                  <Descriptions.Item label="Straße">{this.props.address.street}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions >
+                  <Descriptions.Item label="Postleitzahl">{this.props.address.zip_code}</Descriptions.Item>
+                </Descriptions>
+                <Descriptions >
+                  <Descriptions.Item label="Art der Adresse">{this.props.address.type}</Descriptions.Item>
+                </Descriptions>
+              </Panel>
+            </Collapse>
+          </div>
+
+        </div>
+      )
+    }
   }
 
   handleChange() {
 
+  }
+
+  editAddress() {
+    const action: IAction = {
+      type: ActionType.show_edit_Address
+    }
+    window.CS.clientAction(action)
+  }
+
+  saveAddress() {
+    const action: IAction = {
+      type: ActionType.close_edit_Address
+    }
+    window.CS.clientAction(action)
   }
 
   createAddress() {
@@ -82,26 +135,27 @@ export default class Address extends React.PureComponent<IProps, IState> {
     }
     window.CS.clientAction(action)
   }
-  deleteAddress(e:any){
-    
+
+  deleteAddress(e: any) {
+
     window.CS.clientAction(deleteAddressActionCreator(e))
   }
 
 
 }
 
-export function deleteAddressActionCreator(e:any){
-  console.log("thats my e",e.target.name)
+export function deleteAddressActionCreator(e: any) {
+  console.log("thats my e", e.target.name)
   return function (dispatch: any) {
     const uiAction: IAction = {
-        type: ActionType.server_called
+      type: ActionType.server_called
     }
     dispatch(uiAction);
-   axios.get(`${process.env.REACT_APP_BACKEND}/address/deleteAddressData/${e.target.name}`).then(response => {
-    console.log("address data", response.data);
-    window.CS.clientAction(getAddressActionCreator()) ;
-}).catch(function (error) { console.log(error); })
-}
+    axios.get(`${process.env.REACT_APP_BACKEND}/address/deleteAddressData/${e.target.name}`).then(response => {
+      console.log("address data", response.data);
+      window.CS.clientAction(getAddressActionCreator());
+    }).catch(function (error) { console.log(error); })
+  }
 }
 
 
