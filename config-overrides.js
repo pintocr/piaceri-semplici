@@ -8,6 +8,6 @@ const {override, fixBabelImports, addLessLoader} = require('customize-cra');
     }),
     addLessLoader({
       javascriptEnabled: true,
-      modifyVars: {'@primary-color': '#a50052'},
+      modifyVars: {'@primary-color': 'orange'},
     }),
   );
