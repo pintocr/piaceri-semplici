@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Button, Input, message, Icon, Collapse, Select } from 'antd'
 import axios from 'axios';
 import { IAddressData } from '../state/appState'
-import {getAddressActionCreator} from '../components/LoginContainer'
+import { getAddressActionCreator } from '../components/LoginContainer'
 //redux
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
@@ -77,11 +77,11 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
     const input = this.state.inputData
     axios.post(`${process.env.REACT_APP_BACKEND}/address/createAddress`, input)
       .then(res => {
-        console.log("create address route",res)
+        console.log("create address route", res)
         console.log("user_ID", window.CS.getUIState().user._id)
         window.CS.clientAction(action);
         this.setState({ createAddressFormVisible: window.CS.getUIState().showCreateAddressForm });
-        window.CS.clientAction(getAddressActionCreator()) ;
+        window.CS.clientAction(getAddressActionCreator());
       })
       .catch(error => {
         switch (error.response.data.error) {
@@ -110,7 +110,7 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
     }
     window.CS.clientAction(action);
     this.setState({ createAddressFormVisible: window.CS.getUIState().showCreateAddressForm });
-    window.CS.clientAction(getAddressActionCreator()) ;
+    window.CS.clientAction(getAddressActionCreator());
   };
 
   handleChange(event: any) {
@@ -129,27 +129,56 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
   //   <Option value="Rechnungsadresse" name="type">Rechnungsadresse</Option>
   //   <Option value="Abholstation" name="type">Abholstation</Option>
   // </Select>
-//
+  //
   render() {
     if (window.CS.getUIState().showCreateAddressForm) {
       return (
         <div>
           <form id="createAddressForm">
-            <p>Adresstyp: </p>
-            <Input placeholder="Adresstyp" name="type" value={this.state.inputData.type} onChange={this.handleChange} />&nbsp;
-          <p>Straße: </p>
-            <Input placeholder="Straße" name="street" value={this.state.inputData.street} onChange={this.handleChange} />&nbsp;
-          <p>Postleitzahl: </p>
-            <Input placeholder="Postleitzahl" name="zip_code" value={this.state.inputData.zip_code} onChange={this.handleChange} />&nbsp;
-          <p>Stadt: </p>
-            <Input placeholder="Stadt" name="city" value={this.state.inputData.city} onChange={this.handleChange} />&nbsp;
-          <p>Land: </p>
-            <Input placeholder="Land" name="iso_country_code" value={this.state.inputData.iso_country_code} onChange={this.handleChange} />&nbsp;
-          <p>Abholstation: </p>
-            <Input placeholder="Abholstation" name="pickup_station_id" value={this.state.inputData.pickup_station_id} onChange={this.handleChange} />&nbsp;
-          <p>AbholstationID: </p>
-            <Input placeholder="AbholstationID" name="pickup_ident_no" value={this.state.inputData.pickup_ident_no} onChange={this.handleChange} />&nbsp;
-        </form>
+            <table className="account-table">
+              <tr>
+                <th colSpan={2}>Adresse hinzufügen<br /><br /></th>
+              </tr>
+              <tr>
+                <td>Adresstyp: </td>
+                <td>
+                  <Input placeholder="Adresstyp" name="type" value={this.state.inputData.type} onChange={this.handleChange} />&nbsp;
+              </td>
+              </tr>
+
+              <tr>
+                <td>Straße: </td>
+                <td><Input placeholder="Straße" name="street" value={this.state.inputData.street} onChange={this.handleChange} />&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td>Postleitzahl:</td>
+                <td> <Input placeholder="Postleitzahl" name="zip_code" value={this.state.inputData.zip_code} onChange={this.handleChange} />&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td>Stadt:</td>
+                <td><Input placeholder="Stadt" name="city" value={this.state.inputData.city} onChange={this.handleChange} />&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td>Land:</td>
+                <td><Input placeholder="Land" name="iso_country_code" value={this.state.inputData.iso_country_code} onChange={this.handleChange} />&nbsp;</td>
+              </tr>
+
+
+              <tr>
+                <td>Abholstation:</td>
+                <td><Input placeholder="Abholstation" name="pickup_station_id" value={this.state.inputData.pickup_station_id} onChange={this.handleChange} />&nbsp;</td>
+              </tr>
+
+              <tr>
+                <td>AbholstationID:</td>
+                <td><Input placeholder="AbholstationID" name="pickup_ident_no" value={this.state.inputData.pickup_ident_no} onChange={this.handleChange} />&nbsp;</td>
+              </tr>
+             
+    </table>
+          </form>
           <Button key="back" onClick={this.handleCancel}>
             Abbrechen
             </Button>,

@@ -1,11 +1,15 @@
 import React from 'react';
 import { Modal, Button, Icon, Badge, Row, Col, InputNumber } from 'antd';
+import '../index.css';
 
 //redux
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow';
 declare let window: IWindow;
 
+const iconStyle = {
+  fontSize: '24px', color: 'white', justifySelf: 'center', padding: '2px 15px'
+}
 
 interface IProps {
   stateCounter: number
@@ -118,9 +122,9 @@ export default class ShoppingCartModal extends React.PureComponent<IProps, IStat
     return (
       <div>
         <Badge count={window.CS.getBMState().shoppingCart.items.length as any}>
-          <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>
-            <Icon type="shopping-cart" style={{ fontSize: '24px' }} />
-          </Button>
+         
+            <Icon type="shopping-cart" style={iconStyle} className="navigationEntry" onClick={this.showModal}/>
+          
         </Badge>
         <Modal
           visible={visible}
