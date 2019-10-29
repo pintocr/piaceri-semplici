@@ -1,9 +1,9 @@
 import { initial, IState, IUserData } from '../state/appState'
 import { IWindow } from '../framework/IWindow'
 import { IAction, ActionType } from '../framework/IAction'
-import { IProductsLoadedAction } from '../App'
 import { IUserAction } from '../components/LogIn'
 import { IAddressAction } from '../components/LoginContainer'
+import { IProductsLoadedAction, IProductsLimitedAction, ICategoriesLoadedAction } from '../App'
 
 declare let window: IWindow;
 
@@ -33,6 +33,17 @@ export const reducer = (state = initial, action: IAction) => {
             newState.BM.products = productsLoaded.products;
             return newState;
 
+        case ActionType.add_categories_from_server:
+            const categoriesLoaded = action as ICategoriesLoadedAction;
+            newState.UI.waitingForResponse = false;
+            newState.BM.categories = categoriesLoaded.categories;
+            return newState;
+
+        case ActionType.update_limited_list:
+            const limitedProducts = action as IProductsLimitedAction;
+            newState.BM.productsLimited = limitedProducts.products;
+            return newState;
+
         case ActionType.openLoginModal:
             newState.UI.loginVisible = true;
             return newState;
@@ -57,10 +68,18 @@ export const reducer = (state = initial, action: IAction) => {
             newState.UI.user = userDetails.user;
             return newState;
 
-            case ActionType.get_address_data:
-                const addressData = action as IAddressAction;
-                newState.UI.address = addressData.address;
-                return newState;
+        case ActionType.get_address_data:
+            const addressData = action as IAddressAction;
+            newState.UI.addresses = addressData.addresses;
+            return newState;
+
+        case ActionType.show_Address_Form:
+            newState.UI.showCreateAddressForm = true;
+            return newState;
+
+        case ActionType.close_Address_Form:
+            newState.UI.showCreateAddressForm = false;
+            return newState;
 
         default:
             window.CS.log("1. Error!!!!! no reducer defined");

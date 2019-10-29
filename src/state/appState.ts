@@ -1,19 +1,20 @@
 import mongoose, { Document } from 'mongoose';
 import { string } from 'prop-types';
 
-export interface IUI{
+export interface IUI {
     counter: number;
     loggedIn: boolean;
-    waitingForResponse:boolean;
-    signupVisible : boolean;
+    waitingForResponse: boolean;
+    signupVisible: boolean;
     loginVisible: boolean;
     user: IUserData;
-    address:IAddressData;
+    addresses: IAddressData[];
+    showCreateAddressForm: boolean;
 }
 
 export interface IBM {
-    products:IProductData[];
-    shoppingCart?:IShoppingCart;
+    products: IProductData[];
+    shoppingCart?: IShoppingCart;
 }
 
 export interface IProductData {
@@ -28,7 +29,7 @@ export interface IProductData {
     ref_category: string;
     rating: number;
     pic_list: string[];
-  }
+}
 
 export interface IAddressData {
     _id: string;
@@ -40,6 +41,20 @@ export interface IAddressData {
     ref_user: string;
     pickup_station_id: string;
     pickup_ident_no: string;
+    
+}
+interface ICategoryData {
+    _id: string;
+    name: string;
+    description: string;
+    pic_list: string[];
+}
+
+export interface IBM {
+    categories: ICategoryData[];
+    products: IProductData[];
+    productsLimited: IProductData[];
+    shoppingCart?: IShoppingCart;
 }
 
 export interface IScItemData {
@@ -63,20 +78,20 @@ export interface IShoppingCart {
     user?: IUserData;
 }
 
-export interface IState{
-    UI:IUI;
-    BM:IBM;
+export interface IState {
+    UI: IUI;
+    BM: IBM;
 }
 
 // initial state 
-export const initial:IState = {
-	UI: {
+export const initial: IState = {
+    UI: {
         counter: 0,
-		loggedIn: false,
+        loggedIn: false,
         waitingForResponse: false,
-        signupVisible: false,    
-        loginVisible: false , 
-        user : {
+        signupVisible: false,
+        loginVisible: false,
+        user: {
             _id: "",
             user_name: "",
             user_first_name: "",
@@ -85,20 +100,12 @@ export const initial:IState = {
             user_email: "",
             user_phone: ""
         },
-        address: {
-            _id: "",
-            type: "",
-            street:"",
-            zip_code:"",
-            city: "",
-            iso_country_code: "",
-            ref_user: "",
-            pickup_station_id: "",
-            pickup_ident_no:  ""
-            
-        },
+        addresses: [],
+        showCreateAddressForm: false,
     },
-	BM: {
-        products:[]
-	}
+    BM: {
+        categories: [],
+        products: [],
+        productsLimited: []
+    }
 };

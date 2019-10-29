@@ -46,7 +46,7 @@ export default class LoginContainerModal extends React.PureComponent<IProps, ISt
             return (
                 <span>
                     <span>
-                        <Link className="navigationEntry" to="/account"  onClick= {this.getAddress}>
+                        <Link style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} className="navigationEntry" to="/account" onClick={this.getAddress}>
                             <Icon type="setting" style={{ fontSize: '24px' }} theme="outlined" />
                         </Link>&nbsp;
                     </span>
@@ -88,32 +88,29 @@ export default class LoginContainerModal extends React.PureComponent<IProps, ISt
     getAddress() {
         window.CS.clientAction(getAddressActionCreator())
     }
-  
+
 }
 
 export interface IAddressAction extends IAction {
-    address: IAddressData
-  }
+    addresses: IAddressData[]
+}
 
-function getAddressActionCreator() {
+export function getAddressActionCreator() {
+    console.log("##################################### --- getAddressActionCreator wird ausgeführt!")
     return function (dispatch: any) {
-      const uiAction: IAction = {
-        type: ActionType.server_called
-      }
-      dispatch(uiAction);
-      //${process.env.REACT_APP_BACKEND}
-      const userId:string =  window.CS.getUIState().user._id;
-      axios.post(`${process.env.REACT_APP_BACKEND}/address/getAddressData/`,userId).then(response => {
-        console.log("address data");
-        console.log(response.data);
-        if(response.data !== null){
-        const responseAction: IAddressAction = {
-          type: ActionType.get_address_data,
-          address: response.data as IAddressData
+        const uiAction: IAction = {
+            type: ActionType.server_called
         }
-        dispatch(responseAction);}
-      }).catch(function (error) { console.log(error); })
+        dispatch(uiAction);
+        axios.get(`${process.env.REACT_APP_BACKEND}/address/getAddressData/${window.CS.getUIState().user._id}`).then(response => {
+            console.log("address data", response.data);
+            const responseAction: IAddressAction = {
+                type: ActionType.get_address_data,
+                addresses: response.data.addressData as IAddressData[]
+            }
+            dispatch(responseAction);
+        }).catch(function (error) { console.log(error); })
     }
-  }
+}
 
 
