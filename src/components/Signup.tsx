@@ -7,6 +7,10 @@ import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
 declare let window: IWindow;
 
+const iconStyle = {
+  fontSize: '24px', color: 'white', justifySelf: 'center', padding: '2px 15px'
+}
+
 interface INewCustomer {
     user_name: string;
     user_password: string;
@@ -17,6 +21,7 @@ interface INewCustomer {
 }
 
 interface IProps {
+  stateCounter: number
 }
 
 interface IState {
@@ -34,6 +39,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
         this.handleOk = this.handleOk.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleLink = this.handleLink.bind(this);
 
         this.state = {
             signupLoading: false,
@@ -109,14 +115,21 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
     });
   }
 
+  handleLink = () => {
+    const action: IAction = {
+      type: ActionType.changeToLoginModal
+    }
+  window.CS.clientAction(action);
+  this.setState({ signupVisible: window.CS.getUIState().signupVisible });
+  }
+
   render() {
     const { signupLoading } = this.state;
-    const visible = this.state.signupVisible;
+    const visible =  window.CS.getUIState().signupVisible;
     return (
       <div>
-        <Button style={{ "backgroundColor": "rgb(71, 38, 21)", "fontSize": "1.0rem", "borderColor": "white" }} type="primary" onClick={this.showModal}>
-        <Icon type="user-add" style={{ fontSize: '24px' }} theme="outlined" />
-        </Button>
+
+        <Icon type="user-add" style={iconStyle} className="navigationEntry" theme="outlined" onClick={this.showModal}/>
         <Modal
           visible={visible}
           title="Neuer Kunde?"
@@ -146,7 +159,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
           <Input placeholder= "telefon" name= "user_phone" value = {this.state.inputData.user_phone} onChange={this.handleChange}/>&nbsp;
         </form>
           <p>Sie haben bereits einen Account bei uns?</p>
-          <a href="/">Hier geht es zur Anmeldung</a>
+          <a onClick={this.handleLink}>Hier geht es zur Anmeldung</a>
         </Modal>
       </div>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../App.css';
-import { Row, Select } from 'antd';
+import { Row, Select, Input } from 'antd';
 import "antd/dist/antd.css";
 import PagedArticles from './pagedArticles';
 import { IAction, ActionType } from '../framework/IAction';
@@ -9,7 +9,11 @@ import { IProductData, IProductsLimitedAction } from '../App';
 
 declare let window: IWindow;
 const { Option } = Select;
+const { Search } = Input;
 
+const searchItemStyle = {
+    width: 180, margin: 2
+}
 
 interface IProps {
     limitedList: IProductData[];
@@ -42,11 +46,18 @@ export default class OnloadProducts extends React.PureComponent<IProps, IState> 
                     <div className="product-container">
                         <p>Unsere erlesene Auswahl</p>
                         <Row type="flex" justify="center">
-                            <Select defaultValue="title" size="small" style={{ width: 180, margin: 2 }} onChange={this.handleSort}>
+
+                            <div className="Searchbox">
+                                <Search placeholder="Artikelsuche: Name hier eingeben" style={searchItemStyle} onSearch={value => console.log(value)} enterButton size="small" />
+                            </div>
+
+
+                            <Select defaultValue="title" size="small" style={searchItemStyle} onChange={this.handleSort}>
                                 <Option value="title">Sortiere nach Titel</Option>
                                 <Option value="up">Sortiere nach Preis (auf)</Option>
                                 <Option value="down">Sortiere nach Preis (ab)</Option>
                             </Select>
+
                         </Row>
 
 

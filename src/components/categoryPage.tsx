@@ -2,11 +2,17 @@ import React from 'react';
 import Axios from 'axios';
 import "antd/dist/antd.css";
 import '../stylesheets/pages.scss';
-import { Row, Select } from 'antd';
+import '../index.css';
+import { Row, Select, Input } from 'antd';
 import PagedArticles from './pagedArticles';
 import { IWindow } from '../framework/IWindow';
 declare let window: IWindow;
 const { Option } = Select;
+const { Search } = Input;
+
+const searchItemStyle = {
+    width: 180, margin: 2
+}
 
 interface ICategory {
     _id: string;
@@ -15,7 +21,7 @@ interface ICategory {
     pic_list: string[];
 }
 
-interface IProduct {
+export interface IProduct {
     _id: string;
     title: string;
     product_id: string;
@@ -94,8 +100,13 @@ export default class CategoryPage extends React.PureComponent<IProps, IState> {
 
                 <div className="product-container">
 
-                    <Row type="flex" justify="center">
-                        <Select defaultValue="title" size="small" style={{ width: 180, margin: 2 }} onChange={this.handleSort}>
+                    <Row type="flex" justify="center" className="searchCriteria">
+
+                        <div>
+                            <Search placeholder="Artikelsuche: Name hier eingeben" style={searchItemStyle} onSearch={value => console.log(value)} enterButton size="small"/>
+                        </div>
+
+                        <Select defaultValue="title" size="small" style={searchItemStyle} onChange={this.handleSort}>
                             <Option value="title">Sortiere nach Titel</Option>
                             <Option value="up">Sortiere nach Preis (auf)</Option>
                             <Option value="down">Sortiere nach Preis (ab)</Option>
@@ -117,10 +128,10 @@ export default class CategoryPage extends React.PureComponent<IProps, IState> {
 
         switch (event) {
             case 'title': {
-                    let productList = Array.from(this.state.products).sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title));
-                    this.setState({ products: productList })
-                    break;
-                }
+                let productList = Array.from(this.state.products).sort((a: IProduct, b: IProduct) => a.title.localeCompare(b.title));
+                this.setState({ products: productList })
+                break;
+            }
             case 'up': {
                 let productList = Array.from(this.state.products).sort((a: IProduct, b: IProduct) => a.price - b.price);
                 this.setState({ products: productList })

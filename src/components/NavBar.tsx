@@ -2,12 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import "antd/dist/antd.css";
-import { Icon } from 'antd';
-import LoginContainerModal from './LoginContainer'
+import LoginContainerModal from './LoginContainer';
+import ShoppingCartModal from './shoppingCart';
 import '../index.css';
 //redux
 import { IWindow } from '../framework/IWindow'
 declare let window: IWindow;
+
+
+
 
 
 interface IProps {
@@ -26,18 +29,16 @@ export default class NavBar extends React.PureComponent<IProps, IState> {
         return (
             <div>
                 <div className="navBar">
-                <Link className="navigationEntry" to="/">Home</Link>&nbsp;
+                <div><Link className="navigationEntry" to="/">piaceri semplici.</Link>&nbsp;</div>
                 <Link className ="navigationEntry" to="/coffee">Kaffee</Link>&nbsp;
                 <Link className ="navigationEntry" to="/whiskey">Whiskey</Link>&nbsp;
                 <Link className ="navigationEntry" to="/chocolate">Schokolade</Link>&nbsp;
                 <LoginContainerModal stateCounter={window.CS.getUIState().counter} />&nbsp;
-                <Link className="navigationEntry" to="/"><Icon type="shopping-cart" style={{ fontSize: '24px' }} /></Link>&nbsp;
+                <ShoppingCartModal stateCounter={window.CS.getUIState().counter}/>&nbsp;
                 </div>
                 <br />
             </div>
-
-        )
-
+        ) 
     }
 
 }

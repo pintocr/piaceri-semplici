@@ -10,12 +10,10 @@ export interface IUI {
     user: IUserData;
     addresses: IAddressData[];
     showCreateAddressForm: boolean;
+    shoppingVisible: boolean;
 }
 
-export interface IBM {
-    products: IProductData[];
-    shoppingCart?: IShoppingCart;
-}
+
 
 export interface IProductData {
     _id: string;
@@ -54,12 +52,14 @@ export interface IBM {
     categories: ICategoryData[];
     products: IProductData[];
     productsLimited: IProductData[];
-    shoppingCart?: IShoppingCart;
+    shoppingCart:IShoppingCart;
 }
 
 export interface IScItemData {
     product_id: string;
     count: number;
+    title: string;
+    price: number;
 }
 
 export interface IUserData {
@@ -73,7 +73,6 @@ export interface IUserData {
 }
 
 export interface IShoppingCart {
-    _id: string;
     items: IScItemData[];
     user?: IUserData;
 }
@@ -91,6 +90,7 @@ export const initial: IState = {
         waitingForResponse: false,
         signupVisible: false,
         loginVisible: false,
+        shoppingVisible: false,
         user: {
             _id: "",
             user_name: "",
@@ -105,7 +105,10 @@ export const initial: IState = {
     },
     BM: {
         categories: [],
-        products: [],
-        productsLimited: []
-    }
+        products:[],
+        productsLimited: [],
+        shoppingCart: {
+            items: []
+        }
+	}
 };
