@@ -63,7 +63,6 @@ export default class App extends React.PureComponent<IProps, IState> {
             <Route path="/chocolate"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
             <Route path="/coffee"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
             <Route path="/account"><AccountSettings stateCounter={window.CS.getUIState().counter} /></Route>
-            <Route exact path="/"><OnloadProducts limitedList={window.CS.getBMState().productsLimited} /></Route>
             <Route path="/detailpage/:id" render={(props) => <DetailPage {...props} />}/>  
             <Route exact path="/"><OnloadProducts limitedList={window.CS.getBMState().productsLimited} /></Route>
            
