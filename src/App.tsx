@@ -10,6 +10,7 @@ import DetailPage from './components/DetailPage'
 import Coffee from './components/categoryPage'
 import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
+import PaymentPage from './components/Payment';
 declare let window: IWindow;
 
 interface IProps {
@@ -62,6 +63,7 @@ export default class App extends React.PureComponent<IProps, IState> {
             <Route path="/chocolate"><Coffee stateCounter={window.CS.getUIState().counter} category="Chocolate" /></Route>
             <Route path="/coffee"><Coffee stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
             <Route path="/detailpage/:id" render={(props) => <DetailPage {...props} />}/>  
+            <Route path="/payment" render ={ () => <PaymentPage stateCounter={window.CS.getUIState().counter}/>} />
             <Route exact path="/" component={OnloadProducts} />
       </div>
 

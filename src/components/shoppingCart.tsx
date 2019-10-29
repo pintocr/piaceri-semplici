@@ -1,5 +1,6 @@
 import React from 'react';
-import { Modal, Button, Icon, Badge, Row, InputNumber }from 'antd'
+import { Modal, Button, Icon, Badge, Row, InputNumber, message }from 'antd'
+import { Link } from 'react-router-dom';
 
 //redux
 import { IAction, ActionType } from '../framework/IAction';
@@ -33,7 +34,6 @@ export default class ShoppingCartModal extends React.PureComponent<IProps, IStat
         super(props);
 
         this.showModal = this.showModal.bind(this);
-        this.handleOk = this.handleOk.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.onChangePlus = this.onChangePlus.bind(this);
         this.onChangeMinus = this.onChangeMinus.bind(this);
@@ -58,8 +58,6 @@ export default class ShoppingCartModal extends React.PureComponent<IProps, IStat
         this.setState({ shoppingVisible: window.CS.getUIState().shoppingVisible });
       };
     
-      handleOk = (event : any) => {
-      };
     
       handleCancel = () => {
         const action: IAction = {
@@ -125,15 +123,17 @@ export default class ShoppingCartModal extends React.PureComponent<IProps, IStat
             <Modal
               visible={visible}
               title= "Warenkorb"
-              onOk={this.handleOk}
+              onOk={this.handleCancel}
               onCancel={this.handleCancel}
               footer={[
                 <Button key="back" onClick={this.handleCancel}>
                   Weiter einkaufen
                 </Button>,
-                <Button  style={{ "backgroundColor": "rgb(71, 38, 21)" }} form = "loginForm" key="submit" type="primary" loading={shoppingLoading} onClick={this.handleOk}>
+                <Link to={'/payment'}>
+                <Button style={{ "backgroundColor": "rgb(71, 38, 21)" }} form = "loginForm" key="submit" type="primary" loading={shoppingLoading} onClick={this.handleCancel}>
                   Zur Kasse
                 </Button>,
+                </Link>
               ]}
             >  
 
@@ -157,6 +157,7 @@ export default class ShoppingCartModal extends React.PureComponent<IProps, IStat
                 <Button name={"" + index} onClick={this.deleteLine} size="small"><span  style={{color: "red"}}><Icon type="close" /></span></Button>&nbsp;
                 
                 </Row>
+
                 
                 </div>)}
 
