@@ -22,7 +22,9 @@ export enum ActionType {
     changeSpecificAmount = "changeSpecificAmount",
     deleteLine = "deleteLine",
     show_edit_Address = "show_edit_Address",
-    close_edit_Address = "close_edit_Address"
+    close_edit_Address = "close_edit_Address",
+    show_edit_Account = "show_edit_Account",
+    close_edit_Account = "close_edit_Account"
 }
 export interface IAction {
     type: ActionType;

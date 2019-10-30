@@ -140,6 +140,16 @@ export const reducer = (state = initial, action: IAction) => {
             newState.UI.edit_Address = false;
             return newState;
 
+        case ActionType.show_edit_Account:
+            newState.UI.edit_Address = true;
+            return newState;
+
+        case ActionType.close_edit_Account:
+            newState.UI.edit_Address = false;
+            const newUser = action as IUserAction;
+            newState.UI.user = newUser.user;
+            return newState;
+
         default:
             window.CS.log("1. Error!!!!! no reducer defined");
             return newState;
