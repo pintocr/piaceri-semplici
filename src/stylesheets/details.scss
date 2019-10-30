@@ -5,3 +5,9 @@
     justify-content: center;
     width: 96vw;
 }
+
+.overview {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

@@ -40,6 +40,14 @@ code {
   color: white;
 }
 
+.navigationEntry:hover {
+  color: orange;
+}
+
+.navigationEntry:active {
+  color: orange;
+}
+
 .logincontainer {
   display: flex;
   flex-direction: row;

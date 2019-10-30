@@ -48,11 +48,11 @@ export default class OnloadProducts extends React.PureComponent<IProps, IState> 
                         <Row type="flex" justify="center">
 
                             <div className="Searchbox">
-                                <Search placeholder="Artikelsuche: Name hier eingeben" style={searchItemStyle} onSearch={value => console.log(value)} enterButton size="small" />
+                                <Search placeholder="Artikelsuche: Name hier eingeben" className="searchItemStyle" onSearch={value => console.log(value)} enterButton size="small" />
                             </div>
 
 
-                            <Select defaultValue="title" size="small" style={searchItemStyle} onChange={this.handleSort}>
+                            <Select defaultValue="title" size="small" className="searchItemStyle" onChange={this.handleSort}>
                                 <Option value="title">Sortiere nach Titel</Option>
                                 <Option value="up">Sortiere nach Preis (auf)</Option>
                                 <Option value="down">Sortiere nach Preis (ab)</Option>
