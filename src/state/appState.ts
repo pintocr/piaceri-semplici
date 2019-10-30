@@ -54,6 +54,7 @@ export interface IBM {
     categories: ICategoryData[];
     products: IProductData[];
     productsLimited: IProductData[];
+    searchResult: IProductData[];
     shoppingCart:IShoppingCart;
 }
 
@@ -111,6 +112,7 @@ export const initial: IState = {
         categories: [],
         products:[],
         productsLimited: [],
+        searchResult: [],
         shoppingCart: {
             items: []
         }

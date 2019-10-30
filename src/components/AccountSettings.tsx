@@ -113,7 +113,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                     </form>
                 </div>
             )
-        }else if (window.CS.getUIState().addresses.length === 0 && window.CS.getUIState().showCreateAddressForm === false && this.state.edit === true) {
+        } else if (window.CS.getUIState().addresses.length === 0 && window.CS.getUIState().showCreateAddressForm === false && this.state.edit === true) {
             const size = 'large'
             return (
                 <div>
@@ -183,7 +183,6 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                             <table className="account-table">
                                 <tr>
                                     <th colSpan={2}>Mein Account&nbsp;&nbsp;</th><th> <Icon type="edit" onClick={this.handleEdit} /> <br /><br /></th>
-
                                 </tr>
                                 <tr>
                                     <td><p>Nutzername:</p>&nbsp;</td>
@@ -235,7 +234,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                     </form>
                 </div>
             )
-        }else if (window.CS.getUIState().addresses.length === 0 && window.CS.getUIState().showCreateAddressForm === false) {
+        } else if (window.CS.getUIState().addresses.length === 0 && window.CS.getUIState().showCreateAddressForm === false) {
             const size = 'large'
             return (
                 <div>
@@ -397,7 +396,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
             },
             edit: true
         });
-        
+
         const action: IAction = {
             type: ActionType.show_edit_Account
         }
@@ -413,56 +412,56 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
 
 }
 
-function updateUserDataActionCreator(input:IUserData){
+function updateUserDataActionCreator(input: IUserData) {
     return function (dispatch: any) {
         const uiAction: IAction = {
             type: ActionType.server_called
         }
         dispatch(uiAction);
-        
+
         const newUserData = input;
         axios.post(`${process.env.REACT_APP_BACKEND}/user/editUser/${newUserData._id}`, newUserData)
-          .then(res => {
-            console.log("update user route", res)
-            console.log("user_ID", window.CS.getUIState().user._id)
-            const userUpdateAction: IUserAction = {
-                type: ActionType.close_edit_Account,
-                user: newUserData as IUserData
-            }
-            window.CS.clientAction(userUpdateAction)
-          })
-          .catch(error => {
-            switch(error.response.data.error){
-                case "all fields must be filled":
+            .then(res => {
+                console.log("update user route", res)
+                console.log("user_ID", window.CS.getUIState().user._id)
+                const userUpdateAction: IUserAction = {
+                    type: ActionType.close_edit_Account,
+                    user: newUserData as IUserData
+                }
+                window.CS.clientAction(userUpdateAction)
+            })
+            .catch(error => {
+                switch (error.response.data.error) {
+                    case "all fields must be filled":
                         message.error("Bitte füllen Sie alle Felder aus");
                         break;
-                case "user already exists":
+                    case "user already exists":
                         message.error("Dieser Username ist bereits vergeben");
                         break;
-                case "not a real email":
+                    case "not a real email":
                         message.error("Bitte geben Sie ihre richtige Email Adresse an");
                         break;
-                default:
-                console.log("unbekannter Datenbankfehler");
-                break;
-            }
-          });
-        }
-      };
-      export function getUserData() {
-        console.log("##################################### --- getAddressActionCreator wird ausgeführt!")
-        return function (dispatch: any) {
-            const uiAction: IAction = {
-                type: ActionType.server_called
-            }
-            dispatch(uiAction);
-            axios.get(`${process.env.REACT_APP_BACKEND}/user/getUserData/${window.CS.getUIState().user.user_name}`).then(response => {
-                console.log("address data", response.data);
-                const responseAction: IUserAction = {
-                    type: ActionType.get_all_user_data,
-                    user: response.data.user as IUserData
+                    default:
+                        console.log("unbekannter Datenbankfehler");
+                        break;
                 }
-                dispatch(responseAction);
-            }).catch(function (error) { console.log(error); })
-        }
+            });
     }
+};
+export function getUserData() {
+    console.log("##################################### --- getAddressActionCreator wird ausgeführt!")
+    return function (dispatch: any) {
+        const uiAction: IAction = {
+            type: ActionType.server_called
+        }
+        dispatch(uiAction);
+        axios.get(`${process.env.REACT_APP_BACKEND}/user/getUserData/${window.CS.getUIState().user.user_name}`).then(response => {
+            console.log("address data", response.data);
+            const responseAction: IUserAction = {
+                type: ActionType.get_all_user_data,
+                user: response.data.user as IUserData
+            }
+            dispatch(responseAction);
+        }).catch(function (error) { console.log(error); })
+    }
+}

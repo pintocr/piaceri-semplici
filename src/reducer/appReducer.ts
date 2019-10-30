@@ -150,6 +150,12 @@ export const reducer = (state = initial, action: IAction) => {
             newState.UI.user = newUser.user;
             return newState;
 
+        case ActionType.add_searched_Products:
+            const searchedProducts = action as IProductsLimitedAction;
+            newState.BM.searchResult = searchedProducts.products;
+            newState.BM.productsLimited= searchedProducts.products;
+            return newState;
+
         default:
             window.CS.log("1. Error!!!!! no reducer defined");
             return newState;
