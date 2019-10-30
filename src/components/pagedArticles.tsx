@@ -4,6 +4,10 @@ import "../stylesheets/pages.scss";
 import { Card, Icon, Rate, Button, message } from 'antd';
 import { IProductData } from '../App';
 import { Link } from 'react-router-dom';
+import { ActionType } from '../framework/IAction';
+import { IWindow } from '../framework/IWindow'
+import {IShoppingCartAction} from './DetailPage'
+declare let window: IWindow;
 
 
 const cardStyle = { width: 240, height: 500, margin: 12, border: 'none', overflow: 'hidden', backgroundColor: '#472615', cursor: 'default' }
@@ -58,14 +62,14 @@ export default class PagedArticles extends React.PureComponent<IProps, IState> {
     onChangeBasket = () => {
         message.success("Der Artikel wurde erfolgreich in den Warenkorb gelegt");
 
-        // const action: IShoppingCartAction = {
-        //     type: ActionType.addToShoppingCart,
-        //     productId : this.state.product._id,
-        //     amount: this.state.amount,
-        //     title: this.state.product.title,
-        //     price: this.state.product.price,
-        //   }
+         const action: IShoppingCartAction = {
+             type: ActionType.addToShoppingCart,
+             productId : this.props.product._id,
+             amount: 1,
+             title: this.props.product.title,
+             price: this.props.product.price,
+           }
 
-        // window.CS.clientAction(action);
+         window.CS.clientAction(action);
     }
 }
