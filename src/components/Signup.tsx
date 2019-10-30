@@ -159,7 +159,7 @@ export default class SignUpModal extends React.PureComponent<IProps, IState> {
           <Input placeholder= "telefon" name= "user_phone" value = {this.state.inputData.user_phone} onChange={this.handleChange}/>&nbsp;
         </form>
           <p>Sie haben bereits einen Account bei uns?</p>
-          <a onClick={this.handleLink}>Hier geht es zur Anmeldung</a>
+          <a onClick={this.handleLink} style={{color: 'rgb(71, 38, 21)'}}>Hier geht es zur Anmeldung</a>
         </Modal>
       </div>
     );

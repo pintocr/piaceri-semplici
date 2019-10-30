@@ -45,7 +45,7 @@ export default class Address extends React.PureComponent<IProps, IState> {
       <div>
 
         <div className="DeliveryAddress">
-          <Collapse defaultActiveKey={['1']} onChange={this.handleChange}>
+          <Collapse defaultActiveKey={['1']} style={{width: '300px'}} onChange={this.handleChange}>
             <Panel header={this.props.address.type} key={this.props.address._id}>
               <Descriptions title="Adresse">
                 <Descriptions.Item label="Stadt">{this.props.address.city}</Descriptions.Item>
@@ -63,7 +63,7 @@ export default class Address extends React.PureComponent<IProps, IState> {
                 <Descriptions.Item label="Art der Adresse">{this.props.address.type}</Descriptions.Item>
               </Descriptions>
               <br/>
-              <Button type="primary" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
+              <Button type="primary" className="accountButton" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
           <Icon type="minus-square" />Adresse entfernen
         </Button>
             </Panel>

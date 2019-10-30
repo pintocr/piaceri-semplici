@@ -35,8 +35,8 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
         if (window.CS.getUIState().addresses.length !== 0 && window.CS.getUIState().showCreateAddressForm === false) {
             const size = 'large'
             return (
-                <div>
-                    <form id="AccountSettings" >
+                <div >
+                    <form id="AccountSettings" style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} >
                         <div>
                             <table className="account-table">
                                 <tr>
@@ -80,7 +80,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
 
                                 <tr>
                                     <td>
-                                        <Button type="primary" size={size} onClick={this.createAddress}>
+                                        <Button type="primary"  className="accountButton" size={size} onClick={this.createAddress}>
                                             <Icon type="plus-square" />Addresse hinzufügen
                                     </Button>
                                     </td>
@@ -97,7 +97,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
             const size = 'large'
             return (
                 <div>
-                    <form id="AccountSettings" >
+                    <form id="AccountSettings" style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}} >
                         <div>
                             <table className="account-table">
                                 <tr>
@@ -141,7 +141,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <Button type="primary" size={size} onClick={this.createAddress}>
+                                        <Button type="primary" className="accountButton" size={size} onClick={this.createAddress}>
                                             <Icon type="plus-square" />Addresse hinzufügen
                                     </Button>
                                     </td>
