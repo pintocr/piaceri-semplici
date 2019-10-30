@@ -11,7 +11,7 @@ declare let window: IWindow;
 
 
 const cardStyle = { width: 240, height: 500, margin: 12, border: 'none', overflow: 'hidden', backgroundColor: '#472615', cursor: 'default' }
-const bodyStyle = { backgroundColor: '#472615', height: '100' }
+const bodyStyle = { backgroundColor: '#472615' }
 
 interface IProps {
     product: IProductData
@@ -36,19 +36,20 @@ export default class PagedArticles extends React.PureComponent<IProps, IState> {
                             <div className="pics"><img alt={this.props.product.title} src={path} id={this.props.product._id} /></div>
                         </Link>}>
 
-                    <div className="metaStyle">
-                        <Link to={'/detailpage/' + this.props.product._id} style={{color: 'orange'}}  >
-                            <div>{this.props.product.title}</div>
+                    <div className="text-container">
+                        <Link to={'/detailpage/' + this.props.product._id} className="descStyle" >
+                            <div><b>{this.props.product.title}</b></div>
                             <div>{price}</div>
                             <div>{this.props.product.manufacturer}</div>
                         </Link>
                         <div>
-                            <Button onClick={this.onChangeBasket} type="primary" style={{ backgroundColor: "#472615", borderColor: "#472615" }}>
+                            <Button onClick={this.onChangeBasket} type="primary" className="shopMe" >
                                 <Icon type="shopping-cart" style={{ fontSize: '20px' }} />
                                 In den Warenkorb
                             </Button>
+                            <Rate disabled allowHalf style={{fontSize: '15px', color: '#D4AF37' }} defaultValue={4.5} />
                         </div>
-                        <div><Rate disabled allowHalf style={{ color: '#D4AF37' }} defaultValue={4.5} /></div>
+                        <div></div>
                     </div>
  
                 </Card>

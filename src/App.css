@@ -1,3 +1,18 @@
 .App {
   text-align: center;
 }
+
+.searchItemStyle {
+  width: 180px;
+  margin: 2px;
+}
+
+.searchItemStyle button {
+  background: linear-gradient(#8B4513, rgb(71, 38, 21));
+  border-color: transparent;
+}
+
+.searchItemStyle button:hover {
+  background: linear-gradient(rgb(71, 38, 21),#8B4513);
+  border-color: transparent;
+}
