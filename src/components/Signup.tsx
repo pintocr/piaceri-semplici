@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modal, Button, Input, message, Icon }from 'antd'
+import { Modal, Button, Input, message, Icon } from 'antd'
 import axios from 'axios';
 
 //redux

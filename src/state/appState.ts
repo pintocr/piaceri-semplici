@@ -11,6 +11,8 @@ export interface IUI {
     addresses: IAddressData[];
     showCreateAddressForm: boolean;
     shoppingVisible: boolean;
+    edit_Address : boolean;
+    edit_Account : boolean;
 }
 
 
@@ -52,6 +54,7 @@ export interface IBM {
     categories: ICategoryData[];
     products: IProductData[];
     productsLimited: IProductData[];
+    searchResult: IProductData[];
     shoppingCart:IShoppingCart;
 }
 
@@ -91,6 +94,8 @@ export const initial: IState = {
         signupVisible: false,
         loginVisible: false,
         shoppingVisible: false,
+        edit_Address: false,
+        edit_Account: false,
         user: {
             _id: "",
             user_name: "",
@@ -107,6 +112,7 @@ export const initial: IState = {
         categories: [],
         products:[],
         productsLimited: [],
+        searchResult: [],
         shoppingCart: {
             items: []
         }

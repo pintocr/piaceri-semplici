@@ -5,7 +5,7 @@ import "antd/dist/antd.css";
 import PagedArticles from './pagedArticles';
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow';
-import { IProductData, IProductsLimitedAction } from '../App';
+import { IProductData, IProductsLimitedAction, searchAnything } from '../App';
 
 declare let window: IWindow;
 const { Option } = Select;
@@ -33,11 +33,12 @@ export default class OnloadProducts extends React.PureComponent<IProps, IState> 
         super(props);
 
         this.handleSort = this.handleSort.bind(this);
+        this.handleSearch = this.handleSearch.bind(this);
 
     }
 
     render() {
-
+        console.log("onloadPage")
         return (
             <div>
                 <div className="App">
@@ -48,7 +49,7 @@ export default class OnloadProducts extends React.PureComponent<IProps, IState> 
                         <Row type="flex" justify="center">
 
                             <div className="Searchbox">
-                                <Search placeholder="Artikelsuche: Name hier eingeben" className="searchItemStyle" onSearch={value => console.log(value)} enterButton size="small" />
+                                <Search placeholder="Artikelsuche: Name hier eingeben" className="searchItemStyle" onSearch={this.handleSearch} enterButton size="small" />
                             </div>
 
 
@@ -106,6 +107,11 @@ export default class OnloadProducts extends React.PureComponent<IProps, IState> 
 
 
 
+    }
+
+    handleSearch(e:any){
+        console.log(e)
+        window.CS.clientAction(searchAnything(e))
     }
 
 

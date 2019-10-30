@@ -82,7 +82,7 @@ export const reducer = (state = initial, action: IAction) => {
 
         case ActionType.close_Address_Form:
             newState.UI.showCreateAddressForm = false;
-            
+
         case ActionType.changeToLoginModal:
             newState.UI.signupVisible = false;
             newState.UI.loginVisible = true;
@@ -130,6 +130,30 @@ export const reducer = (state = initial, action: IAction) => {
         case ActionType.deleteLine:
             const lineToDelete = action as IDeleteOneLine;
             newState.BM.shoppingCart.items.splice(lineToDelete.indexOfLine, 1);
+            return newState;
+
+        case ActionType.show_edit_Address:
+            newState.UI.edit_Address = true;
+            return newState;
+
+        case ActionType.close_edit_Address:
+            newState.UI.edit_Address = false;
+            return newState;
+
+        case ActionType.show_edit_Account:
+            newState.UI.edit_Address = true;
+            return newState;
+
+        case ActionType.close_edit_Account:
+            newState.UI.edit_Address = false;
+            const newUser = action as IUserAction;
+            newState.UI.user = newUser.user;
+            return newState;
+
+        case ActionType.add_searched_Products:
+            const searchedProducts = action as IProductsLimitedAction;
+            newState.BM.searchResult = searchedProducts.products;
+            newState.BM.productsLimited= searchedProducts.products;
             return newState;
 
         default:

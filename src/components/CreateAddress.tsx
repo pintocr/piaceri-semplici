@@ -88,9 +88,6 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
           case "all fields must be filled":
             message.error("Bitte füllen Sie alle Felder aus");
             break;
-          case "user already exists":
-            message.error("Dieser Username ist bereits vergeben");
-            break;
           case "not a real email":
             message.error("Bitte geben Sie ihre richtige Email Adresse an");
             break;
@@ -176,8 +173,8 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
                 <td>AbholstationID:</td>
                 <td><Input placeholder="AbholstationID" name="pickup_ident_no" value={this.state.inputData.pickup_ident_no} onChange={this.handleChange} />&nbsp;</td>
               </tr>
-             
-    </table>
+
+            </table>
           </form>
           <Button key="back" onClick={this.handleCancel}>
             Abbrechen
