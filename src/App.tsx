@@ -11,6 +11,7 @@ import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
 import AccountSettings from './components/AccountSettings'
 import PaymentPage from './components/Payment';
+import FinishOrder from './components/FinishOrder'
 declare let window: IWindow;
 
 interface IProps {
@@ -66,6 +67,8 @@ export default class App extends React.PureComponent<IProps, IState> {
             <Route path="/detailpage/:id" render={(props) => <DetailPage {...props} />}/>  
             <Route exact path="/"><OnloadProducts limitedList={window.CS.getBMState().productsLimited} /></Route>
             <Route path="/payment" render ={ () => <PaymentPage stateCounter={window.CS.getUIState().counter}/>} />
+            <Route path="/FinishOrder" render ={ () => <FinishOrder stateCounter={window.CS.getUIState().counter}/>} />
+
       </div>
 
     );

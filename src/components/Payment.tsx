@@ -1,9 +1,14 @@
 import React from 'react';
 import '../stylesheets/details.scss';
-import { InputNumber, Button, Icon, message, Row, Checkbox, Col, Card } from 'antd';
+import { InputNumber, Button, Icon, message, Row, Checkbox, Col, Card} from 'antd';
 import {IProduct} from './categoryPage'
 import {IDeleteOneLine, ICountAction } from './shoppingCart'
+import { Link, Redirect } from 'react-router-dom';
 import DatePicker from "react-datepicker";
+import axios from 'axios';
+import {IAddressData } from '../state/appState'
+
+
  
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -22,6 +27,7 @@ interface IState {
     today : Date;
     deliveryDate: Date;
     checkBoxStatus: Array<boolean>;
+    redirect: boolean
 }
 
 
@@ -32,9 +38,13 @@ export interface IShoppingCartAction extends IAction {
     price: number;
   }
 
+  export interface IAddressAction extends IAction {
+    addresses: IAddressData[]
+}
 
 
-export default class PaymentPage extends React.PureComponent<IProps, IState>  {
+
+  export default class PaymentPage extends React.PureComponent<IProps, IState>  {
 
 
     constructor(props : any) {
@@ -44,6 +54,7 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
         this.handleChange = this.handleChange.bind(this);
         this.isWeekday = this.isWeekday.bind(this);
         this.slowDHL = this.slowDHL.bind(this);
+        this.continue = this.continue.bind(this);
         this.state = {
             amount : 1,
             product: {
@@ -61,7 +72,8 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
             },
             today: new Date(),
             deliveryDate : new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-            checkBoxStatus : [false, false, false, false, false]
+            checkBoxStatus : [false, false, false, false, false],
+            redirect : false
         }
     };
 
@@ -159,118 +171,152 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
 
     }
 
+    continue = () => {
+        if(window.CS.getBMState().shoppingCart.items.length <= 0){
+            message.error("Sie haben keine Artikel in ihrem Warenkorb");
+        } else if (this.state.checkBoxStatus[0] === false && this.state.checkBoxStatus[1] === false) {
+            message.error("Sie haben keine Versandart aufgewählt");
+        } else if (this.state.checkBoxStatus[2]=== false && this.state.checkBoxStatus[3]=== false && this.state.checkBoxStatus[4]=== false){
+            message.error("Sie haben keine Zahlungsart ausgewählt");
+        } else if (window.CS.getUIState().loggedIn === false){
+            message.error("Sie müssen angemeldet sein um zu bestellen");
+            const action: IAction = {
+                type: ActionType.openLoginModal
+              }
+              window.CS.clientAction(action);
+        } else {
+
+            axios.get(`${process.env.REACT_APP_BACKEND}/address/getAddressData/${window.CS.getUIState().user._id}`).then(response => {
+                console.log("address data", response.data);
+                const responseAction: IAddressAction = {
+                    type: ActionType.get_address_data,
+                    addresses: response.data.addressData as IAddressData[]
+                }
+                window.CS.clientAction(responseAction);
+            }).catch(function (error) { console.log(error); })
+
+
+            this.setState({ redirect: true });
+        }
+    }
+
 
     render(){
-
-
-        return(
-           
-            <Row type="flex" justify="center" style = {{flexDirection : "column"}}>
-            
-            <Card
-                    hoverable
-                    style={{ width: 700 }}
-            >
-                        <h2>Ihr Warenkorb</h2>
-
-                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, color: 'white', backgroundColor: 'rgb(71, 38, 21)'  }}>
-                        <Col span={7}><b>Artikelname</b></Col>
-                        <Col span={4} style={{padding: '0 2 0 2'}}><b>Einzelpreis</b></Col>
-                        <Col span={6}><b>Menge</b></Col>
-                        <Col span={4}><b>Gesamt</b></Col>
-                        <Col span={3}><b>löschen</b></Col>
-                        </Row>
-
-                        {window.CS.getBMState().shoppingCart.items.map((element, index) => <div>
-                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5 }}>
-                        <Col span={7}>{element.title}</Col>
-                        <Col span={4}>{Number(element.price).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</Col>
-                        <Col span={6}>
-                        
-                            <Button name={"" + index} size="small" onClick={this.onChangeMinus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
-                            -
-                        </Button>&nbsp;
-
-                        <InputNumber size="small" min={1} max={100} value={window.CS.getBMState().shoppingCart.items[index].count} disabled= {true} defaultValue={1} style={{ width: '2.5rem', color: "black", backgroundColor: "white" }} />&nbsp;
-
-                        <Button name={"" + index} id={"minus" + index} size="small" onClick={this.onChangePlus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
-                            +
-                        </Button>&nbsp;
-                        </Col>
-                        <Col span={4}>{Number(this.calculateProductSum(element.price, element.count)).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</Col>
-
-                        <Col span={3}><Button name={"" + index} onClick={this.deleteLine} size="small"><span style={{ color: "red" }}><Icon type="close" /></span></Button>&nbsp;</Col>
-                        
-                        </Row>
-                        </div>)}
-
-                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
-                        <Col span={17}><b>Zwischensumme: </b></Col>
-                        <Col span={7}><b>{Number(this.calculateSum()).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</b></Col>
-                        </Row>
-                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
-                        <Col span={17}><b>Lieferkosten: </b></Col>
-                        <Col span={7}><b>0,00 €</b></Col>
-                        </Row>
-                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
-                        <Col span={17}><b>Gesamtsumme: </b></Col>
-                        <Col span={7}><b>{Number(this.calculateSum()).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</b></Col>
-                        </Row>
-                </Card>
-           
-                <Card
-                    hoverable
-                    style={{ width: 700 }}
-                 >
-                <h2>Versand</h2>
-                <p>Kostenlose Lieferung</p>
-                <div>
-                    <Checkbox name="DHL" checked = {this.state.checkBoxStatus[0]}  onChange={this.checkBoxChange}>DHL</Checkbox>&nbsp;
-                    <img src="../img/DHL.jpg"></img>&nbsp;
-                    <p>Voraussichtlicher Liefertermin</p>
-                    <DatePicker disabled = {true} selected={this.slowDHL()} onChange={this.handleChange} filterDate={this.isWeekday}/>
-                </div>
+        if(this.state.redirect){
+            return(<Redirect to = "/FinishOrder"/>)
+        } else {
+            return(           
+                <Row type="flex" justify="center" style = {{flexDirection : "column"}}>
                 
-                <div>
-                    <Checkbox name="DHL_EXPRESS" checked = {this.state.checkBoxStatus[1]} onChange={this.checkBoxChange}>DHL Express</Checkbox>&nbsp;
-                    <img src="../img/DHL_Express.jpg"></img>&nbsp;
-                    <p>Wunschliefertermin</p>
-                    <DatePicker selected={this.state.deliveryDate} onChange={this.handleChange} filterDate={this.isWeekday}/>
-                </div>
-                </Card>
                 <Card
-                    hoverable
-                    style={{ width: 700 }}
-                 >
-                <h2>Zahlung</h2>
-                <div>
-                <Checkbox name="Lastschrift" checked = {this.state.checkBoxStatus[2]} onChange={this.checkBoxChange}>Lastschrift</Checkbox>&nbsp;
-                <img src="../img/Kauf_auf_Lastschrift.png"></img>&nbsp;
-                </div>
-                
-                <div>
-                <Checkbox name="Kreditkarte" checked = {this.state.checkBoxStatus[3]} onChange={this.checkBoxChange}>Kreditkarte</Checkbox>&nbsp;
-                <img src="../img/logo-visa.png"></img>&nbsp;
-                </div>
-
-                <div>
-                <Checkbox name="Paypal" checked = {this.state.checkBoxStatus[4]} onChange={this.checkBoxChange}>Paypal</Checkbox>&nbsp;
-                <img src="../img/paypal.png"></img>&nbsp;
-                </div>
-                </Card>
-
-                <Card
-                    hoverable
-                    style={{ width: 700 }}
-                 >
-                <Button>Zurück</Button>&nbsp;
-                <Button>Weiter</Button>&nbsp;
-                </Card>
-
-            </Row>
+                        hoverable
+                        style={{ width: 700 }}
+                >
+                            <h2>Ihr Warenkorb</h2>
+    
+                            <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, color: 'white', backgroundColor: 'rgb(71, 38, 21)'  }}>
+                            <Col span={7}><b>Artikelname</b></Col>
+                            <Col span={4} style={{padding: '0 2 0 2'}}><b>Einzelpreis</b></Col>
+                            <Col span={6}><b>Menge</b></Col>
+                            <Col span={4}><b>Gesamt</b></Col>
+                            <Col span={3}><b>löschen</b></Col>
+                            </Row>
+    
+                            {window.CS.getBMState().shoppingCart.items.map((element, index) => <div>
+                            <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5 }}>
+                            <Col span={7}>{element.title}</Col>
+                            <Col span={4}>{Number(element.price).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</Col>
+                            <Col span={6}>
+                            
+                                <Button name={"" + index} size="small" onClick={this.onChangeMinus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
+                                -
+                            </Button>&nbsp;
+    
+                            <InputNumber size="small" min={1} max={100} value={window.CS.getBMState().shoppingCart.items[index].count} disabled= {true} defaultValue={1} style={{ width: '2.5rem', color: "black", backgroundColor: "white" }} />&nbsp;
+    
+                            <Button name={"" + index} id={"minus" + index} size="small" onClick={this.onChangePlus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
+                                +
+                            </Button>&nbsp;
+                            </Col>
+                            <Col span={4}>{Number(this.calculateProductSum(element.price, element.count)).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</Col>
+    
+                            <Col span={3}><Button name={"" + index} onClick={this.deleteLine} size="small"><span style={{ color: "red" }}><Icon type="close" /></span></Button>&nbsp;</Col>
+                            
+                            </Row>
+                            </div>)}
+    
+                            <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
+                            <Col span={17}><b>Zwischensumme: </b></Col>
+                            <Col span={7}><b>{Number(this.calculateSum()).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</b></Col>
+                            </Row>
+                            <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
+                            <Col span={17}><b>Lieferkosten: </b></Col>
+                            <Col span={7}><b>0,00 €</b></Col>
+                            </Row>
+                            <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
+                            <Col span={17}><b>Gesamtsumme: </b></Col>
+                            <Col span={7}><b>{Number(this.calculateSum()).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</b></Col>
+                            </Row>
+                    </Card>
+               
+                    <Card
+                        hoverable
+                        style={{ width: 700 }}
+                     >
+                    <h2>Versand</h2>
+                    <p>Kostenlose Lieferung</p>
+                    <div>
+                        <Checkbox name="DHL" checked = {this.state.checkBoxStatus[0]}  onChange={this.checkBoxChange}>DHL</Checkbox>&nbsp;
+                        <img src="../img/DHL.jpg"></img>&nbsp;
+                        <p>Voraussichtlicher Liefertermin</p>
+                        <DatePicker disabled = {true} selected={this.slowDHL()} onChange={this.handleChange} filterDate={this.isWeekday}/>
+                    </div>
+                    
+                    <div>
+                        <Checkbox name="DHL_EXPRESS" checked = {this.state.checkBoxStatus[1]} onChange={this.checkBoxChange}>DHL Express</Checkbox>&nbsp;
+                        <img src="../img/DHL_Express.jpg"></img>&nbsp;
+                        <p>Wunschliefertermin</p>
+                        <DatePicker selected={this.state.deliveryDate} onChange={this.handleChange} filterDate={this.isWeekday}/>
+                    </div>
+                    </Card>
+                    <Card
+                        hoverable
+                        style={{ width: 700 }}
+                     >
+                    <h2>Zahlung</h2>
+                    <div>
+                    <Checkbox name="Lastschrift" checked = {this.state.checkBoxStatus[2]} onChange={this.checkBoxChange}>Lastschrift</Checkbox>&nbsp;
+                    <img src="../img/Kauf_auf_Lastschrift.png"></img>&nbsp;
+                    </div>
+                    
+                    <div>
+                    <Checkbox name="Kreditkarte" checked = {this.state.checkBoxStatus[3]} onChange={this.checkBoxChange}>Kreditkarte</Checkbox>&nbsp;
+                    <img src="../img/logo-visa.png"></img>&nbsp;
+                    </div>
+    
+                    <div>
+                    <Checkbox name="Paypal" checked = {this.state.checkBoxStatus[4]} onChange={this.checkBoxChange}>Paypal</Checkbox>&nbsp;
+                    <img src="../img/paypal.png"></img>&nbsp;
+                    </div>
+                    </Card>
+    
+                    <Card
+                        hoverable
+                        style={{ width: 700 }}
+                     >
+                    <Link to="/">
+                    <Button>Zurück</Button>&nbsp;
+                    </Link>
+    
+                    <Button onClick = {this.continue}>Weiter</Button>&nbsp;
+                    </Card>
+    
+                </Row>
+                 ) 
+        }
 
             
-        ) 
+
     }
 
 

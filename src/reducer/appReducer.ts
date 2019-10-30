@@ -125,6 +125,9 @@ export const reducer = (state = initial, action: IAction) => {
         case ActionType.changeSpecificAmount:
             const amountChangeData = action as ICountAction
             newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count = newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count + amountChangeData.delta
+            if(newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count < 1){
+                newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count = 1;
+            }
             return newState;
 
         case ActionType.deleteLine:

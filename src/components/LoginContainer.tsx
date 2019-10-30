@@ -61,7 +61,7 @@ export default class LoginContainerModal extends React.PureComponent<IProps, ISt
             return (
                 <span className="logincontainer">
                     <SignUpModal stateCounter={window.CS.getUIState().counter} />&nbsp;
-            <LoginModal stateCounter={window.CS.getUIState().counter} />
+                    <LoginModal stateCounter={window.CS.getUIState().counter} />
                 </span>
             );
         }
