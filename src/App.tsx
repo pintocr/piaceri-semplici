@@ -10,6 +10,7 @@ import CategoryPage from './components/categoryPage'
 import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
 import AccountSettings from './components/AccountSettings'
+import PaymentPage from './components/Payment';
 declare let window: IWindow;
 
 interface IProps {
@@ -64,7 +65,7 @@ export default class App extends React.PureComponent<IProps, IState> {
             <Route path="/account"><AccountSettings stateCounter={window.CS.getUIState().counter} /></Route>
             <Route path="/detailpage/:id" render={(props) => <DetailPage {...props} />}/>  
             <Route exact path="/"><OnloadProducts limitedList={window.CS.getBMState().productsLimited} /></Route>
-           
+            <Route path="/payment" render ={ () => <PaymentPage stateCounter={window.CS.getUIState().counter}/>} />
       </div>
 
     );
