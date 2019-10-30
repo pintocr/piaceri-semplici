@@ -1,6 +1,6 @@
 import React from 'react';
 import '../stylesheets/details.scss';
-import { InputNumber, Button, Icon, message, Row, Checkbox } from 'antd';
+import { InputNumber, Button, Icon, message, Row, Checkbox, Col, Card } from 'antd';
 import {IProduct} from './categoryPage'
 import {IDeleteOneLine, ICountAction } from './shoppingCart'
 import DatePicker from "react-datepicker";
@@ -166,36 +166,68 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
         return(
            
             <Row type="flex" justify="center" style = {{flexDirection : "column"}}>
-                 <h2>Ihr Warenkorb</h2>
-             {window.CS.getBMState().shoppingCart.items.map((element, index) => <div>
-                <Row type="flex" justify="center">
-                 <p>{element.title}</p>&nbsp;
-                 <p>Einzelpreis: {element.price} €</p>&nbsp;
-                 <Button name={"" + index} size="small" onClick={this.onChangeMinus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
-                    -
-                </Button>&nbsp;
+            
+            <Card
+                    hoverable
+                    style={{ width: 700 }}
+            >
+                        <h2>Ihr Warenkorb</h2>
 
-                <InputNumber size="small" min={1} max={100} value={window.CS.getBMState().shoppingCart.items[index].count} disabled= {true} defaultValue={1} style={{ width: '2.5rem', color: "black", backgroundColor: "white" }} />&nbsp;
+                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, color: 'white', backgroundColor: 'rgb(71, 38, 21)'  }}>
+                        <Col span={7}><b>Artikelname</b></Col>
+                        <Col span={4} style={{padding: '0 2 0 2'}}><b>Einzelpreis</b></Col>
+                        <Col span={6}><b>Menge</b></Col>
+                        <Col span={4}><b>Gesamt</b></Col>
+                        <Col span={3}><b>löschen</b></Col>
+                        </Row>
 
-                <Button name={"" + index} id={"minus" + index} size="small" onClick={this.onChangePlus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
-                    +
-                </Button>&nbsp;
-                <p>Gesamtpreis: {this.calculateProductSum(element.price, element.count )}</p>&nbsp;
+                        {window.CS.getBMState().shoppingCart.items.map((element, index) => <div>
+                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5 }}>
+                        <Col span={7}>{element.title}</Col>
+                        <Col span={4}>{Number(element.price).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</Col>
+                        <Col span={6}>
+                        
+                            <Button name={"" + index} size="small" onClick={this.onChangeMinus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
+                            -
+                        </Button>&nbsp;
 
-                <Button name={"" + index} onClick={this.deleteLine} size="small"><span  style={{color: "red"}}><Icon type="close" /></span></Button>&nbsp;
-                
-                </Row>
-                </div>)}
-                <p>Zwischensumme: {this.calculateSum()} €</p>
-                <p>Lieferkosten: 0,00 €</p>
-                <p>Gesamtsumme: {this.calculateSum()} €</p>&nbsp;
+                        <InputNumber size="small" min={1} max={100} value={window.CS.getBMState().shoppingCart.items[index].count} disabled= {true} defaultValue={1} style={{ width: '2.5rem', color: "black", backgroundColor: "white" }} />&nbsp;
 
+                        <Button name={"" + index} id={"minus" + index} size="small" onClick={this.onChangePlus} type="primary" style={{backgroundColor: "#472615", borderColor: "#472615"}}>
+                            +
+                        </Button>&nbsp;
+                        </Col>
+                        <Col span={4}>{Number(this.calculateProductSum(element.price, element.count)).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</Col>
+
+                        <Col span={3}><Button name={"" + index} onClick={this.deleteLine} size="small"><span style={{ color: "red" }}><Icon type="close" /></span></Button>&nbsp;</Col>
+                        
+                        </Row>
+                        </div>)}
+
+                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
+                        <Col span={17}><b>Zwischensumme: </b></Col>
+                        <Col span={7}><b>{Number(this.calculateSum()).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</b></Col>
+                        </Row>
+                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
+                        <Col span={17}><b>Lieferkosten: </b></Col>
+                        <Col span={7}><b>0,00 €</b></Col>
+                        </Row>
+                        <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, backgroundColor: '#FFEFD5' }}>
+                        <Col span={17}><b>Gesamtsumme: </b></Col>
+                        <Col span={7}><b>{Number(this.calculateSum()).toLocaleString('de', { style: 'currency', currency: 'EUR' })}</b></Col>
+                        </Row>
+                </Card>
+           
+                <Card
+                    hoverable
+                    style={{ width: 700 }}
+                 >
                 <h2>Versand</h2>
                 <p>Kostenlose Lieferung</p>
                 <div>
                     <Checkbox name="DHL" checked = {this.state.checkBoxStatus[0]}  onChange={this.checkBoxChange}>DHL</Checkbox>&nbsp;
                     <img src="../img/DHL.jpg"></img>&nbsp;
-                    <p>Vorraussichtlicher Liefertermin</p>
+                    <p>Voraussichtlicher Liefertermin</p>
                     <DatePicker disabled = {true} selected={this.slowDHL()} onChange={this.handleChange} filterDate={this.isWeekday}/>
                 </div>
                 
@@ -205,7 +237,11 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
                     <p>Wunschliefertermin</p>
                     <DatePicker selected={this.state.deliveryDate} onChange={this.handleChange} filterDate={this.isWeekday}/>
                 </div>
-
+                </Card>
+                <Card
+                    hoverable
+                    style={{ width: 700 }}
+                 >
                 <h2>Zahlung</h2>
                 <div>
                 <Checkbox name="Lastschrift" checked = {this.state.checkBoxStatus[2]} onChange={this.checkBoxChange}>Lastschrift</Checkbox>&nbsp;
@@ -221,8 +257,16 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
                 <Checkbox name="Paypal" checked = {this.state.checkBoxStatus[4]} onChange={this.checkBoxChange}>Paypal</Checkbox>&nbsp;
                 <img src="../img/paypal.png"></img>&nbsp;
                 </div>
+                </Card>
 
+                <Card
+                    hoverable
+                    style={{ width: 700 }}
+                 >
+                <Button>Zurück</Button>&nbsp;
                 <Button>Weiter</Button>&nbsp;
+                </Card>
+
             </Row>
 
             

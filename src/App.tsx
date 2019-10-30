@@ -9,10 +9,7 @@ import DetailPage from './components/DetailPage'
 import CategoryPage from './components/categoryPage'
 import NavBar from './components/NavBar';
 import OnloadProducts from './components/OnloadProducts';
-<<<<<<< HEAD
 import AccountSettings from './components/AccountSettings'
-=======
->>>>>>> da91efa2d138ff4df82b5b444b1967897ec80a9c
 import PaymentPage from './components/Payment';
 declare let window: IWindow;
 
@@ -67,13 +64,8 @@ export default class App extends React.PureComponent<IProps, IState> {
             <Route path="/coffee"><CategoryPage stateCounter={window.CS.getUIState().counter} category="Coffee"/></Route>
             <Route path="/account"><AccountSettings stateCounter={window.CS.getUIState().counter} /></Route>
             <Route path="/detailpage/:id" render={(props) => <DetailPage {...props} />}/>  
-<<<<<<< HEAD
             <Route exact path="/"><OnloadProducts limitedList={window.CS.getBMState().productsLimited} /></Route>
             <Route path="/payment" render ={ () => <PaymentPage stateCounter={window.CS.getUIState().counter}/>} />
-=======
-            <Route path="/payment" render ={ () => <PaymentPage stateCounter={window.CS.getUIState().counter}/>} />
-            <Route exact path="/" component={OnloadProducts} />
->>>>>>> da91efa2d138ff4df82b5b444b1967897ec80a9c
       </div>
 
     );
