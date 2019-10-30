@@ -1,10 +1,15 @@
 import React from 'react';
 import '../stylesheets/details.scss';
-import { InputNumber, Button, Icon, message, Row, Checkbox, Col, Card } from 'antd';
-import { IProduct } from './categoryPage'
-import { IDeleteOneLine, ICountAction } from './shoppingCart'
+import { InputNumber, Button, Icon, message, Row, Checkbox, Col, Card} from 'antd';
+import {IProduct} from './categoryPage'
+import {IDeleteOneLine, ICountAction } from './shoppingCart'
+import { Link, Redirect } from 'react-router-dom';
 import DatePicker from "react-datepicker";
+import axios from 'axios';
+import {IAddressData } from '../state/appState'
 
+
+ 
 import "react-datepicker/dist/react-datepicker.css";
 
 //redux
@@ -22,6 +27,7 @@ interface IState {
     today: Date;
     deliveryDate: Date;
     checkBoxStatus: Array<boolean>;
+    redirect: boolean
 }
 
 
@@ -32,9 +38,13 @@ export interface IShoppingCartAction extends IAction {
     price: number;
 }
 
+  export interface IAddressAction extends IAction {
+    addresses: IAddressData[]
+}
 
 
-export default class PaymentPage extends React.PureComponent<IProps, IState>  {
+
+  export default class PaymentPage extends React.PureComponent<IProps, IState>  {
 
 
     constructor(props: any) {
@@ -44,6 +54,7 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
         this.handleChange = this.handleChange.bind(this);
         this.isWeekday = this.isWeekday.bind(this);
         this.slowDHL = this.slowDHL.bind(this);
+        this.continue = this.continue.bind(this);
         this.state = {
             amount: 1,
             product: {
@@ -60,8 +71,9 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
                 rating: 4,
             },
             today: new Date(),
-            deliveryDate: new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
-            checkBoxStatus: [false, false, false, false, false]
+            deliveryDate : new Date(new Date().getTime() + 24 * 60 * 60 * 1000),
+            checkBoxStatus : [false, false, false, false, false],
+            redirect : false
         }
     };
 
@@ -159,12 +171,41 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
 
     }
 
+    continue = () => {
+        if(window.CS.getBMState().shoppingCart.items.length <= 0){
+            message.error("Sie haben keine Artikel in ihrem Warenkorb");
+        } else if (this.state.checkBoxStatus[0] === false && this.state.checkBoxStatus[1] === false) {
+            message.error("Sie haben keine Versandart aufgewählt");
+        } else if (this.state.checkBoxStatus[2]=== false && this.state.checkBoxStatus[3]=== false && this.state.checkBoxStatus[4]=== false){
+            message.error("Sie haben keine Zahlungsart ausgewählt");
+        } else if (window.CS.getUIState().loggedIn === false){
+            message.error("Sie müssen angemeldet sein um zu bestellen");
+            const action: IAction = {
+                type: ActionType.openLoginModal
+              }
+              window.CS.clientAction(action);
+        } else {
 
-    render() {
+            axios.get(`${process.env.REACT_APP_BACKEND}/address/getAddressData/${window.CS.getUIState().user._id}`).then(response => {
+                console.log("address data", response.data);
+                const responseAction: IAddressAction = {
+                    type: ActionType.get_address_data,
+                    addresses: response.data.addressData as IAddressData[]
+                }
+                window.CS.clientAction(responseAction);
+            }).catch(function (error) { console.log(error); })
 
+
+            this.setState({ redirect: true });
+        }
+    }
+
+render() {
+    if(this.state.redirect){
+        return(<Redirect to = "/FinishOrder"/>)
+    } else {
 
         return (
-
             <div className="overview">
 
                 <Card
@@ -285,14 +326,18 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
                     hoverable
                     style={{ width: 550, margin: 5, cursor: 'default' }}
                 >
+                    <Link to="/">
                     <Button>Zurück</Button>&nbsp;
-                <Button>Weiter</Button>&nbsp;
+                    </Link>
+    
+                    <Button onClick = {this.continue}>Weiter</Button>&nbsp;
                 </Card>
 
 
 
             </div>
         )
+                    }
     }
 
 
