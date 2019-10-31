@@ -62,6 +62,7 @@ export default class LoginContainerModal extends React.PureComponent<IProps, ISt
                 <span className="logincontainer">
                     <SignUpModal stateCounter={window.CS.getUIState().counter} />&nbsp;
                     <LoginModal stateCounter={window.CS.getUIState().counter} />
+                    <Redirect to="/" />
                 </span>
             );
         }
