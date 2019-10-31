@@ -79,6 +79,9 @@ export interface IProductsLoadedAction extends IAction {
 export interface IProductsLimitedAction extends IAction {
   products: IProductData[]
 }
+export interface IProductsSearchedAction extends IAction {
+  products: IProductData[]
+}
 
 export function productsReadActionCreator() {
   return function (dispatch: any) {
@@ -131,4 +134,25 @@ export function limitedProductsActionCreator() {
       window.CS.clientAction(action);
     }
    
+  }
+
+
+  export function searchAnything(search:string){
+    return function (dispatch: any) {
+      const uiAction: IAction = {
+        type: ActionType.server_called
+      }
+      dispatch(uiAction);
+      axios.get(`${process.env.REACT_APP_BACKEND}/product/searchProducts/${search}`).then(response => {
+       
+        if(response.data !== null ){
+        const responseAction: IProductsSearchedAction = {
+          type: ActionType.add_searched_Products,
+          products: response.data as IProductData[]
+        }
+      
+        dispatch(responseAction);
+      }else{window.CS.clientAction(limitedProductsActionCreator())}
+      }).catch(function (error) { console.log(error); })
+    }
   }

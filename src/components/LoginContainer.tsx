@@ -4,7 +4,7 @@ import { Icon } from 'antd';
 import SignUpModal from '../components/Signup';
 import LoginModal from '../components/LogIn';
 import '../index.css';
-import { Link, BrowserRouter as Router } from 'react-router-dom';
+import { Link, Redirect, BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 import {IAddressData } from '../state/appState'
 //redux
@@ -61,7 +61,8 @@ export default class LoginContainerModal extends React.PureComponent<IProps, ISt
             return (
                 <span className="logincontainer">
                     <SignUpModal stateCounter={window.CS.getUIState().counter} />&nbsp;
-            <LoginModal stateCounter={window.CS.getUIState().counter} />
+                    <LoginModal stateCounter={window.CS.getUIState().counter} />
+                    <Redirect to="/" />
                 </span>
             );
         }
