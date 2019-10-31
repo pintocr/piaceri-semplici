@@ -107,39 +107,46 @@ export default class FinishOrder extends React.PureComponent<IProps, IState>  {
             return(<Redirect to = "/"/>)
         } else {
             if (window.CS.getUIState().showCreateAddressForm === false) {
-                const size = 'large'
+                const size = 'small'
                 return (
-                    <div>
+                    <div  className="finish">
                             <div>
+                                
                                 <table className="account-table">
                                     <tr>
-                                        <th>Wählen Sie eine Adresse<br /><br /></th>
+                                        <th colSpan={2}>Wählen Sie eine Adresse<br /><br /></th>
                                     </tr>
                                     <tr>
-                                        <td><p>Empfänger:</p>&nbsp;</td>
-                                        <td><p>{window.CS.getUIState().user.user_first_name}, {window.CS.getUIState().user.user_last_name}</p>&nbsp;</td>
+                                        <td colSpan={2}><p>Empfänger:&nbsp;{window.CS.getUIState().user.user_first_name} {window.CS.getUIState().user.user_last_name}</p></td>
                                     </tr>
                                     {window.CS.getUIState().addresses.map((address, index) =>
-                                        <tr><td>
-                                            <Checkbox name ={"" + index} checked = {this.state.checkBoxStatus[index]} onChange={this.checkBoxChange}><Address key={address._id} address={address} stateCounter={window.CS.getUIState().counter} /></Checkbox>&nbsp;
-                                        </td></tr>)}
+                                        <tr>
+                                            <td><Checkbox name ={"" + index} checked = {this.state.checkBoxStatus[index]} onChange={this.checkBoxChange}/>
+                                            </td>
+                                            <td>
+                                            <Address key={address._id} address={address} stateCounter={window.CS.getUIState().counter} />&nbsp;
+                                        </td>
+                                        </tr>)}
         
                                     <tr>
-                                        <td>
-                                            <Button type="primary" size={size} onClick={this.createAddress}>
+                                        <td colSpan={2}>
+                                            <Button type="primary" className="accountButton" size={size} onClick={this.createAddress}>
                                                 <Icon type="plus-square" />Addresse hinzufügen
                                         </Button>
                                         </td>
                                     </tr>
                                 </table>
-        
+                               
                             </div>
         
+                            <div>
                         <Link to="/payment">
-                            <Button>Zurück</Button>&nbsp;
+                            <Button className="accountButton">Zurück</Button>&nbsp;
                             </Link>
             
-                            <Button onClick = {this.continue}>Zahlungspflichtig bestellen</Button>&nbsp;
+                            <Button style={{color: 'white', backgroundColor: 'darkred'}} onClick = {this.continue}>Zahlungspflichtig bestellen</Button>&nbsp;
+
+                            </div>
                     </div>
                 )
             }else if (window.CS.getUIState().showCreateAddressForm === true) {
