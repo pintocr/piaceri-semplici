@@ -78,21 +78,7 @@ export default class FinishOrder extends React.PureComponent<IProps, IState>  {
     }
 
     continue = () => {
-        if(window.CS.getBMState().shoppingCart.items.length <= 0){
-            message.error("Sie haben keine Artikel in ihrem Warenkorb");
-        } else if (this.state.checkBoxStatus[0] === false && this.state.checkBoxStatus[1] === false) {
-            message.error("Sie haben keine Versandart aufgewählt");
-        } else if (this.state.checkBoxStatus[2]=== false && this.state.checkBoxStatus[3]=== false && this.state.checkBoxStatus[4]=== false){
-            message.error("Sie haben keine Zahlungsart ausgewählt");
-        } else if (window.CS.getUIState().loggedIn === false){
-            message.error("Sie müssen angemeldet sein um zu bestellen");
-            const action: IAction = {
-                type: ActionType.openLoginModal
-              }
-              window.CS.clientAction(action);
-        } else {
             message.success("saving order in DB");
-        }
     }
 
 
