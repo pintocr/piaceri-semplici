@@ -125,6 +125,9 @@ export const reducer = (state = initial, action: IAction) => {
         case ActionType.changeSpecificAmount:
             const amountChangeData = action as ICountAction
             newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count = newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count + amountChangeData.delta
+            if(newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count < 1){
+                newState.BM.shoppingCart.items[amountChangeData.indexOfItem].count = 1;
+            }
             return newState;
 
         case ActionType.deleteLine:
@@ -154,6 +157,10 @@ export const reducer = (state = initial, action: IAction) => {
             const searchedProducts = action as IProductsLimitedAction;
             newState.BM.searchResult = searchedProducts.products;
             newState.BM.productsLimited= searchedProducts.products;
+            return newState;
+
+        case ActionType.deleteShoppingCart:
+            newState.BM.shoppingCart.items = [];
             return newState;
 
         default:
