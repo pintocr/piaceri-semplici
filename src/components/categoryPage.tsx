@@ -5,7 +5,11 @@ import '../stylesheets/pages.scss';
 import '../index.css';
 import { Row, Select, Input } from 'antd';
 import PagedArticles from './pagedArticles';
+import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow';
+import {IProductsSearchedAction, IProductData} from '../App';
+import axios from 'axios';
+
 declare let window: IWindow;
 const { Option } = Select;
 const { Search } = Input;
@@ -52,6 +56,7 @@ export default class CategoryPage extends React.PureComponent<IProps, IState> {
         super(props);
 
         this.handleSort = this.handleSort.bind(this);
+        this.categorize =  this.categorize.bind(this);
 
         this.state = {
             categoryId: '',
@@ -64,24 +69,7 @@ export default class CategoryPage extends React.PureComponent<IProps, IState> {
     componentDidMount() {
 
         // window.CS.getBMState().categories.
-        Axios.get(`${process.env.REACT_APP_BACKEND}/category`)
-            .then(res => {
-                let categoryInfo = window.CS.getBMState().categories.filter((cat: ICategory) => cat.name === this.props.category)[0];
-                this.setState({
-                    categoryId: categoryInfo._id,
-                    categoryDescription: categoryInfo.description,
-                    pictureList: categoryInfo.pic_list.map((pic: string) =>
-                        process.env.REACT_APP_BACKEND + '/images/' + pic)
-                });
-
-                Axios.get(`${process.env.REACT_APP_BACKEND}/product`)
-                    .then(res => {
-                        let productList = res.data.filter((product: IProduct) => product.ref_category === this.state.categoryId);
-
-                        this.setState({ products: productList })
-
-                    })
-            })
+        this.categorize()
     }
 
 
@@ -124,6 +112,32 @@ export default class CategoryPage extends React.PureComponent<IProps, IState> {
         )
     }
 
+    categorize(){
+        Axios.get(`${process.env.REACT_APP_BACKEND}/category`)
+        .then(res => {
+            let categoryInfo = window.CS.getBMState().categories.filter((cat: ICategory) => cat.name === this.props.category)[0];
+            this.setState({
+                categoryId: categoryInfo._id,
+                categoryDescription: categoryInfo.description,
+                pictureList: categoryInfo.pic_list.map((pic: string) =>
+                    process.env.REACT_APP_BACKEND + '/images/' + pic)
+            });
+    
+            Axios.get(`${process.env.REACT_APP_BACKEND}/product`)
+                .then(res => {
+                    let productList = res.data.filter((product: IProduct) => product.ref_category === this.state.categoryId);
+    
+                    this.setState({ products: productList })
+    
+                })
+        })
+    }
+
+    handleSearch(e:any){
+        console.log(e)
+     //   window.CS.clientAction(searchAnything(e))
+    }
+
     handleSort(event: any) {
 
         switch (event) {
@@ -145,3 +159,24 @@ export default class CategoryPage extends React.PureComponent<IProps, IState> {
         }
     }
 }
+
+// export function searchAnything(search:string){
+//     return function (dispatch: any) {
+//       const uiAction: IAction = {
+//         type: ActionType.server_called
+//       }
+//       dispatch(uiAction);
+//       axios.get(`${process.env.REACT_APP_BACKEND}/product/searchProducts/${search}`).then(response => {
+       
+//         if(response.data !== null ){
+//         const responseAction: IProductsSearchedAction = {
+//           type: ActionType.add_searched_Products,
+//           products: response.data as IProductData[]
+//         }
+      
+//         dispatch(responseAction);
+//       }else{window.CS.clientAction(limitedProductsActionCreator())}
+//       }).catch(function (error) { console.log(error); })
+//     }
+//   }
+

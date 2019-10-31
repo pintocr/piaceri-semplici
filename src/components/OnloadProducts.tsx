@@ -11,9 +11,7 @@ declare let window: IWindow;
 const { Option } = Select;
 const { Search } = Input;
 
-const searchItemStyle = {
-    width: 180, margin: 2
-}
+
 
 interface IProps {
     limitedList: IProductData[];

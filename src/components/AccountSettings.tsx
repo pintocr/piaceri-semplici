@@ -17,12 +17,21 @@ interface IProps {
     stateCounter: number;
 }
 
+interface IUserDataWithoutPass {
+    _id: string;
+    user_first_name: string;
+    user_last_name: string;
+    user_email: string;
+    user_phone: string;
+}
+
+
 interface IUserAction extends IAction {
-    user: IUserData
+    user: IUserDataWithoutPass
 }
 
 interface IState {
-    UserData: IUserData;
+    UserData: IUserDataWithoutPass;
     edit: boolean;
 }
 
@@ -33,10 +42,8 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
         this.state = {
             UserData: {
                 _id: "",
-                user_name: "",
                 user_first_name: "",
                 user_last_name: "",
-                user_password: "",
                 user_email: "",
                 user_phone: ""
             },
@@ -46,11 +53,20 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
         this.createAddress = this.createAddress.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
         this.handleSave = this.handleSave.bind(this);
-
+        this.handleCancel = this.handleCancel.bind(this);
     };
 
-
-
+    handleCancel = () => {
+        const action: IUserAction = {
+          type: ActionType.close_edit_Account,
+          user: window.CS.getUIState().user as IUserData
+        }
+        window.CS.clientAction(action);
+        this.setState({ edit: false});
+      };
+    // <Button key="back" onClick={this.handleCancel}>
+    // Abbrechen
+    // </Button>
     render() {
         console.log("AccountSettings rendered()")
         if (window.CS.getUIState().addresses.length !== 0 && window.CS.getUIState().showCreateAddressForm === false && this.state.edit === true) {
@@ -61,11 +77,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                         <div>
                             <table className="account-table">
                                 <tr>
-                                    <th colSpan={2}>Mein Account&nbsp;&nbsp;</th><th> <Icon type="save" onClick={this.handleSave} /> <br /><br /></th>
-                                </tr>
-                                <tr>
-                                    <td><p>Nutzername:</p>&nbsp;</td>
-                                    <td><Input placeholder="Nutzername" name="user_name" value={this.state.UserData.user_name} onChange={this.handleChange} />&nbsp;&nbsp;</td>
+                                    <th colSpan={2}>Mein Account&nbsp;&nbsp;</th><th><Icon type="close" onClick={this.handleCancel}/> </th><th> <Icon type="save" onClick={this.handleSave} /> <br /><br /></th>
                                 </tr>
                                 <tr>
                                     <td><p>Vorname:</p>&nbsp;</td>
@@ -74,10 +86,6 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                                 <tr>
                                     <td><p>Nachname:</p>&nbsp;</td>
                                     <td><Input placeholder="Nachname" name="user_last_name" value={this.state.UserData.user_last_name} onChange={this.handleChange} />&nbsp;&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td><p>Passwort: (Passwort muss neu gesetzt werden, andernfalls wird das Passwort zu 'asd' gesetzt!)</p>&nbsp;</td>
-                                    <td><Input placeholder="password" type="password" name="user_password" value={this.state.UserData.user_password} onChange={this.handleChange} />&nbsp;&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td><p>E-Mail:</p>&nbsp;</td>
@@ -121,11 +129,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                         <div>
                             <table className="account-table">
                                 <tr>
-                                    <th colSpan={2}>Mein Account&nbsp;&nbsp;</th><th> <Icon type="save" onClick={this.handleSave} /> <br /><br /></th>
-                                </tr>
-                                <tr>
-                                    <td><p>Nutzername:</p>&nbsp;</td>
-                                    <td><Input placeholder="Nutzername" name="user_name" value={this.state.UserData.user_name} onChange={this.handleChange} />&nbsp;&nbsp;</td>
+                                    <th colSpan={2}>Mein Account&nbsp;&nbsp;</th><th><Icon type="close" onClick={this.handleCancel}/> </th><th> <Icon type="save" onClick={this.handleSave} /> <br /><br /></th>
                                 </tr>
                                 <tr>
                                     <td><p>Vorname:</p>&nbsp;</td>
@@ -134,10 +138,6 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                                 <tr>
                                     <td><p>Nachname:</p>&nbsp;</td>
                                     <td><Input placeholder="Nachname" name="user_last_name" value={this.state.UserData.user_last_name} onChange={this.handleChange} />&nbsp;&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td><p>Passwort: (Passwort muss neu gesetzt werden, andernfalls wird das Passwort zu 'asd' gesetzt!)</p>&nbsp;</td>
-                                    <td><Input placeholder="password" type="password" name="user_password" value={this.state.UserData.user_password} onChange={this.handleChange} />&nbsp;&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td><p>E-Mail:</p>&nbsp;</td>
@@ -197,10 +197,6 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                                     <td><Input placeholder="Nachname" name="user_last_name" disabled value={window.CS.getUIState().user.user_last_name} />&nbsp;&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td><p>Passwort:</p>&nbsp;</td>
-                                    <td><Input placeholder="password" type="password" name="user_password" disabled value={window.CS.getUIState().user.user_password} />&nbsp;&nbsp;</td>
-                                </tr>
-                                <tr>
                                     <td><p>E-Mail:</p>&nbsp;</td>
                                     <td><Input placeholder="email" name="user_email" disabled value={window.CS.getUIState().user.user_email} />&nbsp;&nbsp;</td>
                                 </tr>
@@ -256,10 +252,6 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                                 <tr>
                                     <td><p>Nachname:</p>&nbsp;</td>
                                     <td><Input placeholder="Nachname" name="user_last_name" disabled value={window.CS.getUIState().user.user_last_name} />&nbsp;&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td><p>Passwort:</p>&nbsp;</td>
-                                    <td><Input placeholder="password" type="password" name="user_password" disabled value={window.CS.getUIState().user.user_password} />&nbsp;&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td><p>E-Mail:</p>&nbsp;</td>
@@ -318,10 +310,6 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
                                 <tr>
                                     <td><p>Nachname:</p>&nbsp;</td>
                                     <td><Input placeholder="Nachname" name="user_last_name" disabled value={window.CS.getUIState().user.user_last_name} />&nbsp;&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td><p>Passwort:</p>&nbsp;</td>
-                                    <td><Input placeholder="password" type="password" name="user_password" disabled value={window.CS.getUIState().user.user_password} />&nbsp;&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td><p>E-Mail:</p>&nbsp;</td>
@@ -387,10 +375,8 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
         this.setState({
             UserData: {
                 _id: window.CS.getUIState().user._id,
-                user_name: window.CS.getUIState().user.user_name,
                 user_first_name: window.CS.getUIState().user.user_first_name,
                 user_last_name: window.CS.getUIState().user.user_last_name,
-                user_password: "asd",
                 user_email: window.CS.getUIState().user.user_email,
                 user_phone: window.CS.getUIState().user.user_phone
             },
@@ -412,14 +398,22 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
 
 }
 
-function updateUserDataActionCreator(input: IUserData) {
+function updateUserDataActionCreator(input: IUserDataWithoutPass) {
     return function (dispatch: any) {
         const uiAction: IAction = {
             type: ActionType.server_called
         }
         dispatch(uiAction);
 
-        const newUserData = input;
+        const newUserData = {
+            _id: window.CS.getUIState().user._id,
+            user_name: window.CS.getUIState().user.user_name,
+            user_first_name: input.user_first_name,
+            user_last_name: input.user_last_name,
+            user_password: window.CS.getUIState().user.user_password,
+            user_email: input.user_email,
+            user_phone: input.user_phone
+        };
         axios.post(`${process.env.REACT_APP_BACKEND}/user/editUser/${newUserData._id}`, newUserData)
             .then(res => {
                 console.log("update user route", res)
