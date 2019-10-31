@@ -6,16 +6,33 @@ import Address from './Addresses';
 import {IDeleteOneLine, ICountAction } from './shoppingCart'
 import CreateAddress from './CreateAddress';
 import { Link, Redirect } from 'react-router-dom';
+import axios from 'axios';
+import mongoose from 'mongoose'
  
 import "react-datepicker/dist/react-datepicker.css";
 
 //redux
 import { IAction, ActionType } from '../framework/IAction';
 import { IWindow } from '../framework/IWindow'
+import { ObjectId } from 'bson';
+
 declare let window: IWindow;
 
 interface IProps {
     stateCounter: number;
+}
+
+interface IOrder {
+    description: string,
+    total_price: number,
+    product_list: Array<Object>,
+    ref_address: string,
+    ref_user: string
+}
+
+interface IproductList {
+    ref_product : string,
+    amount : number
 }
 
 interface IState {
@@ -42,6 +59,8 @@ export default class FinishOrder extends React.PureComponent<IProps, IState>  {
         super(props);
 
         this.continue = this.continue.bind(this);
+        this.calculateSum = this.calculateSum.bind(this);
+        this.mapProducts = this.mapProducts.bind(this);
         this.state = {
             amount : 1,
             product: {
@@ -79,16 +98,48 @@ export default class FinishOrder extends React.PureComponent<IProps, IState>  {
     this.setState({ checkBoxStatus: [...checkboxes] });
     }
 
+    calculateSum = () => {
+        let sum = 0;
+        window.CS.getBMState().shoppingCart.items.forEach(element => {
+            sum = sum + element.price * element.count;
+        })
+
+        return Math.round(sum * 100) / 100;
+    }
+
+    mapProducts = () => {
+       let newArray : Array<IproductList> = []
+       window.CS.getBMState().shoppingCart.items.forEach(element => {
+            newArray.push({ref_product : element.product_id,
+                amount : element.count});
+        })
+        return newArray;
+    }
+
     continue = () => {
             if(this.state.checkBoxStatus.indexOf(true) === -1){
                 message.error("Bitte wählen sie eine Adresse aus");
             } else {
-                const action: IAction = {
-                    type: ActionType.deleteShoppingCart
-                }
-                window.CS.clientAction(action)
-                this.setState({ redirect: true });
-                message.success("Ihre Bestellung war erfolgreich");
+
+            const input : IOrder = {
+                description: "Order to home of customer",
+                total_price: this.calculateSum(),
+                product_list: this.mapProducts(),
+                ref_address: window.CS.getUIState().addresses[0]._id,
+                ref_user: window.CS.getUIState().user._id
+            }
+            console.log(input)
+
+                axios.post(`${process.env.REACT_APP_BACKEND}/order/add`, input)
+                .then(res => {
+                    const action: IAction = {
+                        type: ActionType.deleteShoppingCart
+                    }
+                    window.CS.clientAction(action)
+                    this.setState({ redirect: true });
+                    message.success("Ihre Bestellung war erfolgreich");
+                })
+                .catch(error => { console.log(error);});              
             }
     }
 
