@@ -26,6 +26,7 @@ export enum ActionType {
     show_edit_Account = "show_edit_Account",
     close_edit_Account = "close_edit_Account",
     add_searched_Products = "add_searched_Products",
+    deleteShoppingCart = "deleteShoppingCart"
 }
 export interface IAction {
     type: ActionType;
