@@ -159,6 +159,10 @@ export const reducer = (state = initial, action: IAction) => {
             newState.BM.productsLimited= searchedProducts.products;
             return newState;
 
+        case ActionType.deleteShoppingCart:
+            newState.BM.shoppingCart.items = [];
+            return newState;
+
         default:
             window.CS.log("1. Error!!!!! no reducer defined");
             return newState;

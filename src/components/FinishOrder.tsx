@@ -5,7 +5,7 @@ import {IProduct} from './categoryPage';
 import Address from './Addresses';
 import {IDeleteOneLine, ICountAction } from './shoppingCart'
 import CreateAddress from './CreateAddress';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
  
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -22,6 +22,7 @@ interface IState {
     amount : number;
     product : IProduct;
     checkBoxStatus: Array<boolean>;
+    redirect : boolean;
 }
 
 
@@ -56,7 +57,8 @@ export default class FinishOrder extends React.PureComponent<IProps, IState>  {
                 pic_list: [],
                 rating: 4,
             },
-            checkBoxStatus : [false, false, false, false, false]
+            checkBoxStatus : [false, false, false, false, false],
+            redirect : false
         }
     };
 
@@ -78,7 +80,16 @@ export default class FinishOrder extends React.PureComponent<IProps, IState>  {
     }
 
     continue = () => {
-            message.success("saving order in DB");
+            if(this.state.checkBoxStatus.indexOf(true) === -1){
+                message.error("Bitte wählen sie eine Adresse aus");
+            } else {
+                const action: IAction = {
+                    type: ActionType.deleteShoppingCart
+                }
+                window.CS.clientAction(action)
+                this.setState({ redirect: true });
+                message.success("Ihre Bestellung war erfolgreich");
+            }
     }
 
 
@@ -92,49 +103,55 @@ export default class FinishOrder extends React.PureComponent<IProps, IState>  {
 
 
     render(){
-    if (window.CS.getUIState().showCreateAddressForm === false) {
-        const size = 'large'
-        return (
-            <div>
+        if(this.state.redirect){
+            return(<Redirect to = "/"/>)
+        } else {
+            if (window.CS.getUIState().showCreateAddressForm === false) {
+                const size = 'large'
+                return (
                     <div>
-                        <table className="account-table">
-                            <tr>
-                                <th>Wählen Sie eine Adresse<br /><br /></th>
-                            </tr>
-                            <tr>
-                                <td><p>Empfänger:</p>&nbsp;</td>
-                                <td><p>{window.CS.getUIState().user.user_first_name}, {window.CS.getUIState().user.user_last_name}</p>&nbsp;</td>
-                            </tr>
-                            {window.CS.getUIState().addresses.map((address, index) =>
-                                <tr><td>
-                                    <Checkbox name ={"" + index} checked = {this.state.checkBoxStatus[index]} onChange={this.checkBoxChange}><Address key={address._id} address={address} stateCounter={window.CS.getUIState().counter} /></Checkbox>&nbsp;
-                                </td></tr>)}
-
-                            <tr>
-                                <td>
-                                    <Button type="primary" size={size} onClick={this.createAddress}>
-                                        <Icon type="plus-square" />Addresse hinzufügen
-                                </Button>
-                                </td>
-                            </tr>
-                        </table>
-
+                            <div>
+                                <table className="account-table">
+                                    <tr>
+                                        <th>Wählen Sie eine Adresse<br /><br /></th>
+                                    </tr>
+                                    <tr>
+                                        <td><p>Empfänger:</p>&nbsp;</td>
+                                        <td><p>{window.CS.getUIState().user.user_first_name}, {window.CS.getUIState().user.user_last_name}</p>&nbsp;</td>
+                                    </tr>
+                                    {window.CS.getUIState().addresses.map((address, index) =>
+                                        <tr><td>
+                                            <Checkbox name ={"" + index} checked = {this.state.checkBoxStatus[index]} onChange={this.checkBoxChange}><Address key={address._id} address={address} stateCounter={window.CS.getUIState().counter} /></Checkbox>&nbsp;
+                                        </td></tr>)}
+        
+                                    <tr>
+                                        <td>
+                                            <Button type="primary" size={size} onClick={this.createAddress}>
+                                                <Icon type="plus-square" />Addresse hinzufügen
+                                        </Button>
+                                        </td>
+                                    </tr>
+                                </table>
+        
+                            </div>
+        
+                        <Link to="/payment">
+                            <Button>Zurück</Button>&nbsp;
+                            </Link>
+            
+                            <Button onClick = {this.continue}>Zahlungspflichtig bestellen</Button>&nbsp;
                     </div>
+                )
+            }else if (window.CS.getUIState().showCreateAddressForm === true) {
+                return (
+                    <div>
+                        <CreateAddress stateCounter={window.CS.getUIState().counter} />
+                    </div>
+                )
+            }
+        }
 
-                <Link to="/payment">
-                    <Button>Zurück</Button>&nbsp;
-                    </Link>
     
-                    <Button onClick = {this.continue}>Zahlungspflichtig bestellen</Button>&nbsp;
-            </div>
-        )
-    }else if (window.CS.getUIState().showCreateAddressForm === true) {
-        return (
-            <div>
-                <CreateAddress stateCounter={window.CS.getUIState().counter} />
-            </div>
-        )
-    }
     }
 
 
