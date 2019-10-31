@@ -50,16 +50,16 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
     this.handleCountry = this.handleCountry.bind(this);
 
     this.state = {
-      iso_country_code: "",
-      type: "",
+      iso_country_code: "DE",
+      type: "home",
       createAddressFormVisible: window.CS.getUIState().showCreateAddressForm,
       inputData: {
         _id: "",
-        type: "home",
+        type: "",
         street: "",
         zip_code: "",
         city: "",
-        iso_country_code: "DE",
+        iso_country_code: "",
         ref_user: window.CS.getUIState().user._id,
         pickup_station_id: "",
         pickup_ident_no: "",
@@ -201,7 +201,7 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
               <tr>
               <td>Land:</td>
               <td>
-              <Select  defaultValue= "DE" size = "small" className = "searchItemStyle" onChange = {this.handleCountry}>
+              <Select defaultValue="DE" size="small" className="searchItemStyle" onChange={this.handleCountry}>
               <Option value='AF'>Afghanistan</Option>
               <Option value='AX'>Aland Islands</Option>
               <Option value='AL'>Albania</Option>
