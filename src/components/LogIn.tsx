@@ -153,7 +153,7 @@ export default class LoginModal extends React.PureComponent<IProps, IState> {
             <Input.Password placeholder="password" name="password" value={this.state.inputData.password} onChange={this.handleChange} />&nbsp;
             </form>
           <p>Sie haben noch keinen Account bei uns?</p>
-          <a onClick={this.handleLink}>Hier geht es zur Registrierung</a>
+          <a onClick={this.handleLink} style={{color: 'rgb(71, 38, 21)'}}>Hier geht es zur Registrierung</a>
         </Modal>
       </div>
     );

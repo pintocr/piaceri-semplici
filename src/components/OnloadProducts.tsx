@@ -45,7 +45,7 @@ export default class OnloadProducts extends React.PureComponent<IProps, IState> 
                     <div className="Searchcontainer"></div>
 
                     <div className="product-container">
-                        <p>Unsere erlesene Auswahl</p>
+                        <p className="selection">Unsere erlesene Auswahl</p>
                         <Row type="flex" justify="center">
 
                             <div className="Searchbox">

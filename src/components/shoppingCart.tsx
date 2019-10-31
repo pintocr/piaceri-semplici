@@ -142,7 +142,7 @@ export default class ShoppingCartModal extends React.PureComponent<IProps, IStat
         >
 
 
-          <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, color: 'white', backgroundColor: 'rgb(71, 38, 21)'  }}>
+          <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, padding: 5, color: 'white', backgroundColor: 'rgb(71, 38, 21)', fontSize: '0.8rem'  }}>
             <Col span={7}><b>Artikelname</b></Col>
             <Col span={4} style={{padding: '0 2 0 2'}}><b>Einzelpreis</b></Col>
             <Col span={6}><b>Menge</b></Col>

@@ -10,7 +10,7 @@ import {IShoppingCartAction} from './DetailPage'
 declare let window: IWindow;
 
 
-const cardStyle = { width: 240, height: 500, margin: 12, border: 'none', overflow: 'hidden', backgroundColor: '#472615', cursor: 'default' }
+const cardStyle = { width: 240, height: 525, margin: 12, border: 'none', overflow: 'hidden', backgroundColor: '#472615', cursor: 'default' }
 const bodyStyle = { backgroundColor: '#472615' }
 
 interface IProps {
