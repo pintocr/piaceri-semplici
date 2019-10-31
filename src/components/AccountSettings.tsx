@@ -161,7 +161,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
 
                                 <tr>
                                     <td>
-                                        <Button type="primary" size={size} onClick={this.createAddress}>
+                                        <Button type="primary" className="accountButton" size={size} onClick={this.createAddress}>
                                             <Icon type="plus-square" />Addresse hinzufügen
                                     </Button>
                                     </td>
@@ -218,7 +218,7 @@ export default class AccountSettings extends React.PureComponent<IProps, IState>
 
                                 <tr>
                                     <td>
-                                        <Button type="primary" size={size} onClick={this.createAddress}>
+                                        <Button type="primary" className="accountButton" size={size} onClick={this.createAddress}>
                                             <Icon type="plus-square" />Addresse hinzufügen
                                     </Button>
                                     </td>

@@ -104,12 +104,12 @@ export default class Address extends React.PureComponent<IProps, IState> {
                 <table>
                 <tr>
                   <td>
-                    <Button type="primary" size={size} onClick={this.editAddress} name={this.props.address._id}>
+                    <Button type="primary" className="accountButton" size={size} onClick={this.editAddress} name={this.props.address._id}>
                       <Icon type="edit" />Adresse bearbeiten
                      </Button>&nbsp;&nbsp;
                  </td>
                   <td>
-                    <Button type="primary" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
+                    <Button type="primary" className="accountButton" size={size} onClick={this.deleteAddress} name={this.props.address._id}>
                       <Icon type="minus-square" />Adresse entfernen
                      </Button>&nbsp;
                  </td>
