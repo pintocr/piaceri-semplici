@@ -1,7 +1,12 @@
 body {
-  margin: 0 2vw 0 2vw;
+ 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.searchItemStyle {
+  width: 200px;
+  margin: 2px;
 }
 
 code {

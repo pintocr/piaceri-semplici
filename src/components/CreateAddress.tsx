@@ -1,6 +1,9 @@
 import React from 'react';
 import { Modal, Button, Input, message, Icon, Collapse, Select } from 'antd'
 import axios from 'axios';
+import "antd/dist/antd.css";
+import '../index.css';
+import '../stylesheets/pages.scss';
 import { IAddressData } from '../state/appState'
 import { getAddressActionCreator } from '../components/LoginContainer'
 //redux
@@ -171,11 +174,11 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
               <tr>
                 <td>Adresstyp: </td>
                 <td>
-                <Select  defaultValue="home" size="small"  className="searchItemStyle" onChange={this.handleType}>
+                <Select  defaultValue="home" size="small" className="searchItemStyle" onChange={this.handleType}>
                             <Option value="home">Lieferadresse</Option>
                             <Option value="invoice">Rechnungsadresse</Option>
                             <Option value="pickup">Packstation</Option>
-                        </Select>
+                 </Select>
                   {/* <Input placeholder="Adresstyp" name="type" value={this.state.inputData.type} onChange={this.handleChange} />&nbsp; */}
               </td>
               </tr>
@@ -197,7 +200,8 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
 
               <tr>
               <td>Land:</td>
-              <Select  defaultValue="DE" size="small" className="searchItemStyle" onChange={this.handleCountry}>
+              <td>
+              <Select  defaultValue= "DE" size = "small" className = "searchItemStyle" onChange = {this.handleCountry}>
               <Option value='AF'>Afghanistan</Option>
               <Option value='AX'>Aland Islands</Option>
               <Option value='AL'>Albania</Option>
@@ -361,7 +365,7 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
               <Option value='QA'>Qatar</Option>
               <Option value='RE'>Reunion</Option>
               <Option value='RO'>Romania</Option>
-              <Option value='RU'>Russian Federation</Option>
+              <Option value='RU'>Russia</Option>
               <Option value='RW'>Rwanda</Option>
               <Option value='BL'>Saint Barthelemy</Option>
               <Option value='SH'>Saint Helena</Option>
@@ -414,6 +418,7 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
               <Option value='ZM'>Zambia</Option>
               <Option value='ZW'>Zimbabwe</Option>
             </Select>
+            </td>
                 {/* <td>Land:</td>
                 <td><Input placeholder="Land" name="iso_country_code" value={this.state.inputData.iso_country_code} onChange={this.handleChange} />&nbsp;</td> */}
               </tr>
