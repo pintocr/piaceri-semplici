@@ -16,3 +16,8 @@
   background: linear-gradient(rgb(71, 38, 21),#8B4513);
   border-color: transparent;
 }
+
+.selection {
+  font-family: 'Sriracha', cursive;
+  font-size: 1.2rem;
+}

@@ -173,7 +173,7 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
                 >
                     <h2>Ihr Warenkorb</h2>
 
-                    <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, color: 'white', backgroundColor: 'rgb(71, 38, 21)' }}>
+                    <Row type="flex" justify="start" style={{ flexDirection: "row", margin: 5, padding: 5, fontSize: '0.8rem' , color: 'white', backgroundColor: 'rgb(71, 38, 21)' }}>
                         <Col span={7}><b>Artikelname</b></Col>
                         <Col span={4} style={{ padding: '0 2 0 2' }}><b>Einzelpreis</b></Col>
                         <Col span={6}><b>Menge</b></Col>
@@ -222,40 +222,62 @@ export default class PaymentPage extends React.PureComponent<IProps, IState>  {
                     hoverable
                     style={{width: 550, margin: 5, cursor: 'default' }}
                 >
-                    <h2>Versand</h2>
-                    <p>Kostenlose Lieferung</p>
-                    <div>
-                        <Checkbox name="DHL" checked={this.state.checkBoxStatus[0]} onChange={this.checkBoxChange}>DHL</Checkbox>&nbsp;
-                    <img src="../img/DHL.jpg"></img>&nbsp;
-                    <p>Voraussichtlicher Liefertermin</p>
-                        <DatePicker disabled={true} selected={this.slowDHL()} onChange={this.handleChange} filterDate={this.isWeekday} />
-                    </div>
+                    <h2>Versandoptionen</h2>
+                    <Row>
+                        <Col span={2}><Checkbox name="DHL" checked={this.state.checkBoxStatus[0]} onChange={this.checkBoxChange}>
+                                </Checkbox></Col>
+                        <Col span={14}><b>DHL</b>
+                                <p>Kostenlose Lieferung</p>
+                                <p>Voraussichtliche Lieferung<br/>
+                                <DatePicker disabled={true} selected={this.slowDHL()} onChange={this.handleChange} filterDate={this.isWeekday} />
+                                </p></Col>
+                    <Col span={8}><img src="../img/DHL.jpg"></img>&nbsp;</Col>
+                    </Row>
 
+                    <Row>
+                    <Col span={8}></Col>
+                    <Col span={14}>
+                    
+                    <br/><br/>
+                    </Col>
+                    </Row>
+
+
+                   <Row>
+                   <Col span={2}><Checkbox name="DHL_EXPRESS" checked={this.state.checkBoxStatus[1]} onChange={this.checkBoxChange}>
+                            </Checkbox></Col>
+                       <Col span={14}><b>DHL Express</b>
+                            <p>Kostenpflichtiger Service</p>
+                            <p>Wunschliefertermin<br/>
+                            <DatePicker selected={this.state.deliveryDate} onChange={this.handleChange} filterDate={this.isWeekday} />
+                            </p></Col>
+                       <Col span={8}> <img src="../img/DHL_Express.jpg"></img>&nbsp;</Col>
+                   </Row>
                     <div>
-                        <Checkbox name="DHL_EXPRESS" checked={this.state.checkBoxStatus[1]} onChange={this.checkBoxChange}>DHL Express</Checkbox>&nbsp;
-                    <img src="../img/DHL_Express.jpg"></img>&nbsp;
-                    <p>Wunschliefertermin</p>
-                        <DatePicker selected={this.state.deliveryDate} onChange={this.handleChange} filterDate={this.isWeekday} />
+                        
+                   
+                   
+                        
                     </div>
                 </Card>
                 <Card
                     hoverable
                     style={{ width: 550, margin: 5, cursor: 'default'}}
                 >
-                    <h2>Zahlung</h2>
+                    <h2>Zahlungsmöglichkeiten</h2>
                     <div>
                         <Checkbox name="Lastschrift" checked={this.state.checkBoxStatus[2]} onChange={this.checkBoxChange}>Lastschrift</Checkbox>&nbsp;
-                <img src="../img/Kauf_auf_Lastschrift.png"></img>&nbsp;
+                <img src="../img/Kauf_auf_Lastschrift.png"></img><br/><br/>
                 </div>
 
                     <div>
                         <Checkbox name="Kreditkarte" checked={this.state.checkBoxStatus[3]} onChange={this.checkBoxChange}>Kreditkarte</Checkbox>&nbsp;
-                <img src="../img/logo-visa.png"></img>&nbsp;
+                <img src="../img/logo-visa.png"></img>&nbsp;<br/><br/>
                 </div>
 
                     <div>
                         <Checkbox name="Paypal" checked={this.state.checkBoxStatus[4]} onChange={this.checkBoxChange}>Paypal</Checkbox>&nbsp;
-                <img src="../img/paypal.png"></img>&nbsp;
+                <img src="../img/paypal.png"></img>&nbsp;<br/><br/>
                 </div>
                 </Card>
 
