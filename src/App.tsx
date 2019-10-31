@@ -79,6 +79,7 @@ export interface IProductsLoadedAction extends IAction {
 export interface IProductsLimitedAction extends IAction {
   products: IProductData[]
 }
+
 export interface IProductsSearchedAction extends IAction {
   products: IProductData[]
 }

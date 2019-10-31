@@ -28,6 +28,8 @@ interface IProps {
 }
 
 interface IState {
+  iso_country_code: string;
+  type: string;
   createAddressFormVisible: boolean;
   inputData: INewAddress;
 }
@@ -41,9 +43,12 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
     this.handleOk = this.handleOk.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleType = this.handleType.bind(this);
+    this.handleCountry = this.handleCountry.bind(this);
 
     this.state = {
-
+      iso_country_code: "",
+      type: "",
       createAddressFormVisible: window.CS.getUIState().showCreateAddressForm,
       inputData: {
         _id: "",
@@ -61,6 +66,22 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
     };
   }
 
+  handleType(event:any){
+    console.log("handleType",event)
+    this.setState({
+      type: event
+    })
+    console.log("type", this.state.type)
+  }
+
+  handleCountry(event:any){
+    console.log("handleCountry",event)
+    this.setState({
+      iso_country_code: event
+    })
+    console.log("country",this.state.iso_country_code)
+  }
+
   showForm = () => {
     const action: IAction = {
       type: ActionType.show_Address_Form
@@ -74,7 +95,18 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
     const action: IAction = {
       type: ActionType.close_Address_Form
     }
-    const input = this.state.inputData
+    const input = {
+      _id: "",
+      type: this.state.type,
+      street: this.state.inputData.street,
+      zip_code: this.state.inputData.zip_code,
+      city: this.state.inputData.city,
+      iso_country_code: this.state.iso_country_code,
+      ref_user: window.CS.getUIState().user._id,
+      pickup_station_id: this.state.inputData.pickup_station_id,
+      pickup_ident_no: this.state.inputData.pickup_ident_no,
+    }
+    console.log("INPUT HERE ######: ",input)
     axios.post(`${process.env.REACT_APP_BACKEND}/address/createAddress`, input)
       .then(res => {
         console.log("create address route", res)
@@ -111,20 +143,11 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
   };
 
   handleChange(event: any) {
-    console.log(event);
+    let { name, value } = event.target;
     this.setState({
       inputData: {
-        _id: "",
-        type: event,
-        street: "",
-        zip_code: "",
-        city: "",
-        iso_country_code: "",
-        ref_user: window.CS.getUIState().user._id,
-        pickup_station_id: "",
-        pickup_ident_no: "",
-
-
+        ...this.state.inputData,
+        [name]: value
       }
     });
   }
@@ -148,7 +171,7 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
               <tr>
                 <td>Adresstyp: </td>
                 <td>
-                <Select defaultValue="home" size="small"  className="searchItemStyle" onChange={this.handleChange}>
+                <Select  defaultValue="home" size="small"  className="searchItemStyle" onChange={this.handleType}>
                             <Option value="home">Lieferadresse</Option>
                             <Option value="invoice">Rechnungsadresse</Option>
                             <Option value="pickup">Packstation</Option>
@@ -174,7 +197,7 @@ export default class CreateAddress extends React.PureComponent<IProps, IState> {
 
               <tr>
               <td>Land:</td>
-              <Select defaultValue="DE" size="small" onChange={this.handleChange}>
+              <Select  defaultValue="DE" size="small" onChange={this.handleCountry}>
               <Option value='AF'>Afghanistan</Option>
               <Option value='AX'>Aland Islands</Option>
               <Option value='AL'>Albania</Option>
