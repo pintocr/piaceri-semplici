@@ -42,6 +42,9 @@ export interface IShoppingCartAction extends IAction {
     addresses: IAddressData[]
 }
 
+  export interface IAddressAction extends IAction {
+    addresses: IAddressData[]
+}
 
 
   export default class PaymentPage extends React.PureComponent<IProps, IState>  {
