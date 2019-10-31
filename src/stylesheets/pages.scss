@@ -224,11 +224,19 @@
 
 .accountButton {
   background: linear-gradient(rgb(71, 38, 21),#8B4513);
+  color: white;
   border-color: transparent;
 }
 
 .accountButton:hover {
   background: linear-gradient(#8B4513,rgb(71, 38, 21));
+  color: white;
   border-color: transparent;
+}
+
+.finish {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
